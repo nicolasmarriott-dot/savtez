@@ -1,0 +1,14 @@
+SAVTEZ-2 | lists and data used by SAVTEZ-GENERATE_v0.3_r3.py (all free, public; fetched 2026-11-02; local copies outside this folder)
+word frequency | wordfreq 3.x (pip, free; Apache-2.0 code, CC-BY-SA data) | all 42 languages of wordfreq.available_languages(); 'large' lists (incl. subtitles, social media, Reddit, Twitter sources) for ar bn ca cs de en es fi fr he it ja mk nb nl pl pt ru sv uk zh; 'best' for the rest; CJK tokenizers via wordfreq[cjk] in a local Python venv
+wordfreq gate | gas>0 (max en 1.02e-4) | gaz>0 (max tr 9.12e-5) | lol>0 (max en 1.12e-4) | qxzv=0 in all 42 | PASS, not BLOCKED
+acronym 1 | own list of 695 common acronyms, written out in SAVTEZ-PROPOSE_v0.3.py (this folder)
+acronym 2 | NetLingo acronym list, https://www.netlingo.com/acronyms.php (2903 entries parsed; html sha256 1447a65c5bfd...)
+acronym 3 | English Wikipedia: an article or redirect exists for the uppercase string (MediaWiki API, titles query) (cache sha256 12ea37515c4f... incl. lists 4)
+slang 1 | Urban Dictionary headword list, github.com/mattbierner/urban-dictionary-word-list (2,688,884 headwords; concat sha256 3183384b7805...)
+slang 2 | English Wiktionary (all languages section): entry exists for the lowercase or uppercase string (MediaWiki API)
+leetspeak | leet de-substitution map written out in SAVTEZ-GENERATE_v0.3_r3.py (z->s; k->c,ck,q; x->ks,cks,ex,cs; f->ph,v; j->g,y; b->8; d->th; t->7; s->z,5; h->#), each variant checked against top-50k words of en fr de es pt it nl pl tr sv (wordfreq), NetLingo and the own acronym list
+txtspk | vowel-dropped skeletons of the 20k commonest words in 27 Latin-script wordfreq languages (33,368 skeletons)
+hexspeak | own hexspeak list of 52 entries written out in SAVTEZ-GENERATE_v0.3_r3.py (removes 0: the strings have no vowels a, e, o, i or digits, which all hexspeak needs)
+English dictionaries (first CVC round only) | dwyl english-words (github.com/dwyl/english-words, 466k, sha256 39a4ead879cc...) | english-words pip package (web2 + gcide)
+tokenizers | tiktoken cl100k_base, o200k_base, p50k_base, r50k_base | Hugging Face tokenizer.json (public): openai-community/gpt2, Qwen/Qwen2.5-7B-Instruct, deepseek-ai/DeepSeek-V3, unsloth/Llama-3.2-1B-Instruct, unsloth/mistral-7b-instruct-v0.3, unsloth/gemma-2-9b-it, microsoft/Phi-3-mini-4k-instruct, google-bert/bert-base-multilingual-cased, FacebookAI/xlm-roberta-base, EleutherAI/gpt-neox-20b, bigscience/bloom, tiiuae/falcon-7b, zai-org/GLM-4.5 | not fetchable: xai-org/grok-1, moonshotai/Kimi-K2-Instruct (404)
+sigil corpora | Project Gutenberg #1342 #84 #2701 #11 #98 #1661 #2600 #5200 + 260 random English Wikipedia extracts (prose, 7.5M chars) | 400 local .md files (markdown, 3.9M chars) | 400 Python stdlib files (code, 6.1M chars)

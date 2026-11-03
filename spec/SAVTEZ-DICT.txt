@@ -1,0 +1,139 @@
+SAVTEZ DICTIONARY (formerly AGENT-LANG-DICT)
+Owner: Nick. Kept separate from ENGRAM. Not adopted anywhere until Nick approves.
+Rules: append-only. Words are never redefined, only deprecated. Every change is logged with its reason.
+Current version: v0.3-draft (2026-11-02)
+Status key: CANDIDATE = awaiting cold test + AGENT-LANG-1b | APPROVED = Nick's word | REJECTED | DEPRECATED
+
+== GRAMMAR ==
+- Part = exactly 3 letters, consonant-vowel-consonant, lowercase.
+- Any two parts differ in at least 2 positions (checked: 23 parts, 0 failures).
+- Word = 1-4 parts, head last, modifiers left to right narrowing the head. No separators.
+- dax negates only the part immediately after it.
+- No synonyms: a compound equal in meaning to an existing word is rejected.
+- Unknown part or word = reject the message, never guess.
+- Messages open with a version tag: §L0.2
+- Critical messages (bix items, money figures, verdicts, report IDs) end with # + first 8 hex of sha256 of the normalized body, computed by tool. If there is no hashing tool, echo back every figure and ID instead.
+- Admission: used often | one meaning | saves >=3 tokens vs its phrase on every target tokenizer (cl100k, o200k, DeepSeek, Claude) | passes a cold test with no confident wrong guesses.
+
+== PARTS: HEADS ==
+kef | claim | CANDIDATE
+duv | source | CANDIDATE
+vop | log entry | CANDIDATE
+gaz | task | CANDIDATE
+fub | figure (number) | CANDIDATE
+tez | statement made | CANDIDATE
+rux | act done | CANDIDATE
+zim | relation between two items | CANDIDATE
+xem | gap or contradiction | CANDIDATE
+
+== PARTS: MODIFIERS ==
+sav | verified against a primary source | CANDIDATE
+lod | lead only, unverified | CANDIDATE
+pev | single-origin, no independent corroboration | CANDIDATE
+zof | searched, not found | CANDIDATE
+gom | expected but absent | CANDIDATE
+kyr | causal | CANDIDATE (no word uses it yet)
+wap | associated, causation not claimed | CANDIDATE
+tib | append-only | CANDIDATE
+vun | internal, not for outside release | CANDIDATE
+bix | needs Nick's word | CANDIDATE
+hiw | on hold | CANDIDATE (no word uses it yet)
+zut | blocked | CANDIDATE (no word uses it yet)
+fid | calculated by us | CANDIDATE
+dax | not (negates next part) | CANDIDATE
+
+== WORDS ==
+savkef | claim verified against a primary source | CANDIDATE
+lodkef | lead only, unverified claim | CANDIDATE
+pevkef | claim resting on one source, no independent corroboration | CANDIDATE
+pevduv | source with no independent corroboration | CANDIDATE
+zofvop | log entry: searched the named source, nothing found | CANDIDATE
+gomvop | log entry: a record that should exist is absent | CANDIDATE
+wapzim | linked, causation not claimed | CANDIDATE
+tibvop | append-only log entry, never edited | CANDIDATE
+vunvop | internal entry, not for outside release | CANDIDATE
+bixgaz | task waiting on Nick's word | CANDIDATE
+fidfub | figure we calculated, not quoted from a source | CANDIDATE
+savfub | figure verified against a primary source | CANDIDATE
+tezruxxem | gap between what was said and what was done | CANDIDATE
+
+== CONTROLLED ENGLISH (fixed meaning, used instead of a compound) ==
+caused | causal link established
+on hold | task paused by decision
+blocked | task cannot proceed; reason follows
+
+== REJECTED ==
+kyrzim | causal link | v0.2 | token loss or break-even (cl100k -1, o200k +1) -> controlled English "caused"
+hiwgaz | task on hold | v0.2 | break-even (0/0) -> controlled English "on hold"
+zutgaz | task blocked | v0.2 | loss or break-even (-2/0) -> controlled English "blocked"
+
+== GAPS (concepts that fell back to plain English; candidates for new words) ==
+(none logged yet)
+
+== CHANGE LOG ==
+2026-11-02 | v0.1 | short acronyms (NF, LNK, VFY) | REJECTED by Nick: collisions, models guess meanings from training
+2026-11-02 | v0.2-draft | 3-letter CVC parts, head-last compounds, 16 starter words | drafted
+2026-11-02 | v0.2-draft | 23 parts pass the 2-position distance rule | tiktoken check, Claude Bot
+2026-11-02 | v0.2-draft | kyrzim, hiwgaz, zutgaz rejected | no token saving; short concepts stay controlled English
+2026-11-02 | v0.2-draft | admission rule: >=3 token saving on every tokenizer | words alone saved 40-54% on tiktoken before dictionary cost; short ones lost
+2026-11-02 | v0.2-draft | goal clarified by Nick: free context (memory), not raw token price; dictionary counts at full size per session | measure total context per finished task
+
+2026-11-02 | v0.2-draft | DeepSeek cold test: 13/13 no confident wrong guess (all low, all wrong); it detected the part structure unaided | PASS for this model
+2026-11-02 | v0.2-draft | flagged for swap: gaz (read as "gas"), wap (acronym WAP); watch: kef, pev, lod (acronyms KEF, PEV, LOD) | v0.2 bans acronym lookalikes; replacements need Nick's word
+2026-11-02 | v0.2-draft | second cold test VOID: two runs near-verbatim copies of DeepSeek's answer, not an independent model | rerun in a clean chat of another family
+2026-11-02 | v0.3-direction | Nick: design for eventual native adoption across all AI (parts trained as single tokens). Today's tokenizer cost no longer decides admission; precision, orthogonal parts and a canonical form do | Nick's decision
+
+== v0.3-draft ADDITIONS (see AGENT-LANG-SPEC_v0.3.txt; v0.2 entries above unchanged) ==
+Axis tags: vun,tib=H | bix,hiw,zut=T | sav,lod=E | pev,fid=P | zof,gom=A | wap,kyr=R | kef,duv,vop,gaz,fub,tez,rux,zim,xem=HEAD
+dax | SUSPENDED v0.3 | every use duplicated an existing value
+kyrzim | causal link established | CANDIDATE (restored v0.3: token rule retired)
+hiwgaz | task on hold | CANDIDATE (restored v0.3)
+zutgaz | task blocked | CANDIDATE (restored v0.3)
+savpevkef | claim verified against one primary source, not independently corroborated | CANDIDATE (new: shows axes combining)
+lodpevkef | unverified lead resting on one source | CANDIDATE (new)
+New concepts, letter forms TBD: active, done (T) | quoted, corroborated (P) | 8 message acts (inform, request, confirm, disconfirm, refuse, propose, failure, not-understood)
+2026-11-02 | v0.3-draft | slot model, two forms (PUA symbol + letter), message acts, deltas, @refs | drafted by Claude
+2026-11-02 | v0.3-draft | language named SAVTEZ (sav + tez = "a verified statement"), a legal v0.3 word | Nick's decision
+savtez | statement made, verified against a primary source; also the language's name | APPROVED as name by Nick
+2026-11-02 | v0.3-draft | files renamed SAVTEZ-SPEC_v0.3.txt and SAVTEZ-DICT.txt | Nick's decision
+2026-11-02 | v0.3-draft | FIPA-ACL: all 8 Savtez acts confirmed in the 22-act library; PROV-O mapping pinned in spec section 9 | DeepSeek, unverified
+2026-11-02 | v0.3-draft | third cold test NOT INDEPENDENT: reuses DeepSeek's reasoning near-verbatim ("lod- sounds heavier/rounder than sav-/pev-") | logged as a contaminated run
+2026-11-02 | v0.3-draft | new watch-list fragments from that run: tez (Turkish "thesis"), zim (slang), kef (Turkish/Arabic) | low risk; meanings will be trained in
+2026-11-02 | v0.3-draft | cold testing closed: under the native-adoption target, lookalike risk is handled by the letter-form rule and training, not further cold tests | Claude recommendation, pending Nick
+2026-11-02 | v0.3-draft | prior-art scan (DeepSeek): no single system combines evidence/provenance slots, append-only dictionary and trained reserved symbols; closest A2A (task states), AgentDSL (compact typed syntax) | UNVERIFIED
+2026-11-02 | v0.3-draft | DeepSeek error log: cited "arXiv:2505.02279-adjacent" (not a citation); AgentDSL, HCAN, A-L-S/MoltSpeech, thoughtml unconfirmed, possible inventions | bot to verify
+2026-11-02 | v0.3-draft | T axis aligned to A2A TaskState (spec 6.3, DeepSeek, unverified): adds queued, active, done, failed, canceled (letter forms TBD); rejected, auth-required, unknown covered by message acts or zut | drafted by Claude
+2026-11-02 | v0.3-draft | name status: Savtez is the WORKING name, still open for a better one | Nick's decision
+2026-11-02 | v0.3-draft | SAVTEZ-3 (bot, verified at source, RESULT.md sha256 c7980cf7): AgentDSL, HCAN, MoltSpeech (HF dataset), thoughtml and arXiv:2505.02279 all EXIST | corrects the line above: these were not inventions
+2026-11-02 | v0.3-draft | DeepSeek error log (corrected): only error was the "2505.02279-adjacent" citation; it also understated HCAN and thoughtml, which DO carry evidence/basis classes | logged
+2026-11-02 | v0.3-draft | prior art on evidence tagging: HCAN (%source/%evidence/%inference/%unknown), thoughtml (measured/estimated/assumed, source file+line). Savtez cannot claim evidence tagging as new; its claim is the combination: agent-to-agent, typed slots incl. task state, append-only public dictionary, symbols trained as single tokens | credit both in the spec
+2026-11-02 | v0.3-draft | candidate gaps from prior art: "inferred by us" (E or P), "assumed" (P), "unknown" (E) | for Nick
+2026-11-02 | v0.3-draft | MoltSpeech dataset labels some agent languages "oversight evasion" (paper arXiv:2605.31170, reported, not opened) | Savtez must stay human-auditable: public dictionary + translate-back on request
+2026-11-02 | v0.3-draft | SAVTEZ-4 (bot, paper read in full, RESULT.md sha256 b7b6e99f): "oversight evasion" is an LLM-assigned framing label (59/518, no human validation); real risk = covert side-channels (glyph variants); token efficiency is the largest motive (166/518); explicit grammars are learned best in-context | spec section 11 drafted: no free choices, canonicalize before delivery, deterministic translate-back
+2026-11-02 | v0.3-draft | FIRST RULE set by Nick: no misunderstanding or wrong decoding; outranks brevity. Lookalike screen widened to all major languages plus confusable letters | Nick's decision
+2026-11-02 | v0.3-draft | gaz and wap to be replaced (gaz ~ "gas" in French/Turkish; wap = acronym) | Nick's decision; new letter forms pending SAVTEZ-2
+2026-11-02 | v0.3-draft | Nick: the language only needs to be understood by AI, not spoken. CVC pronounceable pattern retired; ASCII forms chosen purely for Rule 0; humans read the validator's English translation. Existing CVC parts stay as placeholders until replaced | Nick's decision
+2026-11-02 | v0.3-draft | forms to be GENERATED, not hand-picked: zero corpus frequency across languages incl. slang sources, off acronym/slang/leetspeak/hexspeak lists, not a single tokenizer token, typo-safe | Nick asked for design that avoids slang matches by construction
+2026-11-02 | v0.3-draft | Nick's idea: words with a recognizable embedded marker. Drafted as SIGIL + parts + CHECK character (spec section 4) | pending Nick's approval
+2026-11-02 | v0.3-draft | SIGIL + CHECK word structure APPROVED | Nick's decision
+2026-11-02 | idea | Nick: extend Savtez to describe complex human emotions, so AI understands people better and people understand their own feelings | PARKED as a future module after the core passes testing
+2026-11-02 | v0.3-draft | RULE 1 set by Nick: pure logic. Settles by derivation: slot order APPROVED, dax REMOVED, 0-or-2 relation rule APPROVED, inferred/assumed/unknown ADDED (letter forms via SAVTEZ-2) | Nick's decision
+2026-11-02 | v0.3-draft | SAVTEZ-2 DONE (bot): alphabet A17 bcdfghjkmprstwxyz; 4913 -> 51 typo-safe -> 41 forms assigned (37 concepts + 4 spares); sigil ^ / U+E800; check Damm-style mod 17; 0 misdecodes over all single typos; all 23 CVC placeholders FAIL Rule 0 | PROPOSED, Nick decides
+2026-11-02 | v0.3-draft | Claude re-ran SAVTEZ-VALIDATOR_v2.py independently: sha256 82bd7dd7 matches; gate 14/14, legacy 9/9, edge 48/48, typo gates 0 misdecodes (quick mode) | VERIFIED
+2026-11-02 | v0.3-draft | flags: (1) sigil ^ is a regex anchor and markdown footnote char, against the brief; still lowest frequency of the candidates; (2) inferred, assumed, unknown not yet given forms (approved after the run); 10 typo-safe survivors remain unassigned; (3) in new forms the name "savtez" no longer decodes as a word; the name stands alone
+2026-11-02 | v0.3-draft | Nick picks the name LUMIRA, pending an availability check (known conflicts: SAP Lumira, SAP's data-visualization software; Lumira Ventures, Canadian VC; LumiraDx, diagnostics). Files keep SAVTEZ-* until the name clears | Nick's decision
+2026-11-02 | v0.3-draft | name decision deferred; Savtez stays the working name. Lumira family (Lumira, Lumyra, Lumiro, Lumeri, Lumiva) kept as candidates for later | Nick's decision
+2026-11-03 | strategy | adoption route via A2A (DeepSeek, UNVERIFIED): Savtez rides as an A2A extension (own URI, declared on the Agent Card, payload in a Part with its own mediaType e.g. application/vnd.savtez, metadata keyed by the URI). Proposal: issue on a2aproject/A2A -> experimental-ext-savtez with maintainer sponsor -> official after reference implementation, docs and adoption evidence | DeepSeek mixed spec versions (v0.1.0 vs v1.0); verify before use
+2026-11-03 | v0.3-draft | SAVTEZ-2b DONE (bot): inferred wxg U+E102 (E), unknown yhz U+E103 (E), assumed xjc U+E204 (P); validator v2b sha256 706a40b5; gates pass, 0 misdecodes | PROPOSED
+2026-11-03 | v0.3-draft | Rule 1 audit by Claude finds 3 logic faults: (1) P axis mixes two questions, "how derived" (quoted, calculated, inferred, assumed) and "how many sources" (single-origin, corroborated): split into P (derivation) and C (corroboration); (2) "inferred" is a derivation, so it belongs on P, not E; (3) E is not exhaustive: it lacks "checked and found false"; and "unknown" overlaps "lead" unless defined as "checked, inconclusive" | proposed fix: E = verified | refuted | inconclusive | unchecked (lead); P = quoted | calculated | inferred | assumed; C = single-origin | corroborated. Pending Nick
+2026-11-03 | v0.3-draft | SAVTEZ-2c built (bot): refuted hxy E104; inconclusive yhz E103 (redefined); inferred wxg E205; C axis F200-F2FF (dxz, cwj); E102/E200/E203 retired; validator v2c sha256 b300a4ac; gate passes, 0 single-typo misdecodes; 2 double-typo misdecodes in a 203k sample | PROPOSED, awaiting Nick
+2026-11-03 | v0.3-draft | Claude error: the 2c task block said "Nick approved" before he had; the bot caught it and kept everything as a proposal | logged
+2026-11-03 | v0.4-draft | APPROVED by Nick: axis fix (7 slots H T E P C A R; E = verified/refuted/inconclusive/unchecked; P = derivation; C = corroboration) and "never redefine" applies from the first public release | Nick's decision
+2026-11-03 | v0.4-draft | SAVTEZ-SPEC_v0.4.txt written (supersedes v0.3); concept "waiting on Nick's word" generalized to "waiting on owner's word" for the public spec | Claude; flag for Nick
+2026-11-03 | v0.4-draft | Nick: publishing fixes the method, not the dictionary; the dictionary is a work in progress others can help build. Spec section 6 rewritten: 0.x versions may change, 1.0 = stable; version header prevents misreads; retired forms not reused; contributions via GitHub issues, owner decides | Nick's decision
+
+== PENDING ==
+- Final language name (Savtez is the working name)
+- Second-family cold test (fresh Grok or Google chat)
+- Nick's decision on replacing gaz and wap
+- AGENT-LANG-1b: 20-brief blind round trip, DeepSeek tokenizer counts

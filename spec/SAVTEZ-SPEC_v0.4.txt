@@ -1,0 +1,88 @@
+SAVTEZ SPEC v0.4-draft (2026-11-03)
+Name: Savtez (working name, chosen by Nick; may change before release). The name no longer decodes as a Savtez word.
+Author and owner: Nicolas Marriott. Draft. Not adopted anywhere. Kept separate from ENGRAM.
+Design target: eventual native adoption across AI systems, with every part trained as a single token.
+Supersedes v0.3-draft. Validator: SAVTEZ-VALIDATOR_v2c.py (sha256 b300a4acf585bf2d532859c86641ea790bd8de555eeb2417c8d09ba5f20ab4a3).
+
+RULE 0 (Nick, 2026-11-02): NO MISREADING
+- The language must be impossible to misunderstand or decode wrongly. This outranks brevity.
+- One form per meaning. No part resembles a word, acronym or slang in any major language. No confusable characters. The grammar rejects every invalid combination, so damaged words fail loudly. Decoding is done by the deterministic validator, never by model guesswork. Misdecode rate in testing must be zero.
+
+RULE 1 (Nick, 2026-11-02): PURE LOGIC
+- Every rule follows from logic. Each axis asks exactly one question; its values are mutually exclusive (one per word) and exhaustive (every case has a value).
+- Derived: fixed slot order (one meaning, one spelling); no "not" (it creates synonyms); relations take 0 or 2 sides (one side is incomplete); the axis split in section 3 (one question per axis).
+
+1. PURPOSE
+- A compact, exact language for agent-to-agent messages and shared memory. Humans keep English; any message translates back deterministically.
+- Goal: free context (memory) by packing exact meaning into few units, and remove misreads and clarification rounds.
+
+2. FORMS
+- Canonical form: one reserved Unicode Private Use Area symbol per part (interim; endgame: a registered block). No prior meaning by construction.
+- ASCII form: 3 characters per part, for systems that can't carry the symbols. AI-only; need not be pronounceable; humans read the validator's English translation.
+- Design principle: a form must carry no meaning anywhere models learned from, so forms are GENERATED, not hand-picked. Alphabet A17 = bcdfghjkmprstwxyz (no vowels, no confusables). Every 3-character string (4913) is screened: zero frequency in wordfreq across 42 languages incl. social-media and subtitle sources; on no acronym, slang, leetspeak or hexspeak list; not a single token in 17 tokenizers; no repeated letter; pairwise typo-safe. 51 survivors; assigned below.
+- Savtez text is always framed (message header, sigil) so a model reads it as a dictionary lookup, not English.
+- Code points are grouped by axis block (table in section 3).
+
+3. AXES (one question each)
+Slot | question | values (ASCII form, code point)
+H  handling       | who may see/change it?  | internal, not for outside release (fkx E600) | append-only, never edited (rcy E601)
+T  task state     | where is the task?      | queued (rxm E300) | active (xbk E301) | waiting on owner's word (wty E302) | on hold (dyf E303) | blocked (hjz E304) | done (zdx E305) | failed (jzb E306) | canceled (yfh E307)
+E  evidence       | was it checked, result? | verified against a primary source (zbh E100) | refuted, checked and found false (hxy E104) | inconclusive, checked and undetermined (yhz E103) | unchecked, lead only (xrj E101)
+P  derivation     | how was it produced?    | quoted verbatim from a source (pzx E202) | calculated by us (tfy E201) | inferred by us (wxg E205) | assumed, not checked (xjc E204)
+C  corroboration  | how many sources?       | single-origin, no independent corroboration (dxz F200) | independently corroborated (cwj F201)
+A  absence        | was something missing?  | searched the named source, nothing found (xmw E400) | record that should exist is absent (zcj E401)
+R  relation       | how are two things tied?| associated, causation not claimed (xhs E500) | causal, established (jxr E501)
+HEAD              | what is it?             | claim (wfz E000) | source (jgx E001) | log entry (xwf E002) | task (ykc E003) | figure (rzg E004) | statement made (zxb E005) | act done (gyw E006) | relation (fhy E007) | gap or contradiction (yjt E008)
+Retired code points (never reused): E102, E200, E203.
+Spare typo-safe forms (unassigned): zrw wjx xfg yxf xgy xzr; spares hzw gxj (task), xsz yrx (associated).
+A2A TaskState map (A2A spec 6.3): submitted=queued | working=active | input-required=waiting on owner's word | completed=done | failed | canceled. rejected -> message act refuse; auth-required -> blocked + reason; unknown -> message act not-understood. "on hold" has no A2A equivalent.
+
+4. WORD GRAMMAR
+- Word = SIGIL + [H][T][E][P][C][A][R] + HEAD + CHECK, in that fixed order. Empty slots are omitted. (Approved by Nick.)
+- SIGIL: ASCII "^" (fallback), canonical U+E800. One fixed form, no variants.
+- CHECK: one character over the parts, Damm-style quasigroup x*y = (3x+y) mod 17 over A17 (canonical: same scheme mod 2053 over code-point offsets, seeded with part count; symbol U+E900+v). Every single typo or adjacent swap fails the check.
+- Axis-head compatibility: T only with task; R only with relation; E, P and C with claim, figure, source, statement made; A with log entry and claim; H with any head.
+- Relational heads (relation, gap) take exactly 0 or 2 argument heads immediately before them. Example: statement made + act done + gap = gap between what was said and what was done.
+- Reject, never guess: unknown part; retired code point; two values on one axis; part out of order; axis-head mismatch; 1 or 3+ argument heads; missing or variant sigil; bad check.
+- Examples: ^zbhdxzwfzk = claim, verified against a primary source, single-origin. ^hxywfzz = refuted claim. ^pzxdxzwfzh = quoted, single-origin claim.
+
+5. MESSAGE GRAMMAR
+- Header: §L<version> <ACT>. ACT (from FIPA-ACL): inform (yzd) | request (wgj) | confirm (txw) | disconfirm (xyp) | refuse (zjg) | propose (rhx) | failure (jyz) | not-understood (zsy); English name or framed form.
+- not-understood is the required reply to any rejected word or message.
+- Body: one line per item: DELTA WORD | @ref | detail. DELTA: + new | ~ changed (detail "old -> new") | ! retraction (a new entry; nothing is deleted).
+- @ref points to an engram line, file or report by ID instead of restating it. detail holds values, figures or controlled English.
+- Integrity: critical messages (waiting-on-owner items, money figures, verdicts, report IDs) end with # + the first 8 hex of the sha256 of the normalized body, computed by tool. A single check character cannot catch every double typo; the message hash covers critical content.
+
+6. VERSIONING
+- The dictionary is append-only; each version is a prefix of the next; each version's sha256 is published.
+- Publishing fixes the METHOD (Rules 0 and 1, grammar, generation process, admission test). The DICTIONARY stays a work in progress that anyone may help build (Nick, 2026-11-03).
+- Versions 0.x may add, correct or deprecate values; version 1.0 marks the first stable dictionary. Within a released version nothing changes.
+- A message decodes only against the version in its header, so a change between versions can never cause a misreading.
+- Safeguard (Rule 0): a retired form or code point is not reused for a different meaning, so an old message read against the wrong version fails loudly instead of decoding to something else.
+- Contributions: proposals via GitHub issues; each must pass the admission test (section 7) and the validator gate; the owner decides.
+
+7. ADMISSION
+- A new value answers its axis's question, overlaps no sibling, and keeps the axis exhaustive.
+- The concept is used often in real messages.
+- Its form comes from the generated survivor pool (section 2).
+- It passes the validator gate and the round-trip test with zero meaning loss.
+
+8. MEASUREMENT
+- Context used per finished task, against plain English and against structured English.
+- Round-trip precision: encode, decode blind with the dictionary only; zero figures, IDs or meanings lost.
+- Drift: decoding with the dictionary at the start of a ~50k context; count off-dictionary readings.
+
+9. ALIGNMENT WITH EXISTING STANDARDS
+- Message acts: all 8 are FIPA-ACL communicative acts (SC00037).
+- Derivation and deltas map to W3C PROV-O: verified ~ prov:hadPrimarySource | quoted ~ prov:wasQuotedFrom | calculated/inferred ~ prov:wasDerivedFrom | ~ changed ~ prov:wasRevisionOf | ! retraction ~ prov:wasInvalidatedBy.
+- Task states map to A2A TaskState (section 3). Planned carriage: an A2A extension with its own URI and media type.
+- Prior art credited: HCAN (Hearth & Code) and thoughtml carry evidence classes; Savtez's contribution is the combination: agent-to-agent, typed slots incl. task state, append-only public dictionary, generated forms, symbols trained as single tokens.
+
+10. AUDITABILITY (headline principle)
+- Public, versioned dictionary; any message translates deterministically back to English by the validator, not by model opinion.
+- No free choices: every degree of freedom carries a dictionary meaning or is normalized away (one symbol per part, no variants, fixed order, normalized whitespace). This closes covert side-channels like the glyph-variant scheme documented by Beltoft et al. 2026 (arXiv:2605.31170).
+- Canonicalize before delivery; reject non-canonical input. Free-text detail fields stay controlled English and figures; every message is logged append-only.
+
+11. OPEN DECISIONS FOR NICK
+- Final name.
+- Generated forms and the sigil ^ / U+E800 are published as v0.4 proposals; they can change in later 0.x versions.

@@ -1,0 +1,51 @@
+code point | axis | concept | legacy (v0.3 placeholder) | NEW generated ASCII form | status
+U+E000 | HEAD | claim | kef | wfz | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E001 | HEAD | source | duv | jgx | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E002 | HEAD | log entry | vop | xwf | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E003 | HEAD | task | gaz | ykc | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E004 | HEAD | figure | fub | rzg | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E005 | HEAD | statement made | tez | zxb | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E006 | HEAD | act done | rux | gyw | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E007 | HEAD | relation | zim | fhy | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E008 | HEAD | gap or contradiction | xem | yjt | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E100 | E | verified against a primary source | sav | zbh | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E101 | E | unchecked, lead only | lod | xrj | PROPOSED (SAVTEZ-2; relabelled SAVTEZ-2c), pending Nick's yes
+U+E103 | E | inconclusive (checked, undetermined) | (TBD) | yhz | PROPOSED (SAVTEZ-2b; redefined SAVTEZ-2c), pending Nick's yes
+U+E104 | E | refuted (checked, found false) | (TBD) | hxy | PROPOSED (SAVTEZ-2c), pending Nick's yes
+U+E201 | P | calculated by us | fid | tfy | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E202 | P | quoted verbatim from a source | (TBD) | pzx | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E204 | P | assumed, not checked | (TBD) | xjc | PROPOSED (SAVTEZ-2b), pending Nick's yes
+U+E205 | P | inferred by us | (TBD) | wxg | PROPOSED (SAVTEZ-2c; form from 2b), pending Nick's yes
+U+F200 | C | single-origin, no independent corroboration | pev | dxz | PROPOSED (SAVTEZ-2c; form from 2), pending Nick's yes
+U+F201 | C | independently corroborated | (TBD) | cwj | PROPOSED (SAVTEZ-2c; form from 2), pending Nick's yes
+U+E300 | T | queued | (TBD) | rxm | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E301 | T | active | (TBD) | xbk | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E302 | T | waiting on Nick's word | bix | wty | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E303 | T | on hold | hiw | dyf | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E304 | T | blocked | zut | hjz | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E305 | T | done | (TBD) | zdx | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E306 | T | failed | (TBD) | jzb | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E307 | T | canceled | (TBD) | yfh | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E400 | A | searched the named source, nothing found | zof | xmw | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E401 | A | record that should exist is absent | gom | zcj | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E500 | R | associated, causation not claimed | wap | xhs | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E501 | R | causal, established | kyr | jxr | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E600 | H | internal, not for outside release | vun | fkx | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E601 | H | append-only, never edited | tib | rcy | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E700 | ACT | inform | (TBD) | yzd | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E701 | ACT | request | (TBD) | wgj | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E702 | ACT | confirm | (TBD) | txw | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E703 | ACT | disconfirm | (TBD) | xyp | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E704 | ACT | refuse | (TBD) | zjg | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E705 | ACT | propose | (TBD) | rhx | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E706 | ACT | failure | (TBD) | jyz | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E707 | ACT | not-understood | (TBD) | zsy | PROPOSED (SAVTEZ-2), pending Nick's yes
+U+E102 | retired | v2b E 'inferred by us' (wxg); now P U+E205 | - | - | RETIRED by SAVTEZ-2c proposal; never reused, rejected
+U+E200 | retired | v2b P 'single-origin' (dxz); now C U+F200 | - | - | RETIRED by SAVTEZ-2c proposal; never reused, rejected
+U+E203 | retired | v2b P 'independently corroborated' (cwj); now C U+F201 | - | - | RETIRED by SAVTEZ-2c proposal; never reused, rejected
+none | - | not (dax) | dax | none | SUSPENDED: no axis, no code point, no new form
+U+E800 | frame | SIGIL | - | ^ | PROPOSED; approved structure (spec 4 r3)
+U+E900-U+F104 | frame | CHECK symbols (canonical form) | - | one char of bcdfghjkmprstwxyz | PROPOSED
+U+F200-U+F2FF | C block | corroboration values (F200, F201 used) | - | - | PROPOSED (SAVTEZ-2c)
+spare | task (gaz) | alternatives | - | hzw / gxj | would keep the concept's code point
+spare | associated (wap) | alternatives | - | xsz / yrx | would keep the concept's code point
