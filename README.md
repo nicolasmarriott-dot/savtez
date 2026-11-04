@@ -1,10 +1,10 @@
-# Savtez (working name)
+# Savtez
 
 - **Author:** Nicolas Marriott
-- **Date:** 2026-11-03
-- **Status:** v0.4, work in progress: method fixed, dictionary open to contributions until v1.0
+- **Date:** 2026-11-04 (v0.4 released 2026-11-03)
+- **Status:** v0.7r1 specification and dictionary frozen; v0.7 validator in progress. Work in progress: dictionary open to contributions until v1.0
 
-This repository is a dated public record of Savtez v0.4 and an open work in progress. Savtez is not a standard, and nobody has adopted it.
+This repository is a dated public record of Savtez (v0.4, and v0.7r1 from 2026-11-04) and an open work in progress. The full history is in [RECORD.md](RECORD.md). Savtez is not a standard, and nobody has adopted it.
 
 ## Purpose
 
@@ -61,8 +61,12 @@ If you change any one character, or swap two adjacent ones, the word is rejected
 
 | Path | Contents | License |
 |---|---|---|
+| `spec/SAVTEZ-SPEC_v0.7r1.txt` | language specification, v0.7r1 (current; frozen 2026-11-04) | CC BY 4.0 |
+| `spec/SAVTEZ-DICT_v0.7.txt` | v0.7 dictionary: every part, its form and code point, and the 188-form inventory | CC BY 4.0 |
+| `spec/SAVTEZ-PREDICATES_v0.7.txt` | closed list of action predicates for `do=` | CC BY 4.0 |
+| `RECORD.md` | the complete record of the project to date | CC BY 4.0 |
 | `spec/SAVTEZ-SPEC_v0.4.txt` | language specification, v0.4 | CC BY 4.0 |
-| `spec/SAVTEZ-DICT.txt` | append-only dictionary and change log | CC BY 4.0 |
+| `spec/SAVTEZ-DICT.txt` | v0.4 dictionary and change log (to v0.5) | CC BY 4.0 |
 | `tools/SAVTEZ-VALIDATOR_v2c.py` | deterministic validator and decoder (Python 3, standard library only) | Apache-2.0 |
 | `tools/SAVTEZ-GENERATE_v0.3_r3.py` | generator for the ASCII forms | Apache-2.0 |
 | `data/SAVTEZ-CODEPOINTS_v2c.txt` | code point table: concept, axis, ASCII form | CC BY 4.0 |
@@ -86,6 +90,8 @@ python3 tools/SAVTEZ-VALIDATOR_v2c.py --hash -f message.txt   # 8-hex body hash 
 
 A passing gate ends with `SUMMARY | ... | GATE PASSED`. The exit code is 0 on a pass and 2 on a failure. For a single word or message, the exit code is 0 for VALID and 1 for REJECT.
 
+The validator in `tools/` is for v0.4. The v0.7 validator is being built and will be added with its test vectors.
+
 Note: validator v2c decodes the v0.4 words, but it still expects the message header `§L0.3`. A header that says `§L0.4` is rejected until the validator's version table is updated.
 
 You can check the files against the checksums with `sha256sum -c SHA256SUMS`.
@@ -101,7 +107,7 @@ The method is fixed: Rules 0 and 1, the grammar, the generation process and the 
 - **Code (`tools/`): Apache License 2.0.** The full text is in `LICENSE`.
 - **Spec, dictionary and data (`spec/`, `data/`, and this README): Creative Commons Attribution 4.0 International (CC BY 4.0).** The full legal code is in `LICENSE-CC-BY-4.0`.
 
-When you reuse the spec, dictionary or data, credit "Nicolas Marriott, Savtez (working name) v0.4, 2026-11-03".
+When you reuse the spec, dictionary or data, credit "Nicolas Marriott, Savtez v0.7r1, 2026-11-04" (or the version you used).
 
 ## Prior art and credit
 

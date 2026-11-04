@@ -1,0 +1,442 @@
+SAVTEZ SPEC v0.7r1 (FROZEN 2026-11-04; v0.7 + erratum E1; NOT PUBLISHED)
+ERRATA: E1 (05:50) appendix E said files are "store entries", 6.4 says every MF file entry "supplied or not": two validators could
+count differently (conformance suite case C169). Appendix E now matches 6.4. No other change.
+Freeze basis: 7 hostile review rounds, two AI families (ChatGPT rounds 3-6, DeepSeek round 7 + delta: FREEZE OK), 2 conformance suites.
+After freeze, changes only as errata (v0.7r1, ...) for a demonstrated Rule 0 break found by the validator build or the differential test.
+Author and owner: Nicolas Marriott. Design calls delegated to Claude and logged. Not adopted anywhere.
+Built from: draft 6 | review round 6 (R6-01..R6-05, no Rule 0 break) | round 5 (R5-01..R5-05) | round 4 (R4-01..R4-06) | round 3 (R3-01..R3-22); triage in SAVTEZ-v0.7d3-REVIEW3-TRIAGE.txt. Earlier: drafts 1-3.
+Tags: [r8 n] v0.7 additions item n | [An] ambiguity ruling | [dn] DeepSeek review 1 | [Rn] ChatGPT review | [en] DeepSeek review 2 |
+[R3-n] to [R7-n] review rounds 3-7 | [Cn] conformance-suite ambiguity rulings (Nov 4) | [Dn] decision, listed with reasons in section 15 | [B2] token bench 2. No validator exists for this draft yet.
+
+RULE 0 (Nick): NO MISREADING. Every valid message has exactly one parse and one interpretation. Rule 0 outranks brevity. Decoding is
+done by the deterministic validator, never by model guesswork. Damaged or invalid input fails loudly; nothing is repaired or guessed.
+Every registry (heads, axes, values, keys, namespaces, record formats, predicates, certainty words, limits) is closed per version [r8 1].
+RULE 1 (Nick): PURE LOGIC. Each axis asks exactly one question; its values are mutually exclusive and exhaustive. Each applicable axis
+carries zero or one value; a repeated axis is rejected even if the values agree [r8 2]. An omitted value means "not stated" and is
+never defaulted, inferred or inherited from another message [r8 3].
+RULE 2 (Nick, Nov 3 22:40): every message ends with its hash line. No transport-dependent modes [D16].
+
+1. PURPOSE
+- An exact, compact language for agent-to-agent messages and shared records. Humans read the validator's English translation.
+- Goal (Nick): efficient communication that frees context and memory, not only fewer billed tokens, and no misreads or clarification rounds.
+- Validator vs checker: the validator checks form: presence, type, arity, order, resolution of refs inside the message's record set,
+  hashes, signatures, dates and verbatim excerpts. Every judgment of meaning (does this excerpt support the claim, are these two origins
+  really distinct, does this record state a rule) is made by a checker named on the line (checker=), and the decode always says
+  "judged by <checker>, as named by the sender" [R02]. The validator never claims to check a judgment.
+- Trust boundary [r8 39]: Savtez makes every evidence claim traceable to a named actor and to fixed bytes. It cannot detect an actor who
+  lies about what it opened, retrieved, searched or judged; a sender who writes a false but well-formed line is a trust problem, not a
+  misreading. That risk is managed by whom a receiver trusts, never by the format.
+
+2. FORMS [D17]
+- Wire form (normative, the only form a receiver accepts): ASCII, every byte 0x20-0x7E or LF [R22, e2]. Words: "^" + 3 letters per part
+  + 1 check letter, alphabet A17 = bcdfghjkmprstwxyz, forms from the 188-form generated pool; check letters as in 4.3.
+- PUA form (optional, never on the wire): U+E800 + one code point per part + 1 check symbol (U+E900..U+F0E1). A local display or storage
+  form only; the validator converts it 1:1 to ASCII. Never assumed to be one token (bench 1: PUA costs 7-18% MORE than ASCII).
+- Native token form: section 16. Native forms are encodings of the ASCII wire form, never a second language.
+- The check letter catches every single error in a word, not every double error. The validator is the only acceptance authority for a message
+  and its record set; a model never declares its own message valid. Receiver rules (5.2, 5.7, 9.1) check things outside the record set,
+  against the receiver's own store; they are the receiver's decisions, never a validator verdict [R7-02].
+
+3. HEADS, AXES AND MESSAGE-LEVEL PARTS
+Full table with forms and code points: SAVTEZ-DICT_v0.7 (generated after freeze). New parts take unused pool forms and code points by the
+v0.6r1 pool rule; retired forms and code points are never reused [D10].
+Content word slots, in this fixed order: ASSERTER V M L B U K Q E P C S A O F R, then 0 or 2 argument heads, then HEAD [D18].
+HEADS
+claim = a proposition about the world that can be assessed for truth [r8 33].
+source = an identifiable record from which information is obtained or against which it is checked, at a fixed version [r8 26].
+log entry = our own record of an event or state [r8 27].
+task = a unit of work with a lifecycle state. A task head does not assert that the work was performed; L=done does [r8 31].
+figure = a numeric quantity in the fig= grammar [r8 25].
+statement made = content communicated by an actor; it records that the statement was made, not that it is true [r8 34]. It may refer by
+  @ref to a claim head; any proposition whose truth is asserted or evaluated is its own claim head [r8 35].
+act done = an action that occurred. Sending, publishing or delivering a communication is an act done; its content is a statement made
+  [r8 32].
+relation = one typed connection between exactly two arguments, in argument order [r8 30].
+gap or contradiction = a discrepancy or missing correspondence between its two arguments; it does not assert which side is correct [r8 29].
+test = one evaluation of an identified object against the criterion record in criterion=; its result goes on O [r8 28].
+ASSERTER (first slot of every body content word, exactly one, required) [D18]: sender | other agent | human | tool output: the category
+  of whoever makes the line's assertion. It is a category by design; naming which agent or human is parked to v0.8 [R21].
+AXES (head applicability in brackets)
+V visibility (any head) [r8 4]: the sender's declared access intent, not an enforcement guarantee and not a membership test. The sender
+  is always included. private = the sender and the principals listed in to= | internal = the sender's own system, named by one @system
+  role ref | public = anyone. Access is enforced by the transport or receiving system.
+M mutability (any head except log entry) [r8 5]: mutable = the object may change after this record | append-only = the object only grows;
+  existing content is never edited. Log entries are always append-only and never carry M.
+L lifecycle (task) [r8 6]: queued = accepted, not started | active = being worked | paused = stopped | done = finished as specified |
+  failed = ended without meeting its specification | canceled = ended by decision before completion.
+B blocker (task, only with L=paused; optional) [A3, D6, d7]: the one thing the pause waits on, by this precedence (the first that applies):
+  scheduled time = paused until a stated time, given in resume= | owner input = waiting for the task owner to supply information or
+  approval | dependency = waiting on another named task or party, given by a role @ref | resource = waiting for capacity, no named party |
+  decision hold = paused by decision, nothing awaited. Omitted = blocker not stated. Further dependencies are separate depends-on
+  relation lines [r8 7].
+U urgency (task) [r8 8, d6]: immediate = act before any other queued work | by a stated time = finish by the time in due= | no deadline =
+  no time requirement applies. An unstated time requirement is an omitted U.
+K coverage (task, log entry) [r8 9]: full = every member of the universe in set= was covered | partial = at least one but not every
+  member | none = no member covered. K requires set=.
+Q source tier (source) [r8 10]: classified against exactly one event or subject, named by the line's single @event or @subject role ref.
+  primary = a record created by the actor or system that made, observed or officially recorded that event or subject | secondary = any
+  other source. More than one record may be primary.
+E evidence (claim, figure, source, statement made) [r8 11]: verified | refuted | inconclusive (checked, undetermined) | unchecked (lead
+  only). What is checked depends on the head: claim and figure = substantive truth (figure: number, unit, measure and period) |
+  statement made = the statement was in fact made, as recorded | source = the authenticity of the record and the identity of its origin.
+  Requirements: section 9.
+P derivation (claim, figure, statement made) [r8 12, 13]: the LAST derivation step: quoted verbatim | restated from a named source, not
+  verbatim | observed by us | calculated | inferred | assumed. P never appears on a source head.
+C corroboration (claim, figure, statement made) [r8 13, 14]: single-origin | corroborated | conflicting. Never on a source head. 9.3.
+S scope (claim, statement made), relative to the set in set= [r8 15]: none = covers no member | exactly one = covers one member (sets of
+  2+ only) | several but not all = more than one, not every member (sets of 3+ only) | all = every member. A one-member set takes none
+  or all. Unknown scope: omit S.
+A absence (log entry, claim) [r8 18, d5]: describes the search behind a statement that something was not found. Values in this order of
+  precedence: search incomplete | expected but absent | nothing found. On a claim, A describes the search and E describes whether the
+  claim of absence was checked; the two are independent and may appear together. Requirements: 9.6.
+O outcome (test) [r8 17]: met | not met | not evaluable (an evaluation was attempted and could establish neither result).
+F fixed-when (test) [r8 16, R03]: pre-registered = the criterion was time-stamped by a trusted time-stamp authority and the outcome record
+  commits to that time-stamp | post hoc = any other case. Neither value proves when the outcome was observed (9.7).
+R relation (relation head): associated = connected, no stronger type established | causal = the first argument causes the second |
+  depends on = the first depends on the second | part of = the first is part of the second | same entity = both arguments identify one
+  entity | distinct origin = the two arguments are different origins in the sense of C [r8 30]. A distinct origin line has no
+  argument heads and exactly two @actor refs as arguments; anything else is rejected [R5-04].
+  Directed: causal, depends on, part of. Undirected: associated, same entity, distinct origin, a relation with R omitted, and every gap.
+MESSAGE-LEVEL PARTS
+ACT: inform | request | confirm | disconfirm | refuse | propose | failure | not-understood (FIPA-ACL).
+STANDING: own authority | delegated = authorization specific to this instruction from a named principal (header @actor ref) | policy =
+  a general standing rule (header @record ref), no specific authorization | none. Instruction = any request or propose act.
+HEADER WORD [D19]: one framed word = "^" + ACT part + STANDING part + check letter. Exactly these two parts, in this order. ACT and
+  STANDING parts appear nowhere else, and content parts never appear in the header word.
+Certainty: only as a number in prob=. No certainty words anywhere (appendix D) [A2].
+
+4. WORD GRAMMAR
+4.1 Frame, 4.3 check letters, 4.4 retired parts: unchanged from v0.6r1, applied to the slot list in section 3 (the asserter part and the
+    two header parts are ordinary parts for the check letter). The gate must re-prove 0 accepted single-letter edits over every valid
+    content word and header word [D18].
+4.2 Content word = ASSERTER + [axis values in slot order] + [0 or 2 argument heads, relational heads only] + HEAD. A word without exactly
+    one asserter part, with an axis that does not apply to its head, or with a value out of slot order, is rejected. Undirected words
+    with two argument heads take them in canonical order: the first argument head's code point is lower than or equal to the second's
+    [A10]. Only a ! line uses a different word: ASSERTER + bare head (5.7). A ~ line uses a full content word like a + line [R4-01].
+4.5 Axis-to-key and axis-to-ref requirements: section 9 (table).
+4.6 Relational lines [r8 22, 30]: a relation or gap line carries exactly 2 argument @refs in argument order; for same entity, causal and
+    distinct origin it then carries two evidence role refs (9.8). Every other relational line carries no further ref. The two arguments
+    differ. Undirected relations take one canonical order: each argument @ref pairs with the argument head in the same position, and the
+    two (head code point, @ref bytes) pairs are in ascending order; with no argument heads, the two @refs are in ascending byte order. A
+    reversed pair is allowed only for directed types. Argument heads type their arguments [R3-01]: with argument heads, each argument
+    is a line ref (@line, or a cross-message line ref) or an @record; a line ref's target line must carry that head (checked when the
+    target is in the message or supplied; otherwise a receiver rule, decoded as "type not checked"). Without argument heads, an argument
+    may be any ref except @tsa and @sig. Rejected in one message: two identical relation lines, where identical means the same R
+    value (or R omitted on both), the same argument heads (or none) and the same two arguments in the same order, whatever the asserter or
+    any other part [R7-01]; R=associated together with
+    any other relation line on the same two arguments in either order [e16].
+4.7 Refs on non-relational lines: every positional role is exactly one ref, decided by the line's head and values. Role refs come first,
+    in the order of 9.2; any further content @refs follow in ascending byte order with no duplicates. Every open-ended list is a keyed
+    field (to=, inputs=, support=, against=, set=), parsed separately from the ref field; a ref listed in a keyed field may not also
+    appear among the further content refs [D20, R25].
+
+5. MESSAGE GRAMMAR
+5.1 Header (line 1): $L<version> <HEADER WORD> @msg:<sender>:<seq>[ tl=<n>][ reason=<reason>][ <header @refs>]. The prefix "$L" replaces
+    v0.6r1's "§L" [R22, D24]. Version syntax exactly $L<major>.<minor>[r<n>], numbers without leading zeros. The version is read first,
+    before any other rule. A header-only message is allowed only for confirm, disconfirm, refuse, failure and not-understood.
+    tl=<n>: the trust-list number (positive integer, no leading zeros). Required when any line of this message carries an @sig ref, an
+    @tsa ref, or a ref that 9.4(b) reads as a retrieval record; forbidden otherwise [d2].
+    reason=: only on not-understood, required there: unsupported-version | unsupported-dictionary | unsupported-trust-list | invalid |
+    unresolved | over-limit [D15, d17, D26].
+5.2 Message identity [R6-01]: @msg:<sender>:<seq>, sender lowercase [a-z0-9_-]+ (no colon), seq a positive integer without leading
+    zeros. The same grammar holds in the header, in every ref and in MF. A repeated ID from one sender is rejected by the receiver (receiver rule). No @msg
+    ref in a message may equal its own ID.
+5.3 Standing and header refs: delegated requires exactly one header @actor ref (the principal); policy requires exactly one header @record
+    ref (the rule). confirm, disconfirm, refuse and failure carry exactly one header @msg ref, the message answered [A1]; not-understood
+    carries zero or one; the validator accepts either. Quoting the received ID whenever it was readable is a receiver rule: a
+    stateless validator cannot know what the receiver could read [r8 37, d8, C1]. The header carries no other refs. Order:
+    principal or rule first, then the answered @msg. Standing none with request or propose is rejected with reply refuse.
+5.4 Hash line (mandatory, last line): "#" + first 8 lowercase hex of SHA-256 over all preceding lines (the file-set line included) joined
+    by LF, no final LF. Exactly one LF follows it. It is a check against copy and relay errors, not authentication: anyone who changes a
+    message can recompute it, and two messages may share it [R23, R3-22]. It is never an identifier and never a commitment. Authenticity of evidence comes from signatures (9.4); authenticity of the sender is the transport's.
+5.5 Canonical form: ASCII (section 2), LF only, no blank lines, no edge whitespace, single spaces.
+5.6 Body line [D21]: <delta> <WORD>[ | <refs or ->[ | <keyed detail>]]. The ref field is complete @refs separated by exactly one space
+    [R3-09]. Empty trailing fields are omitted; "-" stands for an empty ref
+    field only when keyed detail follows. "| -" at the end of a line is rejected. Body lines are the lines between the header and the
+    file-set line (or the hash line when there is none), numbered from 1. The header, the file-set line and the hash line are never body
+    lines and are never numbered or referenced [R16].
+5.7 Deltas [R04, R05, R17, R18, e7, e10, R5-01]: + new | ~ replaces a target completely: full content word; its ref field starts with
+    the target, then the role refs and further refs of the replacement as on a + line | ! retracts a target: word ASSERTER + bare head,
+    ref field = the target only, no keyed detail. On ~ and ! the first ref is always the target. Targets of ~ and ! are an @record or a line record of another message
+    (@msg:<sender>:<seq>:<n>); never a whole @msg, never an @line of the same message. Within one message, two deltas on one target are
+    rejected. Head matching: a ~ keeps its target's head [A4]; a ! names its target's head [A8]. For a line-record target whose message is
+    in the record set, the validator checks the match; otherwise (every @record target, and line records not supplied) it is a receiver
+    rule the receiver must run against its own store, and the decode says "head match not checked by the validator".
+    Receiver rules (order-independent): a retraction also retracts every entry superseding its target; two ~ on one target = conflict; a
+    retracted record is never revived; a retracted record satisfies no requirement in section 9, and a receiver re-evaluates every record
+    that relied on it [R17].
+5.8 File-set line [D22]: "= " + 64 lowercase hex, immediately before the hash line; present if and only if the message carries any file
+    handle (6.2) or any cross-message line ref (6.4). Its value is the SHA-256 of the message's manifest (format MF, section 10).
+5.9 Replies: not-understood with a reason is the reply to any rejected message, except standing none with an instruction (reply refuse).
+    The reply is encoded in the receiver's own supported version [r8 37]; it quotes only the received message ID, and only when readable.
+
+6. @REFS
+6.1 @<namespace>:<id>, namespace from the closed registry [r8 41, D3]:
+    msg     <sender>:<seq> (a message) or <sender>:<seq>:<n> (body line n of that message, a line record); n is a positive integer
+            without leading zeros, at most that message's body line count when the message is supplied [d14, e8]
+    record  a named logical record in a sender's store; id lowercase [a-z0-9_-]+; never resolved by the validator
+    actor   an agent, person or organisation; id lowercase [a-z0-9_-]+
+    system  a system named for V=internal; id lowercase [a-z0-9_-]+
+    event   an event; opaque id lowercase [a-z0-9_-]+; never resolved [d15]
+    subject a subject of a source (Q); opaque, same grammar as event; never resolved [d15]
+    file    a file in the record set, by handle (6.2)
+    tsa     an RFC 3161 time-stamp token file, by handle
+    sig     a detached Ed25519 signature file, by handle
+    line    a body line of this message; id = its body line number, positive integer without leading zeros, at most the line count
+    Uppercase, unknown namespaces and other shapes are rejected. An @ref is an identifier, never scanned as text.
+6.2 File handles [D22]: file, tsa and sig ids are handles "f<k>", k a positive integer without leading zeros, numbered f1, f2, ... in
+    order of first appearance, reading the message from line 1 to the last body line, left to right. One handle = one file = one
+    namespace. Handle fk is manifest entry k. A handle is local to its message.
+6.3 Record set [R3-02, R3-08]: the validator's input is (a) the message bytes, (b) when the message has a file-set line, the MF bytes,
+    whose SHA-256 must equal the file-set value, and (c) a store of byte strings looked up by SHA-256: files and cited messages alike.
+    How these travel is the transport's business; what the validator accepts is fixed. The record set is the MF plus the store entries it
+    lists. A file must be supplied, with SHA-256 equal to its manifest entry, when a rule reads
+    its bytes: every source head's @file (its hash is signed or retrieved), every excerpt, every record in section 10 named by a role or
+    key, every search-log response file, every cited message [e11, e13]. Otherwise the message is rejected with reason unresolved. Only a
+    further content ref, which no rule reads, may stay unsupplied; its bytes are still committed by the manifest hash.
+6.4 Line refs: @line:<n> points to an existing body line of the same message, never to the line itself; earlier or later lines are allowed
+    [D2]. A cross-message line ref @msg:<sender>:<seq>:<n> counts toward a requirement in section 9 only when that message is listed in
+    the manifest, supplied, and itself valid with its own record set; otherwise the requirement is unmet. Validation follows cited
+    messages depth first, keeps a stack of the messages being validated, and rejects any message met again on that stack [R12]. Limits
+    (fixed per release; values for v0.7 in appendix E) [R3-03]: the root message is depth 0 and each citation adds 1; the depth limit is
+    the deepest message validated. Over the whole closure [R4-04, C2, R7-03]: the message limit counts the root plus every cited
+    message; the file limit counts every file entry in every MF, supplied or not; the byte limit counts every byte actually supplied
+    (messages, MFs and files). Each distinct SHA-256 is counted once. A message that
+    needs more than any limit is rejected with reason over-limit [R11, e3, e17, D26].
+6.5 Text file [e5]: a file is text when it is valid UTF-8 and has no byte below 0x20 other than LF, CR and TAB. Every other file is binary.
+
+7. KEYED DETAIL
+7.1 Grammar: fields separated by ";" in this fixed order: fig ; due ; resume ; actor ; checker ; to ; do ; after ; set ; inputs ;
+    support ; against ; criterion ; prob ; note [A7, D20, D23]. No whitespace except inside note; no escaping. Duplicate, unknown, empty
+    or out-of-order fields are rejected. note=, if present, is last and runs to the end of the line.
+7.2 Numbers (fig=, prob=) [A11]: 0 | -?[1-9][0-9]*(\.[0-9]*[1-9])? | -?0\.[0-9]*[1-9]. "-0", leading zeros, separators, exponents, a
+    trailing point and trailing fractional zeros are rejected. fig=<number>:<unit>:<measure>[:<period>]; unit from appendix B; measure
+    flow (period required: the interval) | stock (period required: the as-of point or interval end) | rate (period optional). period:
+    YYYY | YYYY-MM | YYYY-MM-DD/YYYY-MM-DD; years 0001-9999; real calendar dates; start <= end [A12]. YYYY and YYYY-MM name the whole
+    year or month: for flow they are the interval, for stock the as-of point is its last day [C3].
+7.3 Times (due=, resume=, and the time fields of SL and RR): YYYY-MM-DDTHH:MM:SSZ, UTC, real date, hours 00-23, minutes 00-59, seconds
+    00-59, years 0001-9999 [A5, A12, R14]. actor=@actor:<id> | checker=@actor:<id> | after=@event:<id> | prob=<number 0-1, compared
+    exactly as a decimal> [A13] | do=<predicate> | criterion=@file:<handle> (a CR record).
+    Ref lists (one complete list, comma-separated, sorted bytewise, no duplicates, at least one member):
+    set= members @record, @actor, @event, @subject or @file [D7] | to= members @actor | inputs= any namespace except tsa and sig |
+    support= and against= members @line or cross-message line refs to source heads.
+7.4 do=<predicate> from SAVTEZ-PREDICATES (unchanged list of 10), only on an act done head, with actor= and an object role ref.
+7.5 note=: the only free text. Non-normative; printable ASCII only; no ";" or "|"; no leading or trailing space; no word or phrase from
+    appendix D (whole words, case-insensitive) [A2]. Decision-critical content never goes in note=.
+7.6 Key placement: every key appears only where it has a defined meaning; anywhere else it is rejected. Where marked "required", absence is
+    rejected. fig= figure (required) | due= U=by a stated time (required) | resume= B=scheduled time (required) | set= with S or K
+    (required) | criterion= test (required) [D11] | after= with do= or on an act done head | prob= claim, figure, relation | to= V=private
+    (required) | inputs= P=calculated (required) | support= with C (required); against= only with C=conflicting (required there) |
+    note= anywhere.
+    checker= (required wherever it is allowed) [D23, e14]: claim, figure or statement made with E=verified or E=refuted | relation with R=
+    same entity, causal or distinct origin | any line with A=expected but absent [e4].
+    actor= on: act done (who acted, required) | statement made (who said it) | log entry (who recorded it, required) [r8 27] | task (who
+    owns it) | source (the origin: the actor that first recorded the information; required on any source head that an E, C, support=,
+    against= or relation evidence ref cites) [d16] | test (who evaluated it) | any head carrying A (the searcher, required) [r8 19].
+
+8. VERSIONING
+- Every published version's rules stay frozen; a message decodes only against the version in its header, never across versions [r8 36].
+- Each version names exactly one pinned release: spec, dictionary, predicate list, certainty-word list, limits (appendix E), and each
+  accepted trust-list number paired with that trust list's SHA-256 [D1, d11]. The receiver checks its local files against the release
+  before parsing the body; a mismatch gives not-understood reason unsupported-dictionary (or unsupported-trust-list for a trust list).
+- Trust lists are numbered 1, 2, ..., each signed by the project owner, and immutable once issued; a correction is a new number [d11].
+  The owner's Ed25519 public key is pinned in the release (the trust anchor) [R3-15]. A key is valid only in the trust lists that list
+  it; revoking a key means issuing a new number without it and dropping the old number from the next release [R3-16].
+- The dictionary stays open until v1.0; retired forms and code points are never reused.
+
+9. EVIDENCE, SEARCH AND TESTS (checked per line by the validator)
+9.1 Requirement table. Each "role" is exactly one positional ref, in the order of 9.2.
+  V private          to= (the principals)
+  V internal         role: one @system ref (the sender's own system). Delivery check (receiver rule): the transport-authenticated sender
+                     system identity maps to that @system id [D5].
+  act done with do=  role: the object acted on
+  source head        role: one @file ref, the record at its fixed version [r8 26]
+  Q (any value)      role: one @event or @subject ref
+  B dependency       role: the blocking item (any namespace except tsa, sig, and @line to its own line)
+  B scheduled time   resume=
+  U by a stated time due=
+  K, S (any value)   set=
+  P quoted, restated role: the source, an @line or cross-message line ref to a source head, or an @file ref [r8 12]
+  P calculated       role: the calculation record (@file); inputs= [D20]
+  log entry head     actor= and role: one @event ref (the event or observation it records) [r8 27]
+  E on a source      verified/refuted: 9.4
+  E on claim, figure, statement made: verified/refuted: 9.5
+  C (any value)      9.3
+  A                  9.6
+  O (any value)      criterion= and role: the outcome record (@file, format OR)
+  F pre-registered   role: one @tsa ref (9.7)
+  R same entity, causal, distinct origin: 9.8
+9.2 Role order on a non-relational line [d3, d4]: @system (V internal) | object acted on (do=) | @file version (source head) | @event or
+    @subject (Q) | blocking item (B dependency) | source (P quoted or restated) | calculation record (P calculated) | @event (log entry) |
+    evidence (E, in the order 9.4 or 9.5 gives) | search plan @file, then search log @file (A) | rule source line ref (A expected but
+    absent) | outcome record @file (O) | @tsa (F). Relational lines: two arguments, then the 9.8 evidence (source line, excerpt) [R3-14].
+9.3 Corroboration [r8 14, 38, R07, R19, R24, e6]. A source's origin is the actor in actor= on the source head: the actor that first
+    recorded the underlying information; a restating or republishing source takes the original record's origin.
+    Same-origin class: the transitive closure of same entity relation lines in the message whose two arguments are both @actor refs,
+    either argument order. Two passes, fixed order [R5-02, R4-06, R3-04]: (1) build the classes from EVERY same entity line between two
+    @actor refs that is well-formed (grammar, refs, keys), before any evidence is checked; (2) check every line's evidence, including
+    9.8's "evidence origin outside both classes", against those final classes. Any failure rejects the whole message. Line order never
+    matters, and a line's evidence never changes which lines build the classes.
+    Two origins are SHOWN DISTINCT only by a distinct origin relation line in the message (never a retracted one: 5.7) [R6-02] whose two arguments are exactly those two @actor
+    refs (in canonical order), and which passes 9.8. Closure never makes origins distinct.
+    Rejected: a distinct origin line whose two arguments are in the same same-origin class.
+    Every support= and against= member is a line ref to a source head with actor= and E=verified. No two members of support= and
+    against= together may name the same @file bytes (the same manifest entry) [R19].
+    single-origin: support= has exactly one member; against= absent.
+    corroborated: support= has at least two members; their origins are pairwise in different same-origin classes and pairwise SHOWN
+      DISTINCT; against= absent.
+    conflicting: support= has at least one member and against= at least one; every support origin and every against origin are pairwise
+      SHOWN DISTINCT (each support-against pair; pairs within one side need not be).
+    Pairs, explicitly [R6-05]: corroborated needs one qualifying line for every unordered pair of support= origins; conflicting needs one
+    for every (support origin, against origin) pair. Each pair has its own line; no pair is inferred from others.
+    The validator checks only these forms. Whether a source in fact supports or contradicts the item is a checker judgment.
+    Size limit: support= and against= together hold at most the number in appendix E.
+9.4 Source E [r8 11, d10, R13, e9]. verified: one evidence role, either
+    (a) an @sig ref to a signature file of exactly 64 bytes, an Ed25519 signature over the 32-byte SHA-256 of the source's @file; it passes
+        if any key the trust list binds to the source's origin actor (actor=) verifies it; or
+    (b) an @file ref to a retrieval record (format RR) whose signature verifies with a key the trust list binds to the retrieving actor,
+        where the retrieving actor is the origin actor or an actor the trust list admits as a retriever, every URL in it is https on a host
+        exactly equal to a host the trust list binds to the origin actor, with no port (section 10 URL form) [d19, R4-02], and its response hash equals the
+        SHA-256 of the source's @file. Records name files only by SHA-256 and the store resolves them by SHA-256, so a record and a handle
+        naming the same bytes always carry the same hash [R7-04]. Path (b) exists only for an origin with at least one host in the trust list.
+    The decode states the path used and, for (b), the retrieving actor; path (b) is only as trustworthy as that actor
+    [d10]. For (b) the decode reads "retrieval asserted by <actor>": a signed record of a fetch, not independent proof that the host sent
+    those bytes [R3-06].
+    refuted: two evidence roles: the same proof applied to the authentic record that the source misstates, then a line ref to that
+    authentic source head (E=verified) [D13]. inconclusive and unchecked need no proof. Time-stamps, route names and other source heads
+    never authenticate a source.
+9.5 Claim, figure and statement made E [r8 11, d1, D23, R08, R09, e1, D25]. verified or refuted: checker= names the judging actor, and the
+    evidence roles are, for a text source:
+      1. a line ref to a source head with Q=primary and E=verified; 2. an excerpt @file whose bytes occur verbatim, as one contiguous byte
+      sequence, in that source head's @file.
+    For a binary source (6.5):
+      1. a line ref to the primary source head (Q=primary, E=verified); 2. a line ref to a text rendition of it: a source head with
+      E=verified (any Q), joined to the primary source head by an R=associated relation line in the message between the two source
+      head lines;
+      3. an excerpt @file found verbatim in the rendition's @file.
+      The checker named in checker= also judges that the rendition is faithful to the primary; the decode labels the associated line
+      "asserted rendition link"; which side is the primary and which the rendition is fixed by the claim line's evidence roles 1 and 2,
+      not by the undirected associated line [R7-06] [R6-03]. The validator checks
+      only the structure [R4-05].
+    Excerpt floor: an excerpt is at least the byte count in appendix E, or is the whole of the file it is found in when that file is
+    shorter. An empty excerpt is always rejected. The floor is a mechanical minimum, not a relevance test [R3-10]. refuted uses the excerpt from the contradicting record. The validator checks the refs,
+    the cited heads' values and the substring; whether the excerpt supports or contradicts the exact proposition, and whether the source
+    concerns its subject, is the checker's judgment [R20]. inconclusive and unchecked need no evidence and no checker=.
+9.6 Absence [r8 18-21, e4, e13]: the line carries actor= (the searcher). search incomplete: nothing further is required [d9: no proof
+    required for the weakest statement]. nothing found and expected but absent: role refs @file search plan (SP) then @file search log
+    (SL); the search is complete: SP has at least one entry; the SL entry-id set equals the SP entry-id set exactly; every SL outcome is
+    retrieved or returned-empty; each such entry's response file is supplied (6.3). Any denied, timed-out or failed entry makes the search
+    incomplete, and then only search incomplete is valid. An SL id not in the plan, or a plan id missing from the log, is rejected.
+    expected but absent also carries checker= and a rule source line ref to a source head with E=verified (not a claim or statement made
+    line). That the record states a rule, obligation or commitment requiring the item, rather than a prediction or possibility, is the
+    checker's judgment, not the validator's [e4]. "Complete" means the log records a completed outcome for every planned entry [R3-13]; whether each entry was
+    really searched within its scope, plan adequacy and log honesty are checker judgments.
+9.7 Tests [r8 16, 17, D11, d12, d18, R03, e15]: every test line carries criterion=@file:<handle> whose file parses as format CR. O (any
+    value) carries the outcome record role (format OR). F=pre-registered carries one @tsa role ref to an RFC 3161 time-stamp token whose
+    messageImprint equals the SHA-256 of the CR file, whose signing certificate's SHA-256 is listed as a TSA in the trust list, and whose
+    signature verifies with that certificate's key [D4]; and line 1 of the OR file is "tsa | <SHA-256 of that token file>". What this
+    proves: the criterion existed at the time-stamp, and the outcome record's bytes were fixed after the token existed (they contain its hash) [R3-12]. What it cannot prove:
+    that the outcome was not observed earlier and held back; that is a checker judgment on E. The validator compares no times. A
+    pre-registered line with a missing, unverifiable or mismatched proof is rejected; post hoc needs no proof.
+9.8 Relation evidence [R01, R06, R28, e12, D25]: a same entity, causal or distinct origin line carries checker= and two evidence roles after
+    its two arguments: 1. a line ref to a source head with E=verified; 2. an excerpt @file found verbatim, as one contiguous byte
+    sequence, in that cited source head's own @file, under the 9.5 excerpt floor [R3-11]. For same entity and distinct origin between @actor refs, the evidence source's origin must not be in the
+    same-origin class of either argument: an actor cannot vouch for its own identity or independence. The decode reads, e.g., "distinct
+    origin, judged by <checker>, as named by the sender, citing <source>". Whether the evidence establishes the relation is the checker's
+    judgment.
+
+10. RECORD FORMATS (parsed by the validator)
+Text records (MF, SP, SL, OR, CR, RR, TL): UTF-8, LF line endings, one entry per line, final LF, no trailing spaces, fields separated by
+" | ". Inside a field exactly four characters are percent-encoded with uppercase hex: % as %25, | as %7C, CR as %0D, LF as %0A. Any other
+% sequence, or a raw |, CR or LF inside a field, is rejected. Processing order [R3-18]: split into lines on LF; split each line on
+" | " into raw fields; check every % escape; decode each field once; then check field meaning. Line and field boundaries are fixed before decoding; a decoded CR, LF or | is
+field content and never a separator [R4-03]. Base64 [R3-07]: RFC 4648 standard
+alphabet with exact padding; a value whose decode re-encodes to different text is rejected. URLs [R3-05, R3-19]: absolute, scheme
+exactly "https", host lowercase ASCII (internationalized names as A-labels), no trailing dot, no IP literal, no user info, no port, no
+fragment; comparisons use the parsed host. Inside records, files are named by full SHA-256 (64 lowercase hex): handles
+are wire-only.
+MF manifest [D22, R26]: three sections, in order. (1) "f<k> | <SHA-256>" for every handle, k contiguous from 1, in handle order. (2) "- |
+   <SHA-256>" for every file that a record in this message names by hash and a rule reads (search responses, RR responses), sorted
+   bytewise, when not already listed in (1). (3) "@msg:<sender>:<seq> | <SHA-256 of the message bytes>" for every message cited by a
+   cross-message line ref, sorted bytewise by ID. No SHA-256 appears twice. Nothing else appears. One message has exactly one MF.
+SP search plan: entry-id | @ref of what is searched | scope | query or procedure. scope and query are free text the validator does
+   not interpret (checker judgment) [R7-07]. entry-id lowercase [a-z0-9_-]+, unique; at least one entry.
+SL search log: entry-id | outcome (retrieved | returned-empty | denied | timed-out | failed) | response (<SHA-256> or -) | time (7.3):
+   when the response completed or the attempt ended [R3-20].
+   retrieved and returned-empty always carry a response (the raw body, or the status and metadata exactly as received); "-" only for
+   denied, timed-out or failed when no bytes were received. Every SP entry-id appears exactly once.
+OR outcome record [d18, e15]: at least two lines. Line 1 is "tsa | <64 lowercase hex>" if and only if the test line carries
+   F=pre-registered; on every other test line (F=post hoc or F omitted) it is "tsa | -" [R7-05]; lines 2 onward are outcome content and are never parsed as line 1.
+CR criterion record: exactly three lines in order: "object | <@ref>", "condition | <text>", "pass rule | <text>".
+RR retrieval record [R14, R15]: line 1: requested https URL | final https URL | response <SHA-256> | time (7.3) | retrieving actor
+   @actor:<id>. Then one line per redirect, in order: "redirect | <Location header value, exactly as received> | <https URL>",
+   where the URL is that value resolved against the previous URL (the requested URL for the first) by RFC 3986 section 5; the validator
+   performs the resolution and compares [R5-03]. With redirects, the last redirect URL equals the final URL; with none, the
+   requested URL equals the final URL. Last line: "sig | ed25519:<signature, base64>" by the retrieving actor over the SHA-256 of all
+   preceding bytes [D4].
+TL trust list [R27]: first line "number | <n>"; then entries sorted bytewise, no line repeated: "@actor:<id> | host | <lowercase
+   hostname>", "@actor:<id> | key | ed25519:<public key, base64>", "@actor:<id> | retriever", "tsa | <SHA-256 of a TSA signing
+   certificate>". An actor may have several keys and several hosts; "retriever" at most once per actor. Last line "sig | ed25519:<owner
+   signature, base64>" over the SHA-256 of all preceding bytes [D4]. Supplied from the pinned release, never from the manifest.
+T time-stamp token: binary, exempt from the text rules; an RFC 3161 TimeStampToken in DER that embeds its signing certificate.
+S signature file [R13]: binary, exactly 64 bytes, a raw Ed25519 signature (RFC 8032).
+Signature algorithms [D4]: Ed25519 (RFC 8032) for @sig, RR and TL. TSA tokens: RSA PKCS#1 v1.5 or RSASSA-PSS with SHA-256/384/512, or
+   ECDSA P-256/P-384 with SHA-256/384. No other algorithm is accepted.
+
+11. AUDITABILITY AND THE LIMITS OF THE GUARANTEE
+- The determinism guarantee covers the header, words, @refs, keyed fields, record formats, hashes, signature checks, excerpt matches and
+  limits. note= is outside it.
+- What the validator cannot see: whether an excerpt supports a claim, whether two origins are really distinct, whether a record states a
+  rule, whether a plan was adequate, whether a log is truthful, whether an actor lied about what it opened, whether a named checker
+  really judged. Every one of these is attributed to a named actor in the decode [r8 39, R02].
+
+12. ALIGNMENT, 13. ADMISSION, 14. MEASUREMENT: unchanged from v0.6r1 sections 12, 9 and 10.
+
+15. DECISIONS (D1-D23 as in draft 2 unless noted; draft 3: D24-D26)
+D1 No dictionary or trust-list hash in each header; the release pins them. D2 Same-message line refs; cross-message refs since draft 2.
+D3 Content addressing, hashes in the manifest (D22). D4 Crypto pinned. D5 V internal identity check is a receiver rule. D6 B optional,
+with precedence. D7 set= members. D10 New parts by the pool rule. D11 criterion= on every test. D12 Replaced by D20. D13 E=refuted rules.
+D15 reason= on not-understood. D16 Hash line mandatory (Nick). D17 ASCII the only wire form. D18 Asserter inside the content word.
+D19 ACT + STANDING in one two-part header word. D20 Open-ended ref lists are keyed. D21 Empty trailing fields dropped. D22 File handles +
+one manifest hash. D23 checker= key.
+D24 Version prefix "$L" replaces "§L" (R22/e2: "§" broke the ASCII-only wire; Claude's error in draft 2). "$" cannot start a body (+ ~ !),
+    file-set (=) or hash (#) line. Bench 3 (Nov 4): "$L0.7 " is cheapest or tied on all 7 tokenizers (5-6 tokens; "%L" and "&L" 6; "§L0.6r1 " 8), so "$L" is chosen.
+D25 Excerpt floor (appendix E) for claim and relation evidence. Reviews split: ChatGPT none, DeepSeek 64 bytes. A one-byte excerpt passes
+    any substring check, so a floor stops the trivial case at no cost to honest use; the whole-file exception keeps short records usable.
+    64 confirmed by round 4.
+D26 Hard validation limits (appendix E) and reason over-limit: recursion through cited messages must end deterministically.
+Notes: relation evidence (9.8) now mirrors claim evidence (9.5), and every judgment names a checker. That closes the reviewers' central
+attack (R01/R28, e12) as far as a format can: a sender can still lie, but only by naming a checker and an excerpt that a receiver can
+inspect. ! may no longer target a whole message (R04). Parked to v0.8: identity of a non-sender asserter (R21); optional checker
+signature over the line (R02).
+
+16. NATIVE IMPLEMENTATION (ChatGPT critique, adopted) [D17]
+- Three representations, one meaning: ASCII wire form (normative), PUA (optional local text), native token IDs (lab-specific).
+- Native token IDs are mapped through a token manifest bound to the version and the dictionary hash. The dictionary reserves canonical
+  part identifiers and code points, never numerical token IDs. A lab map must round-trip every dictionary part to ASCII and back.
+- Constrained decoding (the GBNF grammar) guarantees syntax only. The external validator stays the authoritative acceptance boundary;
+  semantic fidelity is what the pilot's blind decode measures.
+- Optimizations (whole-word tokens, abbreviations) must expand canonically to parts and never add meaning: no second language.
+- Token savings beyond the ASCII form are a HYPOTHESIS until a native experiment (arms: ASCII, native parts, native parts + whole words,
+  SE-1) measures tokens, KV-cache memory, latency, invalid rate and misinterpretation rate. Under today's tokenizers no meaning-free
+  1-token part exists; 2 tokens per part is the ASCII floor.
+- Adoption path: reference validator + independent conformance suite + ASCII first; native acceleration follows demand.
+
+17. OPEN QUESTIONS (rounds 4-6 answered Q1-Q4: keep 64, keep the limits, associated acceptable, no remaining meaning claims)
+FREEZE CHECKLIST: normative byte-level test vectors (message bytes, hash preimage, hash line, MF and message SHA-256) published with the
+reference validator [R6-04]; Nick's decision on a dedicated "rendition of" relation value.
+17a. PREVIOUS QUESTIONS
+Q1 Excerpt floor value (D25: 64 bytes or the whole file). Too low, too high, or wrong mechanism?
+Q2 Limit values in appendix E. Too tight for real evidence chains, or too loose for a validator under attack?
+Q3 Rendition structure for binary sources (9.5): is an R=associated line between the two source heads the right link, or does the
+   language need a dedicated relation value (rendition of)?
+Q4 Is there any judgment the validator still claims to check, anywhere in this text?
+
+APPENDIX A: dictionary = SAVTEZ-DICT_v0.7 (generated after freeze).
+APPENDIX B: currencies and UCUM codes: unchanged from v0.6r1 appendix B.
+APPENDIX C: predicates: unchanged (10).
+APPENDIX D: certainty words for note= [A2]: probably, likely, unlikely, possibly, perhaps, maybe, certainly, definitely, surely, presumably,
+   apparently, doubtful, doubtless, and the phrases "almost certainly", "very likely", "highly likely".
+APPENDIX E: limits for v0.7 (provisional, pinned in the release) [D25, D26, R5-05]: excerpt floor 64 bytes | citation depth 3 |
+   messages 64 (the root plus every cited message, each distinct SHA-256 once) | files 1024 (every file entry in every MF, supplied or not;
+   messages and MFs themselves are not counted) [E1] | total bytes 64 MiB (6.4) | support= plus against= members 8.

@@ -1,0 +1,12 @@
+SAVTEZ-PREDICATES 0.7 (closed list for do=; unchanged from 0.6r1)
+predicate | definition | excludes
+reported | the actor communicated information that originated with another party | its truth; the actor's own claims (use asserted)
+asserted | the actor put forward a proposition of its own as a claim | relayed information (use reported); proof
+confirmed | the actor explicitly affirmed an identified prior proposition, record or message | independent verification (E axis); the message act confirm
+reviewed | the actor examined an identified object for a stated purpose | approval, verification, completeness
+flagged | the actor marked an identified object for attention | rejection, blocking, escalation
+accepted | a decision-maker formally adopted an identified submission or proposal | test met (O), verified (E), done (L)
+rejected | a decision-maker formally declined an identified submission or proposal | test not met, refuted, failed
+preregistered | the actor formally recorded a plan, criterion or commitment before the event it governs | the fixed-when state of a test (F axis); records made after the event
+triggered | the actor started an identified process or event | any causal claim (use R causal with evidence); scheduling or queuing
+reset | the actor returned an identified system, process or value to its defined initial state | pause, restart from current state, close

@@ -1,0 +1,274 @@
+SAVTEZ DICTIONARY 0.7 (generated 2026-11-04 by V7-DICT; RULED by Claude 06:15; label "quoted" -> "quoted verbatim" to match spec 3)
+code point | axis | value | ASCII form | origin (K kept from a ruled build, R reconstructed, N new in v0.7)
+U+E000 | HEAD | claim | wfz | K
+U+E001 | HEAD | source | jgx | K
+U+E002 | HEAD | log entry | xwf | K
+U+E003 | HEAD | task | ykc | K
+U+E004 | HEAD | figure | rzg | K
+U+E005 | HEAD | statement made | zxb | K
+U+E006 | HEAD | act done | gyw | K
+U+E007 | HEAD | relation | fhy | K
+U+E008 | HEAD | gap or contradiction | yjt | K
+U+E00A | HEAD | test | dyx | R
+U+F303 | V | private | tjy | K
+U+F304 | V | internal | wkx | K
+U+F305 | V | public | hzw | R
+U+F400 | M | mutable | hjx | R
+U+F401 | M | append-only | rcy | R
+U+F100 | L | queued | rxm | R
+U+F101 | L | active | xbk | R
+U+F102 | L | paused | pwj | R
+U+F103 | L | done | zdx | R
+U+F104 | L | failed | jzb | R
+U+F105 | L | canceled | yfh | R
+U+F504 | B | owner input | rxb | K
+U+F505 | B | dependency | wzy | K
+U+F506 | B | resource | xbz | K
+U+F507 | B | decision hold | yjf | K
+U+F508 | B | scheduled time | zgx | K
+U+F603 | U | by a stated time | ywx | K
+U+F604 | U | immediate | zrw | R
+U+F605 | U | no deadline | dxj | R
+U+F800 | K | full | xwy | K
+U+F801 | K | partial | jxm | K
+U+F802 | K | none | gyj | N
+U+F810 | Q | primary | xyc | K
+U+F811 | Q | secondary | wxs | K
+U+E100 | E | verified | zbh | K
+U+E101 | E | unchecked | xrj | K
+U+E103 | E | inconclusive | yhz | K
+U+E104 | E | refuted | hxy | K
+U+E201 | P | calculated | tfy | K
+U+E202 | P | quoted verbatim | pzx | K
+U+E205 | P | inferred | wxg | K
+U+E208 | P | restated from a named source | jyf | K
+U+E209 | P | observed by us | xcj | R
+U+E20A | P | assumed | xjd | R
+U+F200 | C | single-origin | dxz | K
+U+F203 | C | corroborated | xfj | K
+U+F204 | C | conflicting | yzp | K
+U+F704 | S | exactly one | zgy | K
+U+F705 | S | none | dzx | R
+U+F706 | S | several but not all | gxj | R
+U+F707 | S | all | whz | R
+U+E404 | A | nothing found | xgs | K
+U+E405 | A | expected but absent | fzx | K
+U+E406 | A | search incomplete | gxk | R
+U+F820 | O | met | xzf | K
+U+F821 | O | not met | yjg | K
+U+F822 | O | not evaluable | dxw | K
+U+F830 | F | pre-registered | yxb | K
+U+F831 | F | post hoc | wfy | K
+U+E500 | R | associated | xhs | K
+U+E501 | R | causal | jxr | K
+U+E502 | R | depends on | fzy | R
+U+E503 | R | part of | gjx | R
+U+E504 | R | same entity | yrh | R
+U+E505 | R | distinct origin | xfw | N
+U+E700 | ACT | inform | yzd | K
+U+E701 | ACT | request | wgj | K
+U+E702 | ACT | confirm | txw | K
+U+E703 | ACT | disconfirm | xyp | K
+U+E704 | ACT | refuse | zjg | K
+U+E705 | ACT | propose | rhx | K
+U+E706 | ACT | failure | jyz | K
+U+E707 | ACT | not-understood | zsy | K
+U+E714 | STANDING | own authority | xhg | K
+U+E715 | STANDING | delegated | dxk | K
+U+E716 | STANDING | policy | yzs | K
+U+E717 | STANDING | none | gkx | K
+U+E723 | ASSERTER | sender | xjh | K
+U+E724 | ASSERTER | other agent | gyk | K
+U+E725 | ASSERTER | human | hxj | K
+U+E726 | ASSERTER | tool output | jzy | K
+retired code points (never reused): U+E009 U+E102 U+E200 U+E203 U+E204 U+E206 U+E300 U+E301 U+E302 U+E303 U+E304 U+E305 U+E306 U+E307 U+E400 U+E401 U+E600 U+E601 U+F201
+retired forms (never reused): cwj dyf fkx hjz jyh wty xjc xmw xrk zcj
+FORM INVENTORY (all 188 pool forms): form | status
+cwj | retired
+dxj | assigned U no deadline
+dxk | assigned STANDING delegated
+dxw | assigned O not evaluable
+dxz | assigned C single-origin
+dyf | retired
+dyx | assigned HEAD test
+dzx | assigned S none
+fhy | assigned HEAD relation
+fkx | retired
+fzx | assigned A expected but absent
+fzy | assigned R depends on
+gjx | assigned R part of
+gkx | assigned STANDING none
+gxj | assigned S several but not all
+gxk | assigned A search incomplete
+gxw | spare
+gxz | spare
+gyj | assigned K none
+gyk | assigned ASSERTER other agent
+gyw | assigned HEAD act done
+hjx | assigned M mutable
+hjz | retired
+hxf | spare
+hxj | assigned ASSERTER human
+hxk | spare
+hxw | spare
+hxy | assigned E refuted
+hxz | spare
+hzw | assigned V public
+jgx | assigned HEAD source
+jhx | spare
+jwx | spare
+jxb | spare
+jxh | spare
+jxm | assigned K partial
+jxr | assigned R causal
+jxt | spare
+jxz | spare
+jyf | assigned P restated from a named source
+jyh | retired
+jyz | assigned ACT failure
+jzb | assigned L failed
+jzy | assigned ASSERTER tool output
+pwj | assigned L paused
+pzx | assigned P quoted verbatim
+rcy | assigned M append-only
+rhx | assigned ACT propose
+rjy | spare
+rpy | spare
+rxb | assigned B owner input
+rxg | spare
+rxj | spare
+rxk | spare
+rxm | assigned L queued
+rxy | spare
+rxz | spare
+rzg | assigned HEAD figure
+tfy | assigned P calculated
+tjy | assigned V private
+txw | assigned ACT confirm
+txy | spare
+tzy | spare
+wfy | assigned F post hoc
+wfz | assigned HEAD claim
+wgj | assigned ACT request
+wgx | spare
+whz | assigned S all
+wjx | spare
+wkx | assigned V internal
+wty | retired
+wxb | spare
+wxg | assigned P inferred
+wxh | spare
+wxj | spare
+wxk | spare
+wxs | assigned Q secondary
+wxt | spare
+wzx | spare
+wzy | assigned B dependency
+xbk | assigned L active
+xbz | assigned B resource
+xcj | assigned P observed by us
+xcz | spare
+xfg | spare
+xfj | assigned C corroborated
+xfk | spare
+xfw | assigned R distinct origin
+xfz | spare
+xgj | spare
+xgk | spare
+xgs | assigned A nothing found
+xgy | spare
+xgz | spare
+xhf | spare
+xhg | assigned STANDING own authority
+xhj | spare
+xhs | assigned R associated
+xhy | spare
+xhz | spare
+xjc | retired
+xjd | assigned P assumed
+xjf | spare
+xjg | spare
+xjh | assigned ASSERTER sender
+xjm | spare
+xjw | spare
+xjy | spare
+xmw | retired
+xrh | spare
+xrj | assigned E unchecked
+xrk | retired
+xrz | spare
+xsz | spare
+xwf | assigned HEAD log entry
+xwh | spare
+xwy | assigned K full
+xwz | spare
+xyc | assigned Q primary
+xyf | spare
+xyh | spare
+xyj | spare
+xyk | spare
+xyp | assigned ACT disconfirm
+xyw | spare
+xzb | spare
+xzc | spare
+xzf | assigned O met
+xzg | spare
+xzj | spare
+xzk | spare
+xzr | spare
+xzt | spare
+xzw | spare
+ydx | spare
+yfh | assigned L canceled
+yhj | spare
+yhx | spare
+yhz | assigned E inconclusive
+yjf | assigned B decision hold
+yjg | assigned O not met
+yjh | spare
+yjt | assigned HEAD gap or contradiction
+yjx | spare
+ykc | assigned HEAD task
+ykx | spare
+yrh | assigned R same entity
+yrx | spare
+ysx | spare
+ywj | spare
+ywx | assigned U by a stated time
+yxb | assigned F pre-registered
+yxf | spare
+yxh | spare
+yxj | spare
+yxs | spare
+yxt | spare
+yxw | spare
+yzb | spare
+yzc | spare
+yzd | assigned ACT inform
+yzj | spare
+yzm | spare
+yzp | assigned C conflicting
+yzs | assigned STANDING policy
+yzw | spare
+yzx | spare
+zbh | assigned E verified
+zbx | spare
+zcj | retired
+zcy | spare
+zdx | assigned L done
+zgx | assigned B scheduled time
+zgy | assigned S exactly one
+zjg | assigned ACT refuse
+zjx | spare
+zkx | spare
+zrw | assigned U immediate
+zsx | spare
+zsy | assigned ACT not-understood
+zwx | spare
+zxb | assigned HEAD statement made
+zxf | spare
+zxg | spare
+zxh | spare
+zxk | spare
+zxs | spare
+zxt | spare
