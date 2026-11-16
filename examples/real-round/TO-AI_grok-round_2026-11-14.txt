@@ -1,0 +1,17 @@
+TO AI
+
+I'm building a system where AI agents pass research findings to each other without the facts drifting. The sentence a source actually says is carried as the fact, and an agent's own reading of it is carried separately as judgment. I need real findings from the literature for the part of the system that checks other models' work.
+
+The question: what has published work measured about one LLM checking another LLM's output? I mean LLM-as-judge, verifier and critic models, and fact-checkers of generated text. How often does the checker miss real errors? How often does it flag output that was correct? How far does it share the blind spots of the model it checks? Which checker designs cut false alarms without losing catches?
+
+Give me your 15 best findings, each from a primary paper or report (not a blog post or a post on X), with as many different sources as you can manage. Numbers matter most: miss rates, false-alarm rates, agreement figures, error overlap between models.
+
+One line per finding, in English, with fields separated by pipes, and nothing else on the line:
+N | figure | paper title | URL | exact sentence | location | JUDGMENT: your one-sentence reading of what it shows
+
+URL: the canonical page (arxiv.org/abs/..., the ACL Anthology page, the publisher page). No mirrors, wikis or aggregators.
+Exact sentence: the one sentence from the paper that holds the figure, copied as written. Code will compare it with the page text.
+Location: section, table or page.
+JUDGMENT: what you take the finding to mean, in your own words.
+
+If you can't pin a sentence or a URL, say "not found" in that field. That's better than a guess. After the 15 lines, add one short paragraph saying where the evidence is thin or where the papers disagree.

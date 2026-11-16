@@ -1,0 +1,23 @@
+SAVTEZ REAL-ROUND CHECK v0 RESULT 2026-11-14 (spec: SPEC_real-round-check-v0_2026-11-14.txt; spec written after DeepSeek's answer
+arrived, before any line was checked)
+Input: DeepSeek's 12 sourced findings on multi-agent handoff failures (claim | figure | title | URL | exact sentence | location).
+GROUND TRUTH (Opus, fetched every source itself): 5 of 12 lines are errors (1, 2, 6, 7, 8). In all 12, the source is real and the
+ quoted sentence and figure are correct. Every error is in DeepSeek's own paraphrase of the finding:
+ 1 MAST arXiv 2503.13657: the 41-86.7% failure rates are tied to Figure 5 (other benchmarks), not measured on the 1,642 traces.
+ 2 arXiv 2610.15459: "most communication failures give no immediate signal" from a 20.7% figure (a minority).
+ 6 Zenodo 22134058: adds that both sides were told to preserve everything; the loss is under mismatched conventions.
+ 7 ICML 2026 workshop (Hallucination Snowball): "nearly undetectable by the final stage" while gpt-4o still detects 50.9% there.
+ 8 AgentDropout ACL 2025: its token savings vs baselines read as the share of tokens wasted by redundant communication.
+ URLs: browse-export.arxiv.org links (2, 3, 9) blocked by robots; mintlify.wiki (10) fails; the same pages exist at arxiv.org and
+ mintlify.com. Logged as DeepSeek errors in URL form, not content.
+PIPELINE (code checks on WebFetch-returned sentences, then Haiku claim checker): flagged 11 of 12 lines.
+BARS: catch >= 0.8 of error lines: PASS, 4 of 5 (missed line 1; the conflation joins two true sentences the fetched text both held).
+ False alarms <= 1 of 7 clean lines: FAIL, 7 of 7.
+WHY THE PIPELINE FAILED: the store, not the checker logic. WebFetch passes pages through a model with a 125-character quote limit, so
+ the store held fragments; code then flagged quotes as missing and Haiku flagged claim words that sat outside the fragment. Four of
+ the false alarms were blocked mirror URLs. The shell cannot reach arXiv or ACL (proxy allowlist), so this session has no route to
+ raw page text.
+WHAT IT SHOWS FOR THE DESIGN: the strongest real-work evidence so far for never rewriting facts. DeepSeek's quotes and figures were
+ right 12 of 12; its paraphrases were wrong 5 of 12. A relay that carries the quoted sentence and the figure, and labels the
+ paraphrase as judgment, would have passed no wrong fact. The checker can only be fair with full page text in the store.
+NEXT: full-text store from raw pages (a bot with web access, or attached PDFs), then rerun this same 12-line check; bars as above.

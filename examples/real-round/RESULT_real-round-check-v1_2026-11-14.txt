@@ -1,0 +1,18 @@
+SAVTEZ REAL-ROUND CHECK v1 RESULT 2026-11-14 (same spec and bars as v0: claude/POINTER/REAL/SPEC_real-round-check-v0_2026-11-14.txt)
+Change from v0: the store is full verbatim page text fetched by Checker A (curl plus pdftotext; abstracts and every paragraph holding
+ the figures; file sources_full.txt). 7 of 10 sources in full; source 3 abstract only (OpenReview blocked); source 4 full but the
+ sixteen identifiers are not listed by name; source 8 (CooperBench findings page) now HTTP 410, gone. Same 12 DeepSeek lines, same
+ code checks, same Haiku checker prompt with full text. Ground truth unchanged (Opus, v0): error lines 1, 2, 6, 7, 8.
+CODE FLAGS: line 9 (the quoted sentence carries 12.6% but not the 1.65 odds figure, which sits in a later sentence) and line 10
+ (source gone). Every other quote was verbatim in the source.
+HAIKU (full text): supported no on 1, 2, 6, 7, 8, 9; supported but keeps no on 3, 5, 11, 12; unknown on 10; ok on 4 only.
+BARS: catch >= 0.8 of error lines: PASS, 5 of 5. False alarms <= 1 of 7 clean lines: FAIL, 6 of 7 (3, 5, 9, 10, 11, 12).
+READING (not a re-scored result): with full text, every "supported: no" except line 9 is a real error, and all five errors are among
+ them. The false alarms come from the "keeps" question (a one-line summary always drops some scope, and Haiku reads that as
+ failure) and from a source that vanished between checks. The checker's useful signal is "supported"; "keeps" needs a narrower
+ test (qualifier present in the source sentence and dropped in the claim, which code can check) before it can count.
+WHAT HOLDS ACROSS v0 AND v1: DeepSeek's quotes and figures were right in every line that could be checked; every wrong line was its
+ own paraphrase. Passing the quote as the fact and the paraphrase as labelled judgment would have carried no wrong fact.
+DEEPSEEK ERRORS LOGGED (rule 10): five paraphrase errors (lines 1, 2, 6, 7, 8, detail in v0 result); three mirror or dead URLs
+ (browse-export.arxiv.org for lines 2, 3, 9; mintlify.wiki for line 10).
+Files: this RESULT. The fetch file (fetch-sources-20261114.txt) is not in this release.
