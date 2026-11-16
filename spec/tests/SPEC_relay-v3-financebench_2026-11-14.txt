@@ -1,0 +1,24 @@
+SAVTEZ RELAY v3 ON FINANCEBENCH SPEC (fixed 2026-11-14, before any run)
+Question: over a 5-hop chain on real 10-K filings, does v3 (never rewrite facts) keep errors out of the final answer without losing
+correct answers, against a plain relay?
+Data: FinanceBench open-source set (github patronus-ai/financebench, 150 questions, answers and evidence pages by the authors).
+Questions (fixed now, numerical reasoning, two evidence pages, six filings): financebench_id_02987 Activision 2019 fixed asset turnover;
+ _06655 Amazon 2017 DPO; _10130 Corning 2020 DPO; _04103 General Mills 2019 cash conversion cycle; _05915 CVS 2018 fixed asset turnover;
+ _03856 Adobe 2017 operating cash flow ratio.
+Source per question: the evidence pages plus the page before and after each (distractors), from the PDF.
+Store: tables read from the PDF layout (pdfplumber) and turned into one sentence per cell by code (row label, column header, unit);
+ prose sentences frozen by Sonnet (one per span, or infeasible). GATE before any relay: for every question, the line items the
+ benchmark's justification names must exist as cells with the right values (preflight by code and one read by Claude).
+Arms: PLAIN as relay v2 (finder, condenser, handoff editor, analyst, writer). V3 as relay v2 with relay3.py fixes (rejected lines
+ returned once, drop list shown to later hops, judgments rendered with their cited facts, absence claims checked against the store,
+ rendered brief capped at 250 words by code with one return) plus the judgment checker as return-once at hop 5.
+ The writer must state the final numeric answer; v3 states it in a JUDGE line whose computation is from cited cells.
+Models: Haiku at every hop; judgment checker Haiku; scorers blind Opus and Checker A (one file).
+SCORING: final answer correct if within rounding of the benchmark answer (1% relative, or the benchmark's stated precision); errors as
+ relay v1/v2 definition, counted per brief by blind scorers with the source pages.
+BARS (fixed now): counts only if plain errors >= 4 in total; v3 errors <= half of plain; v3 correct answers >= plain correct - 1;
+ silent drops = 0. Checker returns recorded, not a bar.
+ADDED BEFORE THE RUN: V3 lines may also be COMPUTE <arithmetic over [F#] slots> (code evaluates; plain constants and avg() allowed);
+ JUDGE lines carry no digits, so the final number must come from COMPUTE. Prose lines on these statement pages are line fragments
+ (auditor letters, footers), so they enter the store verbatim instead of through the freezer. GATE PASSED before the run: code
+ reproduced all six benchmark answers from store cells (24.26, 93.86, 63.86, -3.7, 17.98, 0.83).

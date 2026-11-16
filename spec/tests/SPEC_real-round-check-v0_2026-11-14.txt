@@ -1,0 +1,13 @@
+SAVTEZ REAL-ROUND CHECK v0 SPEC (2026-11-14; written after DeepSeek's answer arrived, before any line was checked)
+Purpose: run a real outside-AI research round (DeepSeek, 12 sourced findings on multi-agent handoff failures) through the v3 checks and
+see whether they catch what a careful independent check finds.
+Input: DeepSeek's 12 pipe lines (claim | figure | title | URL | exact sentence | location), saved as deepseek_round.txt.
+STORE: each URL fetched once with WebFetch, asked to return the page's title, authors, date and the verbatim sentences that carry
+ the cited figure (a model sits in the fetch; the shell cannot reach these sites). Saved per line.
+PIPELINE UNDER TEST: code checks (title matches; DeepSeek's quoted sentence appears in the fetched text after normalizing spaces,
+ quotes and TeX escapes; the figure appears in the quoted sentence) plus a Haiku checker on claim vs fetched sentence, both directions.
+ A line passes only if all hold.
+GROUND TRUTH: a separate Opus agent fetches every URL itself and judges each line: source real and matching; quote verbatim;
+ figure right; claim faithful to the source (no widening, no wrong relation). Any failure = an error line.
+BARS: pipeline catches >= 0.8 of ground-truth error lines; pipeline false alarms <= 10% of ground-truth clean lines (max 1 if fewer
+ than 10 clean). Every DeepSeek error found is logged (project rule 10).

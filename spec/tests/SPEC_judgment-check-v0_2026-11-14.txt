@@ -1,0 +1,10 @@
+SAVTEZ JUDGMENT CHECK v0 SPEC (fixed 2026-11-14, before any run)
+Purpose: the relay v2 errors all sat in JUDGE lines. Test a checker aimed only there.
+Items: every accepted JUDGE line in the four v2 hop-5 briefs (25 lines), each with the frozen facts it cites.
+ABSENCE CHECK (code): a line with an absence phrase (no figure, not stated, not given, unmeasured, no data, unknown, gives no, does not
+ say, lacks) also gets every store fact that shares a named entity with the line or its cited facts and is not cited, ranked by shared entities weighted by rarity in the store (idf), top 15.
+CHECKER: one Haiku agent per run, generic instructions (not tuned to the known errors): is the line supported by its facts (nothing
+ stronger, wider, added, wrongly attributed, and any absence claim true against the extra facts)? does it keep what the facts say?
+GATE: lines both blind scorers counted as errors: Q1 "the record gives no FP8 compute figure for them" and Q1 "Serving across GPUs needs
+ NVLink". Q4 "Size the cache to the hit rate you need" was counted by Opus only: reported, not scored.
+BARS: both gate errors caught; false alarms on the 22 clean lines <= 2 (10%). Fail -> the checker is not trusted in v3.

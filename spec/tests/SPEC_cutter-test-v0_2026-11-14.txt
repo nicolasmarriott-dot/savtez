@@ -1,0 +1,21 @@
+SAVTEZ SPAN CUTTER TEST v0 SPEC (fixed 2026-11-14, before any run)
+Purpose: The first test. Can code (spaCy parser) plus a small model merge cut this week's sources into one-fact spans whose context
+fields (table header, scope words, relation edges, list order, antecedent slice) are filled mechanically? Everything in v2 rests on this.
+Corpus: Inference Engineering passages P1-P254 (passages.json, rebuilt with passages.py). Normalization first: rejoin words split across
+passages (P130/P131 "atten-"/"tion"), map kept back to original passage IDs.
+CUTTER (code): full partition; every character is in a fact span or a typed glue span. Table mode: header row plus rows -> one fact per cell,
+header bound. List mode: lead-in plus items -> one ordered fact plus item facts. Prose: sentence split, then cuts at coordinated finite clauses
+and concessive/contrastive subordinate clauses, with a relation edge between the halves. Scope words (closed list) never glue; attached as a
+typed field to every span in their scope. Referring expressions without an antecedent in the span get the preceding sentence as a context slice.
+Span ID = passage ID + index + first 8 hex of sha256 of the normalized source section.
+MERGE (model): Haiku sees only the spans the parser flagged and may merge or split them; it may not change text.
+MEASURES (mechanical): spans with 2+ predicates or coordinated subjects/objects; spans with no subject; scope words that landed in glue or were
+not attached to a span in their scope; table cells without a header; list order facts emitted.
+HAND CHECK (blind Opus agent): all flagged spans plus 60 random fact spans (seed 20261114). For each: carries more than one fact? can't be read
+without missing subject or referent (and context slice doesn't fix it)? a scope word from its sentence that should govern it is missing from
+text+scope field? wrong header or wrong relation edge? The hand check is the ground truth; mechanical counts are scored against it.
+BARS (fixed now): after merge, hand-checked error rate (any of the four faults) <= 5% of fact spans in the random sample; scope words lost = 0;
+table cells without correct header = 0; mechanical flags catch >= 0.8 of the hand-found faults. Fail any bar -> parser metadata is not enough
+and the once-per-source checked rewrite (middle path) becomes the candidate.
+D08: render P18, P19, P36 as cell facts; confirm FP8 (dense) is bound to every compute figure; one Haiku writer pass on those facts asked the
+precision question; error recurs = fail.

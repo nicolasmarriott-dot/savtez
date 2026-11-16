@@ -1,0 +1,32 @@
+SAVTEZ REAL-ROUND CHECK v2 SPEC (2026-11-14 night; written before the round was sent)
+Purpose: test the new split on a real outside-AI research round. The researcher's quoted sentence and figure are the FACT, checked by
+ code against full page text. Its own one-line summary is the JUDGMENT, the only thing sent to the model checker. Researcher: Grok
+ (training data stays with Grok), fresh chat, one file in, one reply out.
+QUESTION: what has published work measured about one LLM checking another LLM's output: how often the checker misses real errors,
+ how often it flags correct output, how far checkers share the generator's blind spots, and which checker designs cut false alarms
+ without losing catches.
+INPUT: Grok's 15 pipe lines: N | figure | title | canonical URL | exact sentence | location | JUDGMENT: one sentence. Saved verbatim
+ as grok_round.txt with sha256.
+STORE: Checker A fetches every URL once (curl plus pdftotext; abstract plus every paragraph holding a cited sentence or figure) into one
+ file. A 403, 410, empty extraction or missing paragraph = ACCESS FAIL, never "text absent".
+FACT CHECKS (code only): F1 title matches the fetched page; F2 the exact sentence appears in the fetched text after normalizing
+ spaces, quotes, dashes, hyphenation breaks and TeX escapes (35\% = 35%); F3 the figure appears as a number in that sentence
+ (rounding to stated precision, separators, K/M/B, x/times allowed).
+JUDGMENT CHECKS: J1 a Haiku checker sees the question, the quoted sentence and the paragraph holding it, and the judgment; it answers
+ only "supported: yes/no" plus one reason line. No "keeps qualifiers" question. J2 code scope test, both directions, fixed lists:
+ DROP = a word from {only, some, up to, at most, at least, approximately, about, nearly, may, might, can, could} present in the
+ quoted sentence and absent from the judgment. WIDEN = a word from {all, always, never, none, every, most, majority} present in
+ the judgment and absent from the quoted sentence. Word-boundary match, case-insensitive.
+PIPELINE FLAG on a line = any of F1, F2, F3, J1 = no, DROP, WIDEN. ACCESS FAIL lines are reported and left out of both bars.
+GROUND TRUTH: a separate Opus agent fetches every URL itself and judges two parts separately, before any pipeline result exists:
+ FACT (source real and matching, sentence verbatim as far as its fetch shows, figure right) and JUDGMENT (faithful: no widening,
+ no wrong relation, no invented condition, no conflation, no savings or limits misread). Error line = either part wrong. Verdicts
+ written to a sealed file first.
+BARS (fixed now): catch >= 0.8 of ground-truth error lines; false alarms <= 10% of ground-truth clean lines (max 1 if fewer than 10
+ clean). The checker bars count only if ground truth finds >= 4 error lines (the baseline must have room to err).
+HEADLINE (reported whatever the bars): wrong facts carried = lines where code passed F1-F3 but ground truth says the FACT is wrong.
+ Target 0. Also reported per component (code, J1, DROP, WIDEN) for diagnosis, not scored.
+PREDICTION (recorded before the run): DROP is the likeliest false-alarm source (a one-line judgment drops "may" or "up to" that
+ doesn't change its truth); WIDEN fires rarely and mostly on real errors; Grok's quotes are less exact than DeepSeek's because Grok
+ paraphrases more readily, so F2 fails will be higher than last round's 0 of 12.
+LOGGING: every Grok error goes to the result file (rule 10), split into fact errors, judgment errors and bad URLs.

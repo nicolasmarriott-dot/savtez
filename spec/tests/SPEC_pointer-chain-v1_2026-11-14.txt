@@ -1,0 +1,29 @@
+SAVTEZ POINTER-CHAIN TEST v1 SPEC (fixed 2026-11-14, before any run)
+Corpus: Inference Engineering, passages P1-P254 (passages.json). Q1=P1-P51, Q2=P52-P146, Q3=P147-P197, Q4=P198-P254.
+Arms: PLAIN = 3 hops, each hop sees only the previous hop's text (hop 1 sees source).
+      POINTER = 3 hops, every claim cites [P#]; code inserts the exact cited passages under each claim at every hop;
+      then a reader agent judges each final sentence against its cited passages; one revision.
+Hop 1 finder: notes on the question from the source. Hop 2 condenser: merge into at most 8 key points, make comparisons explicit.
+Hop 3 writer: 150-word brief for a manager deciding. Models: haiku all hops (run A). Sonnet/Opus/DeepSeek variants later.
+QUESTIONS AND SET POINTS (5 each)
+Q1 Which NVIDIA GPU should a team pick to serve a large LLM at FP8, and what trade-offs matter?
+ S1 H100: 80 GB, 3.35 TB/s, 1,979 TFLOPS FP8. S2 H200: 141 GB, 4.8 TB/s. S3 B200: 192 GB, up to 8 TB/s, ~5 PFLOPS.
+ S4 L40/L4 weaker (L40 48 GB, 864 GB/s; "not a great choice"; Lovelace has no NVLink). S5 FP8 Tensor Cores twice as fast as FP16.
+Q2 Should a team quantize its production LLM, to what format, and how should it check quality?
+ S1 one level of quantization gives 30-50% better performance, not 2x. S2 MX block size 32; NVFP4 block 16 plus 32-bit global scale.
+ S3 sensitivity order weights < activations < KV cache < attention. S4 FP8/MXFP8 the sweet spot; integer formats unsuitable for quality-sensitive work.
+ S5 checks: perplexity, benchmarks, custom evals; standard is zero perceptible quality loss.
+Q3 Which speculative decoding method should a team use, and when does it help?
+ S1 improves TPS/ITL only, not TTFT. S2 helps at low batch sizes; disabled at high batch. S3 draft model at least 10x smaller; most overhead.
+ S4 Medusa 2-4 heads; EAGLE up to 8 draft tokens (2x Medusa), three hidden states, often under 1B params, go-to choice.
+ S5 n-gram: no draft model, sequences can exceed 10 tokens, best for code.
+Q4 How should a team use KV cache re-use to cut latency and cost?
+ S1 prefix caching stops at the first non-repeated token; put novel tokens as late as possible. S2 example: B200 180 GB, 100 GB weights, 80% of remaining = 64 GB.
+ S3 four tiers G1 VRAM (TB/s) > G2 CPU RAM > G3 local SSD (5-10 GB/s) > G4 networked SSD. S4 cache-aware routing: same replica for the same user/conversation; global G4 cache option.
+ S5 long-context problems past cutoffs like 32K, 64K, 128K; attention scales linearly with sequence length (with KV cache).
+ERROR = a final-brief sentence that is false against the source: wrong number, wrong unit, wrong relation (more/less/twice/matched),
+ dropped scope qualifier that changes meaning (only, up to, median, may, often, at low batch), or a claim not in the source.
+BARS (fixed now): pointer errors <= half of plain errors; pointer coverage loss <= 1 set point per question vs plain;
+ checker flag precision >= 0.7 (flags that the blind scorer also marks as errors); test counts only if plain errors >= 4 in total,
+ else lengthen chain to 5 hops and rerun. Tokens recorded, not a bar.
+SCORING: fresh Opus agent, briefs stripped of [P#] tags and labels, shuffled with seed 20261114, map sealed until scoring done.

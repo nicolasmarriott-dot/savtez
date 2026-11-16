@@ -1,0 +1,19 @@
+SAVTEZ RELAY v2 SPEC (fixed 2026-11-14, before any run)
+Question: does the v2 design (never rewrite facts) keep errors out of a final brief over a 5-hop chain, without losing coverage?
+Corpus, questions, set points, error definition: as SPEC_pointer-chain-v1 (Inference Engineering P1-P254, Q1-Q4, 5 set points each).
+Models: Haiku at every hop, both arms. Each hop is a fresh agent that sees only its input file.
+PLAIN ARM: hop 1 finder reads the question's passages and writes notes; hop 2 condenser (at most 10 points); hop 3 handoff editor
+ (tighten for the next agent); hop 4 analyst (make comparisons and trade-offs explicit); hop 5 writer (150-word brief for a manager).
+V2 ARM: the store is the frozen sentences from the freeze test (ID F#, one per span or table cell; infeasible spans shown verbatim).
+ Hop 1 sees the question's store. Every hop writes only three kinds of line:
+  FACT [F#]                       code renders the frozen sentence; the agent writes no fact text
+  JUDGE text with [F#] slots      the agent's own reasoning; a script rejects any digit, and any technical name (H100, FP8, EAGLE,
+                                  Medusa...) not found in the text of a fact the line cites (rejected lines removed and counted)
+  DROP [F#] reason                reason from a closed list: off-topic, duplicate, background, superseded
+ Hop 1 must give every store ID a FACT or a DROP (the ledger). Later hops keep, reorder or DROP; the ledger diff script lists any ID
+ that left the chain without a DROP line (a silent drop). Hop 5 writes a brief from FACT and JUDGE lines; code renders it, IDs stripped.
+SCORING: blind Opus agent, the 8 final briefs stripped of tags and arm labels, shuffled with seed 20261114, map sealed until scoring is
+ done; the same blind set to Checker A in one file.
+BARS (fixed now): test counts only if plain errors >= 4 in total; v2 errors <= half of plain; v2 coverage loss <= 1 set point per
+ question vs plain; silent drops = 0. Brief length and rejected judgment lines recorded, not bars.
+Not in this run: two-family relevance labels (relevance default is "keep"; drops need a closed-list reason), relation edges, typed numbers.

@@ -1,0 +1,26 @@
+SAVTEZ FREEZE TEST v0 SPEC (fixed 2026-11-14, before any run)
+Purpose: test the once-per-source checked rewrite (the outside checker's conditions): each span becomes exactly one stand-alone sentence or
+"infeasible"; typed fields and the verbatim span stay attached; no merging; checkers measured by planted mutations.
+Corpus: same 254 passages and the cutter v0 spans (after the code fixes below), plus the five tables.
+Code fixes carried in from the cutter test (design, not thresholds): relation edges re-pointed after splits; context slice may come from
+the previous passage; tables: header count must equal cell count or the cell is infeasible.
+FREEZER: Sonnet, one pass, sees each span with its passage, the previous passage and any list lead. Writes one sentence per span (one per
+cell for tables) or "infeasible" with a reason. May use words only from that context window. Never merges spans.
+CODE CHECKS on every frozen sentence vs span + context window: closed-list diff (numbers, units and prefixes; hedges and scope words;
+negations; comparatives and superlatives; a/the, some/all/most; named entities) and word provenance (every content word lemma must occur
+in the window). Any appearance, loss or change is a flag.
+HAND CHECK (blind Opus): 60 random frozen sentences (seed 20261114) plus every frozen GPU-table cell. Error = the sentence is not entailed
+by the span in context, or drops meaning the span carries (both directions), or picks the wrong referent.
+MUTATION TEST: 25 frozen sentences the hand check passed (seed 20261114); a separate Sonnet agent writes one mutant per type: flipped
+comparative, dropped hedge, swapped referent, shifted agency, widened scope; plus the 25 unmutated as controls (150 items, shuffled).
+Checkers judge each item against its span in context, both directions: Claude Haiku here, and Grok (one file in, one reply out). Code
+checks run on the same items.
+BARS
+ Freeze error rate (hand check, random 60 non-infeasible) <= 5%.
+ Infeasible <= 15% of spans.
+ D08: every GPU compute cell's frozen sentence states FP8 and dense: all.
+ Code flags catch >= 0.8 of hand-found freeze errors.
+ Mutations: per type, caught by code or either checker; shared miss (code, Haiku and Grok all miss) <= 10% per type. A type above that
+ gets a code check or human spot-check by design.
+ Controls: false alarms <= 10% per checker.
+Pass all freeze bars -> the frozen rewrite replaces parser metadata as the span render in v2.
