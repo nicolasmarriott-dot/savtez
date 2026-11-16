@@ -1,0 +1,71 @@
+
+Task: you are checking sentences for faithfulness to a source. Each item is one sentence meant to say exactly what its source span says, read in its context. Some items are correct; others contain one subtle change of meaning. Judge each item on its own.
+For each item answer two questions separately: (1) Does the source span, read in its context, support everything the sentence says (nothing stronger, wider, added, or attributed to the wrong thing)? (2) Does the sentence keep everything material the span says (qualifiers, negations, comparisons, conditions, who does what)?
+Output one line per item, nothing else, in this exact form: M001 | supported: yes/no | keeps: yes/no | ok: yes/no | reason if any no (max 12 words)
+Cover all 150 items in order. English only. Do not skip items or summarize.
+
+SOURCES
+[S01] SPAN: The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+
+[S02] SPAN: quantization is a scale, not a binary decision.
+
+[S03] SPAN: The decode phase of LLM inference is an autoregressive process in which tokens are generated one at a time.
+
+[S04] SPAN: 2. Draft sequence length: The number of draft tokens that are generated per forward pass.
+
+[S05] SPAN: At higher batch sizes, speculative decoding must be dynamically disabled as compute is too saturated to afford verification.
+
+[S06] SPAN: As a rule of thumb, the draft model should be at least ten times smaller by parameter count than the target model.
+
+[S07] SPAN: During inference, LLMs accumulate a lot of context about the predicted tokens in the form of hidden states between layers.
+
+[S08] SPAN: Traditional draft models don’t have access to this information.
+
+[S09] SPAN: The advantage of n-gram speculation versus EAGLE is that the sequences can be much longer.
+
+[S12] SPAN: the first tokens of each prompt – “Weather in” – form a shared prefix between the pair.
+
+[S13] SPAN: If you’re working on a B200 GPU with 180 GB of VRAM and used 100 GB for model weights and buffers, this would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+
+[S14] SPAN: Figure 5.10: Cache-aware routing allocates traffic based on KV cache rather than simply dividing requests evenly across replicas.
+
+[S15] SPAN: Another option is using the G4 networked storage to build a global KV cache across replicas.
+
+[S16] SPAN: Foundation model labs have been using scaling techniques like RoPE to unlock longer and more accurate context windows.
+
+[S17] SPAN: The B200 and B300 are the new gold standard for inference, offering the highest performance for large language models and demanding workloads like video generation.
+
+[S19] SPAN: Quantization improves latency (both TTFT and TPS), increases system throughput, and opens up headroom for other optimizations like disaggregation, speculation, and prefix caching to be even more effective.
+
+[S22] SPAN: FP32 is sometimes used for training, but almost never for inference.
+
+[S24] SPAN: On the other hand, the lettering for architecture is very meaningful.
+
+[S25] SPAN: An FP8 number in a E4M3 data format means it has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+
+ITEMS
+M001 [S22] GPUs sometimes force FP32 for training, but almost never for inference.
+M002 [S07] During inference, LLMs accumulate most of their context about the predicted tokens in the form of hidden states between layers.
+M003 [S06] As a rule of thumb, the draft model should be at least ten times smaller by parameter count than the target model.
+M004 [S16] Every model developer has been using scaling techniques like RoPE to unlock longer and more accurate context windows.
+M005 [S14] Figure 5.10 shows that cache-aware routing allocates traffic based on KV cache and divides requests more evenly across replicas than simple routing does.
+M006 [S15] Another option is using the G4 networked storage to build a global KV cache across replicas, making routing irrelevant.
+M007 [S08] Medusa does not have access to the hidden-state information that LLMs accumulate during inference.
+M008 [S04] One of three factors that the performance uplift from any speculative decoding strategy depends on is draft sequence length, the number of draft tokens that are generated per forward pass.
+M009 [S25] An FP8 number in a E4M3 data format always has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+M010 [S01] The tradeoff to a microscaling format is that the global scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+M011 [S24] In GPU names, the lettering for architecture is less meaningful than the numbering.
+M012 [S09] The advantage of n-gram speculation versus EAGLE is that the sequences are always much longer.
+M013 [S17] The B200 and B300 are the new gold standard for inference, offering performance on par with Hopper for large language models and demanding workloads like video generation.
+M014 [S19] Quantization to any bit width improves latency (both TTFT and TPS), increases system throughput, and opens up headroom for other optimizations like disaggregation, speculation, and prefix caching to be even more effective.
+M015 [S25] An FP8 number in a E5M2 data format has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+M016 [S13] On a B200 GPU with 180 GB of VRAM where 100 GB is used for model weights and buffers, the configuration shown would have the engine free 80 percent of the remaining VRAM, or 64 GB, from KV cache.
+M017 [S02] Quantization is a scale, not a binary decision, and every step down it costs quality.
+M018 [S09] The advantage of n-gram speculation versus EAGLE is that the sequences can be much longer.
+M019 [S12] The first tokens of each prompt, “Weather in,” form a shared prefix between the pair.
+M020 [S03] The decode phase of LLM inference is a much slower autoregressive process than prefill, in which tokens are generated one at a time.
+M021 [S08] No draft models have access to the hidden-state information that LLMs accumulate during inference.
+M022 [S02] Quantization is more a binary decision than a scale.
+M023 [S13] On a B200 GPU with 180 GB of VRAM where 100 GB is used for model weights and buffers, the configuration shown would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+M024 [S05] At higher batch sizes, every form of speculation, including n-gram, must be dynamically disabled as compute is too saturated to afford verification.
+M025 [S08] Traditional draft models do not provide the hidden-state information that LLMs accumulate during inference.
