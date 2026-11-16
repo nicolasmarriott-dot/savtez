@@ -1,0 +1,25 @@
+SAVTEZ RELAY v3 ON FINANCEBENCH RESULT 2026-11-14 (spec: SPEC_relay-v3-financebench_2026-11-14.txt, bars fixed before the run)
+Run: six FinanceBench questions (Activision, Amazon, Corning, General Mills, CVS, Adobe; two evidence pages each plus neighbours),
+ plain vs v3, 5 Haiku hops, return-once for rejected lines (7 returns over the run) and for judgment-checker flags at hop 5 (4 flags).
+ Gate passed before the run: code reproduced all six benchmark answers from store cells.
+FINAL ANSWERS: plain 6 of 6, v3 6 of 6 correct (every v3 answer computed by code from cited cells; every plain hop-1 agent already
+ had the right answer and every later hop kept it).
+ERRORS (blind)      Opus    Checker A
+ plain               3       1      (two input-count slips; "inventory sign is a judgement"; wrong page numbers for CVS)
+ v3                  4       2      (Activision PP&E labelled "Current assets"; Adobe operating cash under "assumed liabilities")
+BARS: counts only if plain errors >= 4: FAIL under both scorers, so the run does not count. Correct answers v3 >= plain - 1: PASS.
+ Silent drops 0: PASS.
+WHAT IT SHOWS
+ 1. Every v3 error came from one bug in the store builder (cells.py kept a section heading past "Total current assets" and across
+    statement blocks). The agents described the wrong labels faithfully. One bad store entry reached every brief that used it:
+    the systematic failure mode of a shared store, seen in practice. The gate checked values, not labels; a store gate must check
+    every field a sentence carries.
+ 2. On single-computation questions, a plain Haiku relay does not drift over 5 hops: the answer is fixed at hop 1 and carried.
+    The last two relay setups (relay v2 on the book, this run on filings) could not make the plain arm reach 4 errors; only the
+    3-hop pointer run A this morning did (plain 5).
+ 3. Code arithmetic held where an agent's own did not: one v3 hop-3 agent's hand check said 63.85; code gave 63.86 (benchmark 63.86).
+ 4. Cost: v3 hops re-listed a DROP line for every store fact at every hop (up to 293 lines), far more output tokens than plain.
+    The ledger must carry forward drops by code, not by agents rewriting them.
+ 5. The hop-5 checker's flags: 3 of 4 were "the question isn't in the evidence" (the checker was not shown the question). Design fix:
+    the checker sees the question.
+Files: SPEC, RESULT, cells.py, relay_fb.py (claude/POINTER/FB/). Briefs, scores and hop files stay in the session.

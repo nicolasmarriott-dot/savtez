@@ -1,0 +1,11 @@
+POINTER-CHAIN TEST v1, RUN B (DeepSeek finder, Haiku condenser and writer, 3 hops, no reader) RESULT 2026-11-14
+Same spec, questions, prompts and blind scorer setup as run A. Hop 1 by DeepSeek (TO-AI_hop1-finder file), hops 2-3 Haiku.
+ERRORS (blind): plain 3 (Q4 2, Q2 1). Pointer 1 (Q3: "lifts throughput"; the source says speculation lowers throughput, it raises per-user TPS/ITL).
+SET POINTS (of 20): plain 16 (Q1 4, Q2 4, Q3 5, Q4 3). Pointer 18 (Q1 5, Q2 4, Q3 5, Q4 4).
+BARS: plain errors 3 < 4, so run B alone does not count. Pooled with run A: plain 8 errors, pointer 1 (bar: pointer <= half, PASS);
+ coverage pointer 35 vs plain 33 (PASS). Checker precision 0 of 4 flags again, and it missed the one pointer error (a relation word, no number). FAIL.
+PLAIN ERRORS: "G4 is the only tier shared across replicas" (not in source); "savings are only an absolute thousands of tokens" (turned "can skip thousands" into a cap);
+ "custom product evals, the decisive test" (source says run all three checks).
+DeepSeek hop 1: every pointer claim checked against its passages by code; no number mismatches (two false flags were digits inside "FP8", checker fixed).
+CHECKER VERDICT: numbers are not where these errors live. All 9 errors across both runs were relation, scope or add-ons; 1 involved arithmetic.
+ Keep the number check as a hard gate only for NUM mismatches; drop NO-CITE/DERIVED/QUAL as flags.

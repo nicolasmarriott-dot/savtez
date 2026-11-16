@@ -1,0 +1,24 @@
+SAVTEZ SPAN CUTTER TEST v0 RESULT 2026-11-14 (spec: SPEC_cutter-test-v0_2026-11-14.txt, bars fixed before the run)
+Run: spaCy en_core_web_sm cutter (cutter.py) on P1-P254 after normalization (soft-hyphen chars removed, P130/P131 rejoined);
+Haiku merge on the 157 parser-flagged spans and the 5 tables (apply_merge.py; code verified no text changed); blind Opus hand-check of 228
+items (60 random fact spans, seed 20261114; all merged spans; 36 table cells).
+PARTITION: every character of the source is in exactly one span (code check passed). 444 spans, 353 facts after merge, Haiku split only 7.
+BARS
+ Random-sample fault rate <= 5%: FAIL. 20 of 60 (33%): multi-fact 6, unreadable 8, wrong relation 7, scope lost 0.
+   Of the 20, 5 are plain cutter bugs fixable in code (relation edges with empty targets or pointing at IDs that were later split),
+   2 are empty figure labels. The rest (13 of 60, 22%) are parser limits: unresolved this/it/these, appositive and relative-clause
+   second facts, missing contrast links.
+ Scope words lost = 0: PASS. Every governing qualifier sat in the span or its scope field.
+ Table cells with correct header = all: FAIL. Number-format and memory-tier tables clean (36 of 36). The three GPU tables failed:
+   Haiku read the header as 3 columns (GPU, FP8 compute (dense), Memory Bandwidth) against 4 values per row; code caught the
+   count mismatch and bound nothing. Extracted text cannot show whether "Memory Bandwidth" is one column or two.
+ Mechanical flags catch >= 0.8 of hand-found faults: PASS. 45 of 52 (0.87). Precision is low (13 of 37 flagged random spans faulty).
+ D08 (precision bound to every compute figure): FAIL, follows from the GPU-table failure.
+VERDICT (rule fixed in the spec): parser metadata is not enough. The once-per-source checked rewrite (frozen sentence per span,
+ the outside checker's conditions) becomes the candidate.
+WHAT CARRIES OVER: code holds scope words without loss; code flags find most faults; partition by construction works. What the parser
+ can't do is the work a rewrite does: resolve referents, split appositives, state relations, read tables.
+DESIGN FIXES FOR ANY NEXT CUT: header count must equal cell count or the table returns "infeasible"; better, read tables from the PDF
+ layout, not extracted text. Relation edges re-pointed after any split. Context slice drawn from the previous passage too.
+Source note: the book gives B200 as 192 GB in its table and 180 GB of VRAM in its KV-cache example (P224); a source discrepancy, not ours.
+Files: cutter.py, apply_merge.py, this spec and result (claude/POINTER/). Span outputs and hand-check JSON stay in the session.

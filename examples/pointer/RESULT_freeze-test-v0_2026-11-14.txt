@@ -1,0 +1,32 @@
+SAVTEZ FREEZE TEST v0 RESULT 2026-11-14 (spec: SPEC_freeze-test-v0_2026-11-14.txt, bars fixed before the run)
+Run: Sonnet froze 353 spans and the five tables (one stand-alone sentence per span or cell, or "infeasible"; window = passage, previous
+passage, list lead). Code checks: freeze_check.py (closed-list diff and word provenance). Blind Opus hand check of 60 random frozen
+sentences (seed 20261114) plus the 18 GPU-table cells. Mutation test: 25 hand-check-passed sentences, Sonnet wrote one mutant per type
+(comparative, hedge, referent, agency, scope) plus 25 unmutated controls, 150 items shuffled (seed 20261114). Checkers: code, Haiku, Opus,
+Checker A (model family unconfirmed). One file: TO-AI_mutation-check_2026-11-14.txt.
+FREEZE BARS
+ Freeze error rate <= 5%: PASS. 1 of 60. The freezer "corrected" the source's "NVIDIA Grace GPUs" (P50) to "Grace CPUs". Code caught it
+   (entity lost).
+ Infeasible <= 15%: PASS. 9 of 353 (2.5%): empty figure labels, a split Pi table, bare fragments.
+ D08: PASS. All six GPU compute cells say "FP8 compute (dense)". The freezer read "Memory Bandwidth" as two columns (correct; both exact
+   substrings); every cell's row, header and value are exact substrings of the table lines (code check).
+ Code flags catch >= 0.8 of hand-found freeze errors: PASS (1 of 1).
+MUTATION BARS (caught / 25 per type)
+             code  Haiku  Opus  Checker A   missed by every checker
+ comparative  24    25     25    25        0
+ hedge        19    24     23    24        1 (M009: "always" added to the E4M3 definition, which is true by definition; arguably no error)
+ referent     19    25     25    25        0
+ agency       20    22     25    25        0
+ scope        24    24     24    25        0
+ Shared miss <= 10% per type: PASS (at most 1 of 25, 4%).
+ Controls, false alarms <= 10% per checker: Haiku 0, Opus 0, Checker A 0 PASS; code 6 of 25 (24%) FAIL. Code is a first screen, never the
+   only check.
+VERDICT: the frozen rewrite replaces parser metadata as the span render in v2 (rule fixed in the spec). Pipeline: code cuts spans and
+ keeps typed fields; one model freezes each span once (or returns infeasible); code diff screens; a model checker judges both directions.
+LIMIT OF THIS TEST: every checker caught nearly every planted mutant, so the test is near ceiling and cannot measure shared blind spots.
+ The mutants were written to a recipe by a Claude model. Next mutation set should be the real errors from the pointer-chain runs
+ (13 relay errors: "the leading tool", the KVBM agency shift, the dropped table header and the rest), planted into frozen sentences.
+ Checker A's model family is unconfirmed, so this is not yet a confirmed cross-family result.
+DEPARTURE FROM SPEC: the relation-edge and context-slice code fixes were not applied; the freezer saw the full window instead, which made
+ them moot for this test. Checker A replaced Grok as the outside checker. Opus added as a second Claude checker.
+Files: SPEC and RESULT, freeze_check.py, score_mut.py (claude/POINTER/). Frozen sentences, mutants and checker outputs stay in the session.

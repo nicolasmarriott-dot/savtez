@@ -1,0 +1,16 @@
+SAVTEZ JUDGMENT CHECK v0 RESULT 2026-11-14 (spec: SPEC_judgment-check-v0_2026-11-14.txt, bars fixed before the run)
+Run: 25 accepted JUDGE lines from the four relay-v2 hop-5 briefs, each with its cited frozen facts; code absence check fired on one line
+ (Q1 L11) and attached 15 store facts ranked by rare shared entities, including the B200 and B300 FP8 compute cells. One Haiku checker.
+GATE: both lines the two blind scorers counted as errors were caught: PASS.
+ Q1 L11 "the record gives no FP8 compute figure for them": caught, citing the attached B200/B300 cells (~5 petaFLOPS).
+ Q1 L15 "Serving across GPUs needs NVLink": caught ("needs" stronger than "efficient parallelism").
+ Q4 L3 (Opus-only error, not scored): passed by the checker.
+FALSE ALARMS on the 22 clean lines <= 2: FAIL, 4 (18%).
+ Q1 L6 and Q2 L2: true in the source but under-cited (the line's own citations don't carry the point).
+ Q1 L14 ("poor fit" for all Lovelace from an L40 fact) and Q1 L17 ("broadest" support from "among the most widely used"): overstatements
+ the blind scorers let pass. The checker is stricter than the scorers.
+VERDICT (rule fixed in the spec): the checker is not trusted in v3 as a blocking gate.
+READING: every flag was either a real overstatement or a citation that doesn't carry its claim; none was noise. The absence check
+ worked exactly as designed. In a pipeline where a flag sends the line back to its writer once, a false alarm costs one rewrite of one
+ line and a miss costs a wrong brief, so the right use is return-once, not block; a bar for that use must be fixed before its own test.
+Files: SPEC, RESULT (claude/POINTER/). Checker input and output stay in the session.

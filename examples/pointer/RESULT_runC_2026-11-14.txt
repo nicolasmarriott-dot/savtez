@@ -1,0 +1,14 @@
+POINTER-CHAIN TEST v1, RUN C (Haiku finder and condenser, DeepSeek writer, 3 hops, no reader) RESULT 2026-11-14
+Hop-2 inputs are run A's. DeepSeek wrote both arms in one chat from separate inputs (TO-AI_hop3-writer file). Blind Opus scorer, seed 20261114.
+ERRORS (blind): plain 2 (Q1: "one byte per parameter, 70B needs 70 GB", carried from run A's plain hop 2; Q2: "the leading tool" for "a leading tool").
+ Pointer 1 (Q1: "the passages don't state the precision behind these ratings"; the cited row passages P19 and P36 were cut from their table headers P17/P35 that say FP8 dense).
+SET POINTS (of 20): plain 18, pointer 17.
+BARS: plain 2 < 4, so run C alone does not count. Pooled A+B+C: plain 10 errors, pointer 2 (PASS); coverage plain 51, pointer 52 of 60 (PASS).
+NEW FAULT, FIXED BY DESIGN: a table row cut as its own passage loses its column headers. The passage cutter must attach the table header to every row passage.
+Cross-scorer check pending: the same eight blind briefs sent to DeepSeek in a fresh chat (TO-AI_blind-scorer file).
+CROSS-SCORER (a Grok Bot, model unconfirmed, possibly Opus underneath; same blind briefs): plain 2 errors, pointer 2. Agrees with Opus on 3 of 4 errors.
+ Extra pointer error found by the bot only: "Dynamo's KVBM keeps frequent blocks in faster memory" (P239: KVBM moves blocks; keeping hot blocks fast is the engineer's rule). Valid.
+ The bot was stricter on coverage: plain 14, pointer 15 of 20 (Opus 18 vs 17).
+ Pooled A+B+C with this score: plain 10, pointer 3.
+READING: pointers stop errors carried along the chain (the 70B add-on survived two hops in plain). They don't stop a writer misreading a passage it holds:
+ both run-C pointer errors are fresh misreadings at the last hop (a dropped table header, a misattributed action). That is the reader's job, aimed at relation and attribution words in the final output only.

@@ -1,0 +1,27 @@
+SAVTEZ RELAY v2 RESULT 2026-11-14 (spec: SPEC_relay-v2_2026-11-14.txt, bars fixed before the run)
+Run: Haiku at every hop, 5 hops, Q1-Q4, plain vs v2 (frozen-sentence store, FACT/JUDGE/DROP lines, code render, ledger).
+Blind scorers: Opus (fresh agent) and Checker A (model family unconfirmed); 8 briefs shuffled with seed 20261114.
+ERRORS          Opus           Checker A
+ plain           2 (Q1, Q2)     2 (Q1, Q2)
+ v2              3 (Q1 x2, Q4)  2 (Q1 x2)
+ Both scorers: plain Q1 drops "up to" on B200's 8 TB/s; plain Q2 keeps integer formats in play against the source; v2 Q1 says the
+ record gives no FP8 compute figure for Blackwell (it gives ~5 PFLOPS) and that serving across GPUs needs NVLink (Lovelace can still
+ parallelize, inefficiently). Opus alone: v2 Q4 "size the cache to the hit rate you need" (Checker A: advice, not a claim).
+SET POINTS (of 20): Opus plain 8, v2 8; Checker A plain 10, v2 11.
+BARS: test counts only if plain errors >= 4: FAIL (2 by both scorers), so the run does not count. Coverage loss <= 1 per question: PASS.
+ Silent drops = 0: FAIL (Q1 F22, F89, F91, F92; Q2 F141; Q3 F84; Q4 F78).
+WHAT IT SHOWS (design faults, all three in the judgment channel)
+ 1. Writers and condensers put facts into JUDGE lines instead of FACT lines. JUDGE allows no numbers, so the figures fell out; the
+    judgment channel became the rewrite channel. Q2-Q4 v2 briefs carried no fact sentences at all. Fix: the brief must carry its key
+    facts as code-rendered FACT lines (enforced: each JUDGE line's cited facts render with it).
+ 2. Every v2 error sits in a JUDGE line. The worst is an absence claim: hop 2 dropped the Blackwell compute cells as "background", the
+    ledger recorded it, no later hop saw it, and hop 4 reasoned "no figure in the record". Fix: any absence claim ("not stated", "no
+    figure", "unmeasured") is checked by code against the full store and the drop list; the drop list travels with the chain.
+ 3. Most silent drops came from code deleting a rejected JUDGE line along with the only citation of its facts, plus IDs both dropped
+    and cited at one hop. Fix: a rejected line goes back to the agent once; never deleted; drop-and-cite at one hop is a format error.
+ Plain arm at 5 hops on Haiku made fewer errors than the 3-hop runs A-C; this chain style (structured notes, no figures demanded)
+ gives the plain arm little room to err, so the setting must change before another relay can count.
+DEPARTURE FROM SPEC: after hop 2, the renderer was fixed to also show the text of facts cited only inside JUDGE lines (before the fix
+ hop 3 would have seen bare IDs). Applied to all v2 chains from hop 2 on, before any hop-3 agent ran.
+Two hop agents scheduled stray "placeholder" reminders into the session (fired, finished, no effect).
+Files: SPEC, RESULT, relay.py (claude/POINTER/). Hop transcripts and briefs stay in the session.

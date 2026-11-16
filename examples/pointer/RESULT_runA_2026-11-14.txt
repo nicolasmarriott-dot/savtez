@@ -1,0 +1,12 @@
+POINTER-CHAIN TEST v1, RUN A (Haiku, 3 hops, 4 questions) RESULT 2026-11-14
+Spec: claude/POINTER/SPEC_pointer-chain-v1_2026-11-14.txt (fixed before the run). Blind scorer: fresh Opus agent, tags stripped, seed 20261114.
+ERRORS (blind): plain 5 (Q1 3, Q3 1, Q4 1, Q2 0). Pointer before reader 0. Pointer after reader 0.
+SET POINTS (of 20): plain 17 (Q1 4, Q2 3, Q3 5, Q4 5). Pointer before reader 18 (4,4,5,5). Pointer after reader 17 (4,4,5,4).
+BARS: plain >=4 errors, so the test counts (PASS). Pointer errors <= half of plain: 0 vs 5 (PASS). Coverage loss <= 1 per question: worst is Q4 after reader, -1 (PASS).
+ Checker flag precision >= 0.7: FAIL, 0 of 2 (one uncited recommendation sentence, one correct derived figure 288/192 = 50% flagged for a relation look).
+PLAIN ERRORS: Q1 added an outside rule (one byte per parameter, 70B needs 70 GB) and a fit verdict built on it; Q1 computed 67% more bandwidth from B200's "up to 8 TB/s" ceiling;
+ Q3 dropped "often" from EAGLE under 1B params; Q4 turned "can start to emerge past 32K/64K/128K" and "can become the main consumer of VRAM" into flat fact.
+WHAT IT SHOWS: the gain came from the cited passages travelling with each claim at every hop, not from the reader. The reader cut one true set point in Q4 (sentences it judged miscited) and fixed nothing the scorer counted.
+LIMITS: one model family (Haiku), one run, 3 hops, 4 questions. One blind file (Q2 pointer final) kept SOURCE lines, so the scorer could tell its arm; it scored the brief line only.
+ Checker fixtures: 36 vs 35 caught, 10 inside 2010 caught, 27 vs 27.03 and 44 vs 44.2 pass, 3.42 times vs 3.42x passes, 100K vs 100,000 passes.
+NEXT: rerun with Sonnet/Opus/DeepSeek writers and 5 hops; drop the reader stage or make it flag-only; checker flags only hard mismatches (NUM), relations go to a list, not counted as flags.
