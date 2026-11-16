@@ -1,0 +1,67 @@
+
+Task: you are checking sentences for faithfulness to a source. Each item is one sentence meant to say exactly what its source span says, read in its context. Some items are correct; others contain one subtle change of meaning. Judge each item on its own.
+For each item answer two questions separately: (1) Does the source span, read in its context, support everything the sentence says (nothing stronger, wider, added, or attributed to the wrong thing)? (2) Does the sentence keep everything material the span says (qualifiers, negations, comparisons, conditions, who does what)?
+Output one line per item, nothing else, in this exact form: M001 | supported: yes/no | keeps: yes/no | ok: yes/no | reason if any no (max 12 words)
+Cover all 150 items in order. English only. Do not skip items or summarize.
+
+SOURCES
+[S01] SPAN: The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+
+[S02] SPAN: quantization is a scale, not a binary decision.
+
+[S07] SPAN: During inference, LLMs accumulate a lot of context about the predicted tokens in the form of hidden states between layers.
+
+[S09] SPAN: The advantage of n-gram speculation versus EAGLE is that the sequences can be much longer.
+
+[S10] SPAN:  Lookahead Decoding is more general than n-gram speculation as it doesn’t rely as much on highly repetitive context, but it requires extra compute to generate the n-grams.
+
+[S11] SPAN: By default, the inference engine has to run prefill on all four tokens of each prompt.
+
+[S13] SPAN: If you’re working on a B200 GPU with 180 GB of VRAM and used 100 GB for model weights and buffers, this would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+
+[S14] SPAN: Figure 5.10: Cache-aware routing allocates traffic based on KV cache rather than simply dividing requests evenly across replicas.
+
+[S17] SPAN: The B200 and B300 are the new gold standard for inference, offering the highest performance for large language models and demanding workloads like video generation.
+
+[S18] SPAN: The Rubin architecture uses HBM4, an upgrade from the HBM3 and HBM3e that has powered the last few generations of GPUs.
+
+[S19] SPAN: Quantization improves latency (both TTFT and TPS), increases system throughput, and opens up headroom for other optimizations like disaggregation, speculation, and prefix caching to be even more effective.
+
+[S20] SPAN: when it goes wrong, quantization can materially reduce the model’s output quality.
+
+[S21] SPAN: Quantization introduces a new collection of essential terms and abbreviations.
+
+[S22] SPAN: FP32 is sometimes used for training, but almost never for inference.
+
+[S23] SPAN: • Scale factor: A multiplier used to map values from a low-precision format back to the higher-precision format.
+
+[S24] SPAN: On the other hand, the lettering for architecture is very meaningful.
+
+[S25] SPAN: An FP8 number in a E4M3 data format means it has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+
+ITEMS
+M101 [S14] Figure 5.10 shows that load balancing in general allocates traffic based on KV cache rather than simply dividing requests evenly across replicas.
+M102 [S22] FP32 is sometimes used for training, but more often for inference than for training.
+M103 [S07] During inference, LLMs pass a lot of context about the predicted tokens to draft models in the form of hidden states between layers.
+M104 [S13] On any GPU where 100 GB is used for model weights and buffers, the configuration shown would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+M105 [S09] The advantage of n-gram speculation versus EAGLE is that the target model can verify much longer sequences.
+M106 [S11] By default, the user has to run prefill on all four tokens of each prompt.
+M107 [S21] Quantization introduces more essential terms and abbreviations than any other optimization.
+M108 [S07] During inference, LLMs accumulate a lot of context about the predicted tokens in the form of hidden states between layers.
+M109 [S25] An FP8 number in a E4M3 data format uses its 4-bit exponent and 3-bit mantissa to set the remaining bit for the sign.
+M110 [S21] Speculative decoding introduces a new collection of essential terms and abbreviations.
+M111 [S19] Quantization improves latency (both TTFT and TPS), increases system throughput, and is made even more effective by other optimizations like disaggregation, speculation, and prefix caching.
+M112 [S23] The type of a number format is a multiplier used to map values from a low-precision format back to the higher-precision format.
+M113 [S10] Lookahead Decoding requires less compute than n-gram speculation to generate the n-grams.
+M114 [S01] The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization, but more than the compute overhead does.
+M115 [S02] Distillation is a scale, not a binary decision.
+M116 [S23] The scale factor of a number format is a multiplier the higher-precision format applies to map its values onto the low-precision format.
+M117 [S21] Quantization introduces a new collection of terms and abbreviations, every one of them essential.
+M118 [S11] By default, the inference engine has to run prefill on fewer than four tokens of each prompt.
+M119 [S18] The Rubin architecture produces HBM4, an upgrade from the HBM3 and HBM3e that has powered the last few generations of GPUs.
+M120 [S20] When it goes wrong, quantization can materially reduce the output quality of every model.
+M121 [S24] In GPU names, the numbering for architecture is very meaningful.
+M122 [S17] The B200 and B300 are the new gold standard for inference, offering the highest performance for large language models and demanding workloads like video generation.
+M123 [S25] An FP8 number in a E4M3 data format has a 3-bit exponent and a 4-bit mantissa, with the remaining bit for the sign.
+M124 [S23] The scale factor of any number format is a multiplier used to map values from a low-precision format back to the higher-precision format.
+M125 [S22] FP64 is sometimes used for training, but almost never for inference.

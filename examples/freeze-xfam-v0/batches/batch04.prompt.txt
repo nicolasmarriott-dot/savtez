@@ -1,0 +1,65 @@
+
+Task: you are checking sentences for faithfulness to a source. Each item is one sentence meant to say exactly what its source span says, read in its context. Some items are correct; others contain one subtle change of meaning. Judge each item on its own.
+For each item answer two questions separately: (1) Does the source span, read in its context, support everything the sentence says (nothing stronger, wider, added, or attributed to the wrong thing)? (2) Does the sentence keep everything material the span says (qualifiers, negations, comparisons, conditions, who does what)?
+Output one line per item, nothing else, in this exact form: M001 | supported: yes/no | keeps: yes/no | ok: yes/no | reason if any no (max 12 words)
+Cover all 150 items in order. English only. Do not skip items or summarize.
+
+SOURCES
+[S01] SPAN: The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+
+[S03] SPAN: The decode phase of LLM inference is an autoregressive process in which tokens are generated one at a time.
+
+[S04] SPAN: 2. Draft sequence length: The number of draft tokens that are generated per forward pass.
+
+[S05] SPAN: At higher batch sizes, speculative decoding must be dynamically disabled as compute is too saturated to afford verification.
+
+[S06] SPAN: As a rule of thumb, the draft model should be at least ten times smaller by parameter count than the target model.
+
+[S08] SPAN: Traditional draft models don’t have access to this information.
+
+[S10] SPAN:  Lookahead Decoding is more general than n-gram speculation as it doesn’t rely as much on highly repetitive context, but it requires extra compute to generate the n-grams.
+
+[S11] SPAN: By default, the inference engine has to run prefill on all four tokens of each prompt.
+
+[S12] SPAN: the first tokens of each prompt – “Weather in” – form a shared prefix between the pair.
+
+[S13] SPAN: If you’re working on a B200 GPU with 180 GB of VRAM and used 100 GB for model weights and buffers, this would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+
+[S15] SPAN: Another option is using the G4 networked storage to build a global KV cache across replicas.
+
+[S16] SPAN: Foundation model labs have been using scaling techniques like RoPE to unlock longer and more accurate context windows.
+
+[S19] SPAN: Quantization improves latency (both TTFT and TPS), increases system throughput, and opens up headroom for other optimizations like disaggregation, speculation, and prefix caching to be even more effective.
+
+[S20] SPAN: when it goes wrong, quantization can materially reduce the model’s output quality.
+
+[S24] SPAN: On the other hand, the lettering for architecture is very meaningful.
+
+[S25] SPAN: An FP8 number in a E4M3 data format means it has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+
+ITEMS
+M076 [S10] Lookahead Decoding and n-gram speculation both require extra compute to generate the n-grams.
+M077 [S03] The prefill phase of LLM inference is an autoregressive process in which tokens are generated one at a time.
+M078 [S05] At higher batch sizes, speculative decoding saturates compute, so verification must be dynamically disabled.
+M079 [S20] Quantization will materially reduce a model's output quality.
+M080 [S12] The first tokens of every prompt, “Weather in,” form a shared prefix across all requests.
+M081 [S03] The decode phase of LLM inference is an autoregressive process in which tokens are always generated one at a time.
+M082 [S11] By default, the inference engine has to run prefill on all four tokens of each prompt.
+M083 [S15] Another option is using the G4 networked storage to build a global KV cache across all clusters and regions.
+M084 [S13] On a B200 GPU with 180 GB of VRAM where 100 GB is used for model weights and buffers, the configuration shown would allocate 80 percent of the remaining VRAM, or 64 GB, to model weights.
+M085 [S01] The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+M086 [S16] Foundation model labs have been using scaling techniques like speculative decoding to unlock longer and more accurate context windows.
+M087 [S08] Traditional draft models do not have access to the hidden-state information that LLMs accumulate during inference.
+M088 [S20] When it goes wrong, quantization can materially reduce a model's output quality.
+M089 [S01] The tradeoff to a microscaling format is that the small-block scale factor must also be applied by the hardware, slightly reducing the performance gains from quantization.
+M090 [S11] By default, the inference engine has to run prefill on every token of every prompt, however long.
+M091 [S25] An FP8 number in a E4M3 data format has a 4-bit exponent and a 3-bit mantissa, with the remaining bit for the sign.
+M092 [S24] In GPU names, the lettering for architecture is the only meaningful part.
+M093 [S24] In GPU names, the lettering for architecture is very meaningful.
+M094 [S11] By default, the inference engine has to run decode on all four tokens of each prompt.
+M095 [S15] Another option is using the G1 memory tier to build a global KV cache across replicas.
+M096 [S04] One of three factors that the performance uplift from any speculative decoding strategy depends on is draft token cost, the number of draft tokens that are generated per forward pass.
+M097 [S19] Quantization improves latency (both TTFT and TPS), increases system throughput, and opens up headroom for other optimizations like disaggregation, speculation, and prefix caching to be even more effective.
+M098 [S05] At higher batch sizes, speculative decoding is permanently disabled as compute is too saturated to afford verification.
+M099 [S06] As a rule of thumb, the target model should be at least ten times smaller by parameter count than the draft model.
+M100 [S01] The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, significantly reducing the performance gains from quantization.
