@@ -1,0 +1,150 @@
+M001 | supported: no | keeps: yes | ok: no | adds GPUs forcing FP32; source says only used
+M002 | supported: no | keeps: yes | ok: no | "most" overstates "a lot"
+M003 | supported: yes | keeps: yes | ok: yes
+M004 | supported: no | keeps: no | ok: no | "every model developer" replaces foundation model labs
+M005 | supported: no | keeps: no | ok: no | claims more even division; source contrasts with even division
+M006 | supported: no | keeps: yes | ok: no | adds routing irrelevant; context says routing still matters
+M007 | supported: no | keeps: no | ok: no | Medusa substituted for traditional draft models
+M008 | supported: yes | keeps: yes | ok: yes
+M009 | supported: yes | keeps: yes | ok: yes
+M010 | supported: no | keeps: no | ok: no | global scale factor substituted for small-block scale factor
+M011 | supported: no | keeps: no | ok: no | reverses: lettering is very meaningful, numbering somewhat arbitrary
+M012 | supported: no | keeps: no | ok: no | "always" replaces "can be"
+M013 | supported: no | keeps: no | ok: no | "on par with Hopper" replaces highest performance
+M014 | supported: no | keeps: yes | ok: no | adds "to any bit width"
+M015 | supported: no | keeps: no | ok: no | E5M2 substituted for E4M3
+M016 | supported: no | keeps: no | ok: no | frees VRAM from KV cache; source allocates to it
+M017 | supported: no | keeps: yes | ok: no | adds every step costs quality; source says lower risk
+M018 | supported: yes | keeps: yes | ok: yes
+M019 | supported: yes | keeps: yes | ok: yes
+M020 | supported: no | keeps: yes | ok: no | adds "much slower than prefill"
+M021 | supported: no | keeps: no | ok: no | "no draft models" drops "traditional"
+M022 | supported: no | keeps: no | ok: no | reverses scale versus binary decision
+M023 | supported: yes | keeps: yes | ok: yes
+M024 | supported: no | keeps: yes | ok: no | explicitly extends to every form including n-gram
+M025 | supported: no | keeps: no | ok: no | "do not provide" replaces "don't have access"
+M026 | supported: no | keeps: no | ok: no | Blackwell substituted for Rubin
+M027 | supported: no | keeps: no | ok: no | "less accurate" contradicts "more accurate"
+M028 | supported: no | keeps: yes | ok: no | adds "only multiplier"
+M029 | supported: no | keeps: yes | ok: no | 64 GB is less than 100 GB weights and buffers
+M030 | supported: no | keeps: yes | ok: no | adds "longer always better"; context says aim for short
+M031 | supported: no | keeps: no | ok: no | reverses cache and storage relation
+M032 | supported: no | keeps: no | ok: no | reverses: quantization introduces the terms
+M033 | supported: no | keeps: no | ok: no | "less access" replaces no access
+M034 | supported: no | keeps: yes | ok: no | adds "always"
+M035 | supported: no | keeps: no | ok: no | "at most" replaces "at least"
+M036 | supported: no | keeps: yes | ok: no | adds "modest"
+M037 | supported: no | keeps: yes | ok: no | adds "and training"
+M038 | supported: no | keeps: no | ok: no | swaps disaggregation and quantization
+M039 | supported: no | keeps: no | ok: no | H100 and H200 substituted for B200 and B300
+M040 | supported: no | keeps: no | ok: no | inference engines at serving time replace foundation model labs
+M041 | supported: no | keeps: no | ok: no | "must" drops "rule of thumb, should"
+M042 | supported: no | keeps: no | ok: no | draft models substituted for LLMs
+M043 | supported: no | keeps: yes | ok: no | adds "substantial"
+M044 | supported: no | keeps: no | ok: no | reverses mapping direction
+M045 | supported: yes | keeps: yes | ok: yes
+M046 | supported: no | keeps: no | ok: no | "sets a scale" changes "is a scale"
+M047 | supported: no | keeps: no | ok: no | "any inference optimization" replaces speculative decoding
+M048 | supported: no | keeps: yes | ok: no | "can never access" stronger than "don't have access"
+M049 | supported: no | keeps: no | ok: no | "optimization in general" replaces quantization
+M050 | supported: no | keeps: no | ok: no | prefix caching substituted for cache-aware routing
+M051 | supported: no | keeps: yes | ok: no | draft tokens attributed to target model
+M052 | supported: no | keeps: no | ok: no | "less effective" contradicts "even more effective"
+M053 | supported: no | keeps: no | ok: no | "models of all kinds" replaces LLMs
+M054 | supported: no | keeps: yes | ok: no | adds "undisputed"
+M055 | supported: no | keeps: no | ok: no | "every generation" replaces "last few generations"
+M056 | supported: yes | keeps: yes | ok: yes
+M057 | supported: no | keeps: no | ok: no | swaps traffic and KV cache
+M058 | supported: yes | keeps: yes | ok: yes
+M059 | supported: no | keeps: no | ok: no | "every optimization technique" replaces quantization
+M060 | supported: yes | keeps: yes | ok: yes
+M061 | supported: no | keeps: no | ok: no | "better option" replaces "another option"
+M062 | supported: no | keeps: no | ok: no | "every number format" replaces microscaling format
+M063 | supported: no | keeps: no | ok: no | "all other speculation methods" replaces EAGLE
+M064 | supported: yes | keeps: yes | ok: yes
+M065 | supported: no | keeps: no | ok: no | "all model types" replaces LLM
+M066 | supported: no | keeps: no | ok: no | says draft model shrinks target; wrong relation
+M067 | supported: no | keeps: no | ok: no | "guarantee" replaces "depends on"
+M068 | supported: no | keeps: no | ok: no | "shorter" contradicts "longer"
+M069 | supported: no | keeps: no | ok: no | engine "splits" replaces tokens "form" a prefix
+M070 | supported: no | keeps: no | ok: no | "suffix" substituted for "prefix"
+M071 | supported: no | keeps: yes | ok: no | "all of the context" overstates "a lot"
+M072 | supported: no | keeps: yes | ok: no | adds model reducing its own quality; agency shift
+M073 | supported: no | keeps: yes | ok: no | adds scientific computing for FP32; that is FP64
+M074 | supported: no | keeps: no | ok: no | swaps EAGLE and n-gram
+M075 | supported: no | keeps: yes | ok: no | adds "more than any other optimization"
+M076 | supported: no | keeps: yes | ok: no | adds n-gram needing extra compute; context implies not
+M077 | supported: no | keeps: no | ok: no | prefill substituted for decode
+M078 | supported: no | keeps: no | ok: no | reverses cause: compute saturation disables speculation
+M079 | supported: no | keeps: no | ok: no | "will" drops "when it goes wrong" and "can"
+M080 | supported: no | keeps: no | ok: no | "every prompt, all requests" replaces the example pair
+M081 | supported: no | keeps: yes | ok: no | adds "always"; context: speculation yields multiple tokens
+M082 | supported: yes | keeps: yes | ok: yes
+M083 | supported: no | keeps: no | ok: no | "all clusters and regions" replaces replicas
+M084 | supported: no | keeps: no | ok: no | allocates to model weights, not KV cache
+M085 | supported: yes | keeps: yes | ok: yes
+M086 | supported: no | keeps: no | ok: no | speculative decoding substituted for RoPE
+M087 | supported: yes | keeps: yes | ok: yes
+M088 | supported: yes | keeps: yes | ok: yes
+M089 | supported: no | keeps: no | ok: no | "applied by the hardware" replaces "stored in memory"
+M090 | supported: no | keeps: no | ok: no | "every token, however long" replaces four tokens
+M091 | supported: yes | keeps: yes | ok: yes
+M092 | supported: no | keeps: yes | ok: no | "only meaningful part"; numbering also carries meaning
+M093 | supported: yes | keeps: yes | ok: yes
+M094 | supported: no | keeps: no | ok: no | decode substituted for prefill
+M095 | supported: no | keeps: no | ok: no | G1 substituted for G4
+M096 | supported: no | keeps: no | ok: no | draft token cost mislabels draft sequence length definition
+M097 | supported: yes | keeps: yes | ok: yes
+M098 | supported: no | keeps: no | ok: no | "permanently" replaces "dynamically"
+M099 | supported: no | keeps: no | ok: no | reverses draft and target sizes
+M100 | supported: no | keeps: no | ok: no | "significantly" replaces "slightly"
+M101 | supported: no | keeps: no | ok: no | "load balancing in general" replaces cache-aware routing
+M102 | supported: no | keeps: no | ok: no | claims more inference use; source says almost never
+M103 | supported: no | keeps: no | ok: no | "pass to draft models" replaces "accumulate"
+M104 | supported: no | keeps: no | ok: no | "any GPU" drops B200 with 180 GB
+M105 | supported: no | keeps: no | ok: no | verification length replaces draft sequence length
+M106 | supported: no | keeps: no | ok: no | user substituted for inference engine
+M107 | supported: no | keeps: no | ok: no | "more than any other" replaces "new collection"
+M108 | supported: yes | keeps: yes | ok: yes
+M109 | supported: no | keeps: no | ok: no | invents relation: exponent and mantissa set sign bit
+M110 | supported: no | keeps: no | ok: no | speculative decoding substituted for quantization
+M111 | supported: no | keeps: no | ok: no | reverses which optimization enables which
+M112 | supported: no | keeps: no | ok: no | type substituted for scale factor
+M113 | supported: no | keeps: no | ok: no | says less compute; context says Lookahead needs extra
+M114 | supported: no | keeps: yes | ok: no | adds comparison with compute overhead
+M115 | supported: no | keeps: no | ok: no | distillation substituted for quantization
+M116 | supported: no | keeps: no | ok: no | reverses mapping direction
+M117 | supported: no | keeps: yes | ok: no | "every one essential"; context ranks some most important
+M118 | supported: no | keeps: no | ok: no | "fewer than four" contradicts all four tokens
+M119 | supported: no | keeps: no | ok: no | "produces" replaces "uses"
+M120 | supported: no | keeps: yes | ok: no | "every model" widens the model's output quality
+M121 | supported: no | keeps: no | ok: no | numbering substituted for lettering
+M122 | supported: yes | keeps: yes | ok: yes
+M123 | supported: no | keeps: no | ok: no | swaps exponent and mantissa bit counts
+M124 | supported: no | keeps: yes | ok: no | adds "any"; arguably implied by context list
+M125 | supported: no | keeps: no | ok: no | FP64 substituted for FP32
+M126 | supported: yes | keeps: yes | ok: yes
+M127 | supported: no | keeps: yes | ok: no | adds target model as the one spending compute
+M128 | supported: no | keeps: no | ok: no | "all post-Blackwell architectures" replaces Rubin
+M129 | supported: no | keeps: no | ok: no | "any data format" drops E4M3
+M130 | supported: no | keeps: no | ok: no | invents relation between lettering and numbering
+M131 | supported: no | keeps: no | ok: no | "never" drops "almost"
+M132 | supported: yes | keeps: yes | ok: yes
+M133 | supported: no | keeps: yes | ok: no | adds "always"
+M134 | supported: no | keeps: no | ok: no | "any drafter including EAGLE heads" replaces draft model
+M135 | supported: no | keeps: no | ok: no | "arbitrarily long" replaces "longer"
+M136 | supported: no | keeps: no | ok: no | speculative decoding substituted for quantization
+M137 | supported: no | keeps: no | ok: no | n-gram substituted for Lookahead Decoding
+M138 | supported: yes | keeps: yes | ok: yes
+M139 | supported: no | keeps: no | ok: no | "all vendors" widens beyond these GPU names
+M140 | supported: no | keeps: no | ok: no | "lower" substituted for "higher" batch sizes
+M141 | supported: no | keeps: yes | ok: no | adds length comparison not in source
+M142 | supported: no | keeps: no | ok: no | memory bandwidth substituted for compute
+M143 | supported: yes | keeps: no | ok: no | drops the 100 GB condition behind 64 GB
+M144 | supported: yes | keeps: yes | ok: yes
+M145 | supported: no | keeps: no | ok: no | reverses: B200 and B300 offer, not require, performance
+M146 | supported: yes | keeps: yes | ok: yes
+M147 | supported: no | keeps: no | ok: no | "verified" replaces "generated"
+M148 | supported: yes | keeps: yes | ok: yes
+M149 | supported: no | keeps: yes | ok: no | adds "always", not stated in span
+M150 | supported: no | keeps: no | ok: no | "always" replaces "by default"

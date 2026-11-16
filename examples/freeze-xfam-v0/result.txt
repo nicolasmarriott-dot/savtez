@@ -1,0 +1,170 @@
+VERDICT | FREEZE-XFAM-v0 | DONE | All 150 items returned in the required format from Qwen/Qwen3.8-27B (bf16) via anonymous Python gradio_client on bottlecapai/Qwen3.8-27B-reference. 145 arrived in the first run (2026-11-15T07:19:35Z to 2026-11-15T07:24:32Z); M022, M023, M024, M025, M100 and M125 arrived in a 6-item retry at 2026-11-15T14:21:52Z on the same Space, model, sampling, and free anonymous route. No other model was used; no item was filled or repaired.
+M001 | supported: no | keeps: yes | ok: no | Adds "GPUs force" not in source.
+M002 | supported: no | keeps: no | ok: no | "most" added; source says "a lot".
+M003 | supported: yes | keeps: yes | ok: yes
+M004 | supported: no | keeps: no | ok: no | "Every model developer" is an unsupported generalization.
+M005 | supported: no | keeps: no | ok: no | Source says "rather than evenly", not "more evenly".
+M006 | supported: no | keeps: no | ok: no | "making routing irrelevant" contradicts source context.
+M007 | supported: no | keeps: yes | ok: no | Source refers to "Traditional", not specifically Medusa.
+M008 | supported: yes | keeps: yes | ok: yes
+M009 | supported: no | keeps: no | ok: no | "always" added; source states definition as fact.
+M010 | supported: no | keeps: no | ok: no | "global" changes "small-block" scale factor.
+M011 | supported: no | keeps: no | ok: no | Comparison to numbering not in source span.
+M012 | supported: no | keeps: no | ok: no | "always" changes "can be".
+M013 | supported: no | keeps: no | ok: no | "on par with Hopper" contradicts "highest".
+M014 | supported: no | keeps: no | ok: no | "any bit width" is an added constraint.
+M015 | supported: no | keeps: no | ok: no | E5M2 has 5-bit exponent, not 4.
+M016 | supported: no | keeps: no | ok: no | "free... from KV cache" is wrong direction.
+M017 | supported: no | keeps: no | ok: no | "every step... costs quality" is added inference.
+M018 | supported: yes | keeps: yes | ok: yes
+M019 | supported: yes | keeps: yes | ok: yes
+M020 | supported: no | keeps: no | ok: no | "much slower than prefill" is added comparison.
+M021 | supported: no | keeps: no | ok: no | "No draft models" contradicts "Traditional" qualification.
+M022 | supported: no | keeps: no | ok: no | Source says scale, not binary; sentence says binary.
+M023 | supported: yes | keeps: yes | ok: yes
+M024 | supported: no | keeps: no | ok: no | Source limits to speculative decoding; sentence adds n-gram.
+M025 | supported: no | keeps: no | ok: no | Source says lack access; sentence says do not provide.
+M026 | supported: no | keeps: yes | ok: no | Source specifies Rubin architecture, not Blackwell
+M027 | supported: no | keeps: no | ok: no | Contradicts source: 'less accurate' vs 'more accurate'
+M028 | supported: no | keeps: no | ok: no | Adds unsupported claim 'only multiplier'
+M029 | supported: no | keeps: yes | ok: no | Adds unsupported comparison 'more than weights'
+M030 | supported: no | keeps: yes | ok: no | Adds unsupported claim 'longer always better'
+M031 | supported: no | keeps: no | ok: no | Reversed causality: builds cache using storage
+M032 | supported: no | keeps: no | ok: no | Passive voice misattributes 'quantization' as subject
+M033 | supported: no | keeps: no | ok: no | Softens negation 'don't' to 'less access'
+M034 | supported: no | keeps: yes | ok: no | Adds unsupported frequency qualifier 'always'
+M035 | supported: no | keeps: no | ok: no | Contradicts source: 'at most' vs 'at least'
+M036 | supported: no | keeps: yes | ok: no | Adds unsupported qualifier 'modest'
+M037 | supported: no | keeps: yes | ok: no | Adds unsupported scope 'training'
+M038 | supported: no | keeps: no | ok: no | Attributed to wrong subject: Disaggregation vs Quantization
+M039 | supported: no | keeps: yes | ok: no | Wrong hardware: H100/H200 vs B200/B300
+M040 | supported: no | keeps: yes | ok: no | Wrong subject: Inference engines vs Foundation labs
+M041 | supported: no | keeps: no | ok: no | Removes 'rule of thumb' qualifier
+M042 | supported: no | keeps: no | ok: no | Wrong subject: draft models vs LLMs
+M043 | supported: no | keeps: yes | ok: no | Exaggerates 'extra' to 'substantial'
+M044 | supported: no | keeps: no | ok: no | Reversed direction: low-to-high vs high-to-low
+M045 | supported: yes | keeps: yes | ok: yes
+M046 | supported: yes | keeps: yes | ok: yes
+M047 | supported: no | keeps: no | ok: no | Wrong strategy: inference optimization vs speculative decoding
+M048 | supported: no | keeps: no | ok: no | Exaggerates 'don't' to 'never'
+M049 | supported: no | keeps: no | ok: no | Wrong subject: Optimization vs Quantization
+M050 | supported: no | keeps: yes | ok: no | Wrong mechanism: prefix caching vs cache-aware routing
+M051 | supported: no | keeps: yes | ok: no | Draft tokens are generated, not target-generated
+M052 | supported: no | keeps: no | ok: no | Makes optimizations less effective vs even more effective
+M053 | supported: no | keeps: yes | ok: no | Models of all kinds vs LLMs
+M054 | supported: no | keeps: yes | ok: no | Undisputed is stronger than source claims
+M055 | supported: no | keeps: no | ok: no | Every generation vs last few generations
+M056 | supported: yes | keeps: yes | ok: yes
+M057 | supported: no | keeps: no | ok: no | Allocates traffic based on KV, not KV based on traffic
+M058 | supported: yes | keeps: yes | ok: yes
+M059 | supported: no | keeps: no | ok: no | Every optimization technique vs Quantization
+M060 | supported: yes | keeps: yes | ok: yes
+M061 | supported: no | keeps: yes | ok: no | Better option is added judgment
+M062 | supported: no | keeps: no | ok: no | Every number format vs microscaling format
+M063 | supported: no | keeps: no | ok: no | All other methods vs EAGLE
+M064 | supported: yes | keeps: yes | ok: yes
+M065 | supported: no | keeps: no | ok: no | All model types vs LLM inference
+M066 | supported: yes | keeps: yes | ok: yes
+M067 | supported: no | keeps: yes | ok: no | Guarantee is stronger than depends on
+M068 | supported: no | keeps: no | ok: no | Much shorter contradicts much longer
+M069 | supported: no | keeps: no | ok: no | Engine splits vs tokens form
+M070 | supported: no | keeps: no | ok: no | Shared suffix vs shared prefix
+M071 | supported: no | keeps: no | ok: no | All of the context vs a lot of context
+M072 | supported: no | keeps: no | ok: no | Force model vs quantization reduces
+M073 | supported: no | keeps: no | ok: no | Adds or scientific computing
+M074 | supported: no | keeps: no | ok: no | EAGLE advantage contradicts n-gram advantage
+M075 | supported: no | keeps: no | ok: no | More than any other optimization is added
+M076 | supported: no | keeps: yes | ok: no | Source attributes extra compute only to Lookahead, not n-gram.
+M077 | supported: no | keeps: no | ok: no | Source specifies decode phase, sentence says prefill phase.
+M078 | supported: no | keeps: no | ok: no | Speculative decoding is disabled, not verification.
+M079 | supported: no | keeps: no | ok: no | Omits conditional "when it goes wrong"; claims absolute certainty.
+M080 | supported: no | keeps: no | ok: no | Source says "between the pair", sentence says "all requests".
+M081 | supported: no | keeps: no | ok: no | Adds "always" which is not in the source span.
+M082 | supported: yes | keeps: yes | ok: yes
+M083 | supported: no | keeps: no | ok: no | Source says "across replicas", sentence says "clusters and regions".
+M084 | supported: no | keeps: no | ok: no | Source says allocated to KV cache, sentence says model weights.
+M085 | supported: yes | keeps: yes | ok: yes
+M086 | supported: no | keeps: no | ok: no | Source says "RoPE", sentence says "speculative decoding".
+M087 | supported: yes | keeps: yes | ok: yes
+M088 | supported: yes | keeps: yes | ok: yes
+M089 | supported: no | keeps: no | ok: no | Source says "stored in memory", sentence says "applied by hardware".
+M090 | supported: no | keeps: no | ok: no | Source specifies "all four tokens", sentence generalizes to "every token".
+M091 | supported: yes | keeps: yes | ok: yes
+M092 | supported: no | keeps: no | ok: no | Source says lettering is meaningful, doesn't say numbering isn't.
+M093 | supported: yes | keeps: yes | ok: yes
+M094 | supported: no | keeps: no | ok: no | Source says "run prefill", sentence says "run decode".
+M095 | supported: no | keeps: no | ok: no | Source says "G4 networked storage", sentence says "G1 memory tier".
+M096 | supported: no | keeps: no | ok: no | Mismatch: defines draft token cost as sequence length.
+M097 | supported: yes | keeps: yes | ok: yes
+M098 | supported: no | keeps: no | ok: no | Source says "dynamically disabled", sentence says "permanently disabled".
+M099 | supported: no | keeps: no | ok: no | Reverses relationship: draft model is smaller, not target.
+M100 | supported: no | keeps: no | ok: no | Source says slightly reducing; sentence says significantly reducing.
+M101 | supported: no | keeps: yes | ok: no | General load balancing does not allocate based on KV cache.
+M102 | supported: no | keeps: no | ok: no | Contradicts source: FP32 is almost never used for inference.
+M103 | supported: no | keeps: no | ok: no | LLMs do not pass context to draft models; they accumulate it.
+M104 | supported: no | keeps: yes | ok: no | Specific to B200 GPU; sentence generalizes to "any GPU".
+M105 | supported: no | keeps: no | ok: no | Advantage is sequence length of speculation, not verification capability.
+M106 | supported: no | keeps: yes | ok: no | Agent is inference engine, not the user.
+M107 | supported: no | keeps: no | ok: no | Source does not compare quantity to other optimizations.
+M108 | supported: yes | keeps: yes | ok: yes
+M109 | supported: no | keeps: no | ok: no | Exponent/mantissa do not "set" the sign bit; it is separate.
+M110 | supported: no | keeps: no | ok: no | Subject changed from Quantization to Speculative decoding.
+M111 | supported: no | keeps: no | ok: no | Quantization enables optimizations; optimizations do not make quantization effective.
+M112 | supported: no | keeps: no | ok: no | Conflates Type and Scale factor definitions.
+M113 | supported: no | keeps: no | ok: no | Source says Lookahead requires extra compute, not less.
+M114 | supported: no | keeps: no | ok: no | No comparison to compute overhead magnitude in source.
+M115 | supported: no | keeps: no | ok: no | Subject changed from Quantization to Distillation.
+M116 | supported: no | keeps: no | ok: no | Direction reversed; maps low-precision back to high-precision.
+M117 | supported: yes | keeps: no | ok: no | "Every one" is stronger than "a collection of essential".
+M118 | supported: no | keeps: no | ok: no | Contradicts source: must run on all four tokens.
+M119 | supported: no | keeps: yes | ok: no | Architecture uses HBM4, does not "produce" it.
+M120 | supported: no | keeps: no | ok: no | "Every model" is wider than "the model".
+M121 | supported: no | keeps: no | ok: no | Numbering is arbitrary; lettering is meaningful.
+M122 | supported: yes | keeps: yes | ok: yes
+M123 | supported: no | keeps: no | ok: no | Swapped exponent and mantissa bit counts.
+M124 | supported: yes | keeps: yes | ok: yes
+M125 | supported: no | keeps: no | ok: no | Source says FP32; sentence says FP64.
+M126 | supported: yes | keeps: yes | ok: yes
+M127 | supported: yes | keeps: yes | ok: yes
+M128 | supported: no | keeps: yes | ok: no | Source specifies only Rubin, not all post-Blackwell architectures.
+M129 | supported: no | keeps: yes | ok: no | Source specifies E4M3 format, not "any data format".
+M130 | supported: no | keeps: no | ok: no | Misinterprets contrast; lettering independent from numbering's meaning.
+M131 | supported: no | keeps: no | ok: no | Source says "almost never", not "never".
+M132 | supported: yes | keeps: yes | ok: yes
+M133 | supported: no | keeps: yes | ok: no | Source implies general case, sentence adds "always".
+M134 | supported: no | keeps: yes | ok: no | Source specifies "draft model", not any drafter or EAGLE.
+M135 | supported: no | keeps: yes | ok: no | Source says "longer and more accurate", not "arbitrarily".
+M136 | supported: no | keeps: yes | ok: no | Source discusses quantization, not speculative decoding.
+M137 | supported: no | keeps: yes | ok: no | Source attributes extra compute to Lookahead, not n-gram speculation.
+M138 | supported: yes | keeps: yes | ok: yes
+M139 | supported: no | keeps: yes | ok: no | Source context is NVIDIA; "all vendors" is unsupported.
+M140 | supported: no | keeps: yes | ok: no | Source says "higher batch sizes", not lower.
+M141 | supported: no | keeps: yes | ok: no | Source doesn't explicitly compare prefix length to difference.
+M142 | supported: no | keeps: yes | ok: no | Source says "compute" saturated, not memory bandwidth.
+M143 | supported: no | keeps: yes | ok: no | Omits 100GB usage condition required for 64GB result.
+M144 | supported: yes | keeps: yes | ok: yes
+M145 | supported: no | keeps: yes | ok: no | Changes "offering performance" to "requiring performance".
+M146 | supported: yes | keeps: yes | ok: yes
+M147 | supported: no | keeps: yes | ok: no | Source says "generated", not "verified".
+M148 | supported: yes | keeps: yes | ok: yes
+M149 | supported: no | keeps: yes | ok: no | Adds "always", source implies specific example/pair.
+M150 | supported: no | keeps: yes | ok: no | Source says "By default", not "always".
+
+PROVENANCE
+model repo ID: Qwen/Qwen3.8-27B
+Space: bottlecapai/Qwen3.8-27B-reference (https://huggingface.co/spaces/bottlecapai/Qwen3.8-27B-reference)
+endpoint: Gradio /respond via anonymous Python gradio_client (no Hugging Face token)
+precision/quant: bf16 (Space README and app.py: unmodified Qwen/Qwen3.8-27B, dtype=torch.bfloat16, @spaces.GPU size=xlarge, up to 60s per step)
+route: public Space, free anonymous visitor ZeroGPU quota; no paid plan, no new account, no API key, user's HF OAuth token not used
+confirmation: Space card and README list models: Qwen/Qwen3.8-27B; smoke prompt answered 'route smoke test ok'; /step ids [8695, 15728, 1228, 5226, 248046] decoded with the official Qwen/Qwen3.8-27B tokenizer to the same text
+input: examples/freeze-xfam-v0/batches/ (6 batches of 25, built from examples/freeze-xfam-v0/items-and-sources.txt sha256 75c214d571d68ef771d9f8cdbe45544d491c3cc491e59daafdab3857f2e28adf); prompts sent as-is; hashes in batches/prompts.sha256 verified
+sampling: reasoning_effort=off, max_new_tokens=2048, temperature=1.0, top_p=0.95, top_k=20 (Space defaults except thinking off and 2048 output budget, matching the prepared batch params)
+counts: items 150 | sent 150 + 6-item retry | returned 150 | unparsed 0 | not returned 0
+started_utc: 2026-11-15T07:19:35Z
+finished_utc: 2026-11-15T07:24:32Z
+quota: batches 01, 04 and 05 ended with a Space 'Stopped early' notice after a further 120s GPU reservation was refused. Latest notice (batch05, 2026-11-15T07:23:44Z): 'You have exceeded your ZeroGPU quota (120s requested vs. 5s left). Try again in 23:53:58.' That countdown points to about 2026-11-16T07:17:42Z. Some later batches still completed because the first GPU step of a call can finish before a follow-up reservation is refused. No token was added; missing items were left unfilled.
+retry: 2026-11-15T14:21:30Z to 2026-11-15T14:21:52Z; same Space, model, precision, endpoint /respond, sampling (reasoning_effort=off, max_new_tokens=2048, temperature=1.0, top_p=0.95, top_k=20); anonymous, no token, no paid plan, no account change
+retry input: the six still-missing items only, with identical item text, source spans and context copied word for word from examples/freeze-xfam-v0/items-and-sources.txt sha256 75c214d571d68ef771d9f8cdbe45544d491c3cc491e59daafdab3857f2e28adf, built the same way as the original batches (header + needed sources + ITEMS)
+retry raw: examples/freeze-xfam-v0/raw/retry-20261115T142130Z.prompt.txt, .output.txt, .respond.json, .parsed.json
+partial result kept at: (partial result not included in this release)
+raw outputs: examples/freeze-xfam-v0/raw/

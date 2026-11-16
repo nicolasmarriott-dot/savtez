@@ -1,0 +1,19 @@
+# Original hashes of the freeze-xfam-v0 artifacts, as delivered
+# Dates: judgment 2026-11-14; result and score 2026-11-15.
+# Paths and internal checker names in result.txt and score-20261115b.txt
+# were substituted in this tree; those two files therefore have new hashes
+# (see ../../../MANIFEST.txt). The 150 verdict lines in result.txt are unchanged.
+
+freeze-judgment-20261114.txt  11816  sha256 6804a5cd5628dbfdc8d8cb85359d4898217b349c6a3e43be7d6ec1293f6479aa  unchanged
+result.txt  15903  sha256 e6856bda3daed69f7d980388e8df30b838d1009dbd94d7799f3f6aff26ed6e2c  paths/names substituted in this tree
+score-20261115b.txt  1179  sha256 919f89ffded855d6ea1735618d24623b313807307985840a228478fc54ffca76  names substituted in this tree
+items-and-sources.txt  (originally task-20261114e.txt)  sha256 75c214d571d68ef771d9f8cdbe45544d491c3cc491e59daafdab3857f2e28adf  unchanged
+
+# Trimming (2026-11-16)
+# items-and-sources.txt and the batch / retry prompts in this tree have had
+# surrounding CONTEXT paragraphs removed. S10 was completed to its full
+# source sentence (see SOURCE.txt). Their hashes therefore differ from the
+# files used on 2026-11-15. freeze-judgment-20261114.txt is unchanged.
+# The 150 verdict lines in result.txt are unchanged; only path/name
+# substitutions from the local packaging remain, plus this source trim
+# does not touch result.txt.

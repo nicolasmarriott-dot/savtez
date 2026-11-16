@@ -1,0 +1,20 @@
+VERDICT | FREEZE-XFAM-v0 SCORE | Qwen3.8-27B caught 121 of 125 planted items and raised 0 false alarms on 25 clean items. It shares no miss with Checker A.
+
+Answer key, as the task defines it: PLANTED = the 124 items Checker A marked "ok: no", plus M009. CLEAN = the other 25 items.
+Count check: planted 125, clean 25. PASS.
+Caveat: the recorded result says M009 is "arguably no error". The key still counts it as planted.
+
+Planted items scored: 125
+  Caught: 121
+  Missed: 4. M046, M066, M124, M127
+Clean items scored: 25
+  Flagged (false alarms): 0. none
+  Passed: 25
+
+Planted items Qwen missed that Checker A also missed: none. Checker A marked "ok: no" on M046, M066, M124 and M127.
+Planted items Qwen missed that were the recorded miss by every checker (M009): none. Qwen caught M009.
+
+Files
+  freeze-judgment-20261114.txt (Checker A's 150 verdicts): 11816 bytes, sha256 6804a5cd5628dbfdc8d8cb85359d4898217b349c6a3e43be7d6ec1293f6479aa
+  freeze-xfam-v0/result.txt (Qwen's verdicts): 15903 bytes, sha256 e6856bda3daed69f7d980388e8df30b838d1009dbd94d7799f3f6aff26ed6e2c
+Scoring rule: PLANTED = Checker A's 124 ok:no items plus M009; CLEAN = the other 25. Original scoring-task sha256 a6650993aa1931addb6c612bcd1f9780dc27adaf7b0fbf293e10356fcb5929d7 (task text not included).

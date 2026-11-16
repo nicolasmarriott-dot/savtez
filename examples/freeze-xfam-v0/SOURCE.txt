@@ -1,0 +1,23 @@
+Source of the quoted sentences in this example
+
+Title: Inference Engineering
+Author: Philip Kiely
+Publisher: Baseten Books, 2026
+
+The SPAN lines in items-and-sources.txt and the batch prompts are short
+quotations from that book, included so the freeze-xfam-v0 test can be
+inspected and rescored. Surrounding paragraphs are not included.
+
+One span, S10, was a clause rather than a complete sentence. In this tree
+it is given as the single sentence that contains the original clause:
+
+    Lookahead Decoding is more general than n-gram speculation as it doesn’t
+    rely as much on highly repetitive context, but it requires extra compute
+    to generate the n-grams.
+
+The original clause was: "but it requires extra compute to generate the n-grams."
+
+The 150 test sentences (the M001–M150 lines) are the items under test, not
+quotations. The published verdicts and the score are from the 2026-11-15 run,
+which used the surrounding paragraphs as context. Packaged prompts here are
+trimmed and are not byte-identical to the prompts that were sent.
