@@ -1,0 +1,19 @@
+HAND-CHECK | real run R1 (AI research round on repeated context in agent pipelines) | Claude | recorded BEFORE any CARDCHECK card
+Start 2026-11-06T02:40:36Z  End 2026-11-06T02:41:39Z  (13 claims, 9 distinct URLs; my own fetches via WebFetch)
+Verdicts: OK = quote and figures on the cited page | MISS-PAGE = figure/quote not on the cited page (may be elsewhere in the paper)
+| UNREAD = I could not open the page | NOTE = judgment issue
+
+R01 UNREAD   zenodo preview blocked to me (robots). Not verified.
+R02 UNREAD   same page.
+R03 UNREAD   same page.
+R04 MISS-PAGE "re-explore" sentence verbatim on arXiv abs; "Librarian" confirmed; "up to 25%" GPU-energy figure NOT on the abs page.
+R05 OK       "30 to 1,000 times more energy" on abs page (claim's "30-1,000x" matches in meaning; exact string differs).
+R06 UNREAD   arXiv rate-limited three times.
+R07 OK       both fragments on abs page (12/12, 3.9K, 8/12, 7.7K).
+R08 OK       verbatim on abs page.
+R09 UNREAD   doi.org/arXiv rate-limited twice.
+R10 OK       verbatim; page dated Aug 14, 2025. NOTE: vendor "up to" figures, current-state page.
+R11 OK       63%/27%/11% and 422K in TL;DR (quote may span two sentences there; checker will show).
+R12 OK       "18 of 25 compactions ... re-read files it had just touched" found; "~60K tokens in all" found in 1.5 (TL;DR sentence cut in my view).
+R13 MISS-PAGE abs page says "1600+ annotated traces"; "1642", "incorrect verification", "9.1" NOT on abs page. AI said it read the PDF text.
+Summary: 7 OK, 2 MISS-PAGE, 4 UNREAD (my tools blocked). Errors found: 2, both "figure not on the cited page" (bucket 1 shape).

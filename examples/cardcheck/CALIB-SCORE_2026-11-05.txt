@@ -1,0 +1,52 @@
+CALIB + R1 SCORE | CARDCHECK checker_v0.1.r2.py (940f7162...) | scored by Claude 2026-11-05 20:05 against claude/calib-key.txt
+Inputs: calib.jsonl 29b1ed2e... (31), claims_r1.jsonl 313a7f18... (13). Cards: cards_calib 57be6493..., cards_r1 29afdcd9...
+
+ROOT CAUSES FOUND (from the cards' element lists, before scoring)
+E1 EXTRACTOR MISSES DIV TEXT: only p/li/tr/h*/blockquote/pre leaf blocks are collected. Text in plain <div>/<span> (arXiv author
+   lists, mdBook pages, many JS-light sites) is dropped. Caused: K02 Juels/Goldfeder, K07 Debenedetti, K08 Costa/Zanella-Beguelin,
+   F04 (whole docs.tlsnotary.org page empty), likely K05 CSV, A05/A06/A09 (to confirm).
+E2 EXTRACTOR JOIN SPACING: stripped_strings joined with " " puts a space before punctuation after inline tags ("cache reads , 27%").
+   Caused R11 quote NOT_FOUND (false).
+E3 PROTECTED-WORD RULE checks the whole matched element, which without a quote is just the first element holding the slots,
+   often a long unrelated paragraph. Fires on almost every claim.
+
+PER RULE (known set only; accepted set needs hand check before it counts)
+quote/slot absent (bucket 1, hard gate): flags on known items 10 | correct 2-3 (K05 "1,600" if absent today; R-set separately) |
+   wrong 7 (all E1) -> precision < 0.30 as built. Cause is the extractor, not the rule: FIX, then re-calibrate.
+SPLIT (hard gate): raised K10, K11 (true claims, date/entity legitimately in different parts) -> 0/2 correct on known set.
+   Also R01/R02 (true; figures summarised from different sections). Below 0.90 -> HINT per the fixed bar.
+DROPPED_QUALIFIER: raised on K01, K03, K09, F02 (all wrong) + expected F04 not raised (E1). Precision 0/4 -> HINT (bar).
+FIGURE_NOWHERE: raised only where E1 or current-state may explain it; not scorable until E1 is fixed. Stays HINT.
+HOMEPAGE: raised 0 times. Not calibrated (no flags).
+FETCH_FAIL: F01 403 from perma.cc (site blocks bots). Not an error catch; neutral.
+
+LIMIT CASES (predicted before the run, held): F02 2018 Perma page passed its slots (stale but real) and F03 TLSNotary roadmap
+page passed clean. Code cannot see "true then, false now" or "on the roadmap" vs "supports". Bucket 3, as designed.
+
+R1 REAL RUN vs CLAUDE HAND-CHECK (hand-check recorded first, claude/CARDCHECK/HANDCHECK_R1_2026-11-05.txt)
+- Both caught: R04 ("up to 25%" not on the abs page), R13 ("1,642 / 9.1%" not on the abs page).
+- Checker read pages Claude could not (zenodo robots, arXiv rate limits): R01-R03 quotes FOUND; R09 found; R06 flagged
+  (35%/38% not on the abs page as extracted; to confirm by hand: possibly "35\%" LaTeX on the page).
+- Checker false alarms: R11 (E2 spacing); R07/R08/R09/R12 DROPPED_QUALIFIER (E3); R01/R02 SPLIT.
+- Time: checker 4.4 s for 13 claims, unattended. Claude ~1 min of fetches plus reading, 4 claims unreadable.
+- Early read on the stop rule: the checker caught everything the hand-check caught and covered 4 claims the hand-check could
+  not, so it is not failing the stop rule; it is not yet trustworthy because of E1-E3.
+
+DECISIONS (Claude, under the bar fixed before the run)
+- SPLIT and DROPPED_QUALIFIER -> HINTS (shown, never block). FIGURE_NOWHERE, HOMEPAGE stay HINTS.
+- Hard gate = quote/slot string present, only, once E1/E2 are fixed and re-calibrated.
+- E1/E2 are design faults in the extractor (allowed fix + full gate rerun + new fixed gate cases). E3: propose narrowing the
+  protected-word check to the sentence containing a FOUND quote; it stays a hint either way.
+
+--- v0.2 RE-RUN SCORE (2026-11-05 22:40; checker_v0.2.py 2c2d14cc..., cards_calib aec50c88..., cards_r1 f175cb24...)
+Gate 12/12 + 5/5. E1/E2/E3 worked: K02, K07, K08, K11 now clean; R11 quote FOUND; protected-word noise gone except R07/R08 ("no").
+Known-held set (11): 9 clean; K05 SLOT_MISSING "1,600" (correct per key: count not on page today); K10 SPLIT (hint, wrong).
+Known-failed: F02, F03 pass as predicted (bucket 3); F05 catches the false "TOAP not found" (TOAP on page); F01 403 (neutral).
+F04 still SLOT_MISSING on docs.tlsnotary.org: page text exists (search engines index it) but extracts to nothing. Wrong flag:
+ an empty extraction is reported as "text absent". New design fault E4.
+Hard gate (quote/slot absent) on the known set: 2 flags, 1 correct (K05), 1 wrong (F04, E4). Under 5 flags = not yet calibrated.
+R1: hard flags R04 (correct), R13 (correct), R06 (35%/38% not found; Claude could not open the page: arXiv rate limit; OPEN).
+ R11 false alarm fixed. Checker now matches every hand-check catch, with no hard-gate false alarm on R1.
+Accepted set flags to re-check by hand (possible E4 cases first): A05 PyPI, A06 GitHub README, A07 "9k", A09 Chrome Web Store.
+Next: E4 = report element count and extracted characters on every card; an extraction under a fixed floor is EXTRACT_EMPTY
+ (fetch/extraction failure, bucket 1 as access, never "text absent").

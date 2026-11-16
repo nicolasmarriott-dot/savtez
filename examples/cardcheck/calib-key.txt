@@ -1,0 +1,49 @@
+CALIB KEY | Savtez CARDCHECK-v0 calibration | 2026-11-05 | CLAUDE ONLY: never sent to CARDCHECK or any bot
+Pairs with claude/calib.jsonl (31 lines: 11 KNOWN-held, 5 KNOWN-failed, 15 ACCEPTED). Scoring: CARDCHECK reports raw flags only;
+Claude scores each flag correct/wrong per rule against this key, then computes precision per rule (bar 0.90, fixed).
+Expected verdicts were set before any checker run. No edits after results; additions go below a dated line.
+
+KNOWN, HELD (Claude checked the primary page on Nov 5; the claim is true)
+K01 RFC 6962 MMD .................. expect clean. Any flag = wrong flag.
+K02 DECO authors / CCS 2020 ....... authors expect found. "CCS" may be absent from the arXiv abs page (verified elsewhere):
+                                    a missing-slot flag on CCS is a CORRECT flag (the cited page doesn't show it), bucket 1.
+K03 GovBind figures ............... figures were verified from the paper; the ePrint landing page may show the abstract only.
+                                    Missing figures on the landing page = CORRECT flag (wrong page cited for the figure).
+K04 TOAP .......................... expect TOAP found; summaries/references SPLIT likely = judgment, score SPLIT as correct only
+                                    if the page truly has them in separate elements.
+K05 Charlotin 1,600+ .............. CURRENT-STATE: the count grows. A missing "1,600" today is a correct flag and a stale-card case.
+K06 RFC 9530 ...................... expect clean.
+K07 CaMeL ......................... expect clean (quote = title).
+K08 FIDES ......................... expect clean; Zanella-Beguelin tests the accent mapping (normalization).
+K09 NeuroTaint .................... "fundamentally fails" quote from DeepSeek; Claude confirmed the paper's thrust, not this exact
+                                    string. NOT_FOUND = correct flag if the abstract lacks it (paraphrase presented as quote).
+K10 Web Annotation ................ expect clean.
+K11 SCITT RFC 9943 ................ expect clean.
+
+KNOWN, FAILED (Claude caught these by hand on Nov 5)
+F01 Perma "10 a month" vs perma.cc/about ........ expect slot missing (bucket 1). Correct flag.
+F02 Perma "10 a month" vs 2018 Harvard LIL post . page really says 10 links per month (true in 2018; tiers changed Jan 2019).
+                                                  Expect CLEAN: a correct checker pass on a false-today claim. Bucket 3 /
+                                                  current-state. Shows the checker can't catch stale pages; not a rule miss.
+F03 TLSNotary TLS 1.3 vs tlsnotary.org/docs/faq . page: supports TLS 1.2, 1.3 "on the roadmap". Strings present, no protected
+                                                  word. Expect CLEAN = a judgment miss, bucket 3.
+F04 TLSNotary TLS 1.3 vs docs.tlsnotary.org ..... page: "no immediate plans to support TLS 1.3". Expect DROPPED_QUALIFIER:no
+                                                  (correct flag, bucket 2). The two TLSNotary pages disagree with each other.
+F05 Grok "TOAP not found" ....................... negative claim; record exists. Expect TOAP FOUND. The v0 spec has no rule for
+                                                  negative claims: Claude scores "found" as catching the error. Spec gap, logged.
+
+ACCEPTED (unchecked research claims from the Nov 5 Grok and DeepSeek rounds). No expected verdict. Every flag here is a candidate
+missed error; Claude re-checks each flagged item by hand before calling it an error or a wrong flag.
+A01-A11 Grok verifier prior-art list (05:24). A02/A03 commit counts and A09 user count are current-state.
+A12-A15 DeepSeek R1 standards (05:53).
+
+GAPS (not in calib.jsonl)
+- "722 sessions / 34.56B tokens" and "1,642 traces / 9.1% incorrect verification": failed or unconfirmed Nov 5, but which AI said
+  them and which page they cited isn't in the Project files. Add when found (Nov 5 Savtez chat, after 06:00).
+- Green, Karvounarakis, Tannen, Provenance Semirings, PODS 2007 (Grok R5): no URL given; left out rather than build one.
+- Small set: about 31 claims. Precision on a rule with few flags is noisy; read any rule with under 5 flags as "not yet calibrated".
+
+--- 2026-11-05 19:42 (added after calib.jsonl was sent; no change to scored items)
+- Gap sources found by the R1 research round: "722 sessions / 34.56B tokens" = Arsentev, Zenodo 22688706 (10 Sep 2026);
+  "1,642 traces / 9.1% incorrect verification" = Cemri et al., arXiv 2503.13657 (PDF text; the abs page says "1600+").
+  Why they were logged as failed on Nov 5 is not recorded. They are tested in the real run (R01, R13), not in calibration.
