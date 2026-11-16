@@ -1,0 +1,24 @@
+2026-11-15T07:19:35Z START route=anonymous gradio_client space=bottlecapai/Qwen3.8-27B-reference model=Qwen/Qwen3.8-27B precision=bf16
+2026-11-15T07:19:35Z token_check: get_token() is None; no HF_TOKEN in env
+2026-11-15T07:19:35Z loaded batch01: 15069 bytes, 25 items M001-M025
+2026-11-15T07:19:35Z loaded batch02: 12843 bytes, 25 items M026-M050
+2026-11-15T07:19:35Z loaded batch03: 13519 bytes, 25 items M051-M075
+2026-11-15T07:19:35Z loaded batch04: 12816 bytes, 25 items M076-M100
+2026-11-15T07:19:35Z loaded batch05: 13269 bytes, 25 items M101-M125
+2026-11-15T07:19:35Z loaded batch06: 14385 bytes, 25 items M126-M150
+2026-11-15T07:19:35Z connecting anonymously...
+Loaded as API: https://bottlecapai-qwen3-8-27b-reference.hf.space
+2026-11-15T07:19:37Z connected host=https://bottlecapai-qwen3-8-27b-reference.hf.space
+2026-11-15T07:19:37Z SEND batch01 items M001-M025 prompt_bytes=15069
+2026-11-15T07:20:28Z   DONE batch01 via /respond in 50.8s parsed=21/25 unparsed=0 extra=[]
+2026-11-15T07:20:28Z SEND batch02 items M026-M050 prompt_bytes=12843
+2026-11-15T07:21:18Z   DONE batch02 via /respond in 50.8s parsed=25/25 unparsed=0 extra=[]
+2026-11-15T07:21:18Z SEND batch03 items M051-M075 prompt_bytes=13519
+2026-11-15T07:22:02Z   DONE batch03 via /respond in 43.8s parsed=25/25 unparsed=0 extra=[]
+2026-11-15T07:22:02Z SEND batch04 items M076-M100 prompt_bytes=12816
+2026-11-15T07:22:53Z   DONE batch04 via /respond in 50.8s parsed=25/25 unparsed=1 extra=[]
+2026-11-15T07:22:53Z SEND batch05 items M101-M125 prompt_bytes=13269
+2026-11-15T07:23:44Z   DONE batch05 via /respond in 51.1s parsed=24/25 unparsed=0 extra=[]
+2026-11-15T07:23:44Z SEND batch06 items M126-M150 prompt_bytes=14385
+2026-11-15T07:24:32Z   DONE batch06 via /respond in 48.2s parsed=25/25 unparsed=0 extra=[]
+2026-11-15T07:24:32Z WROTE examples/freeze-xfam-v0/result.txt status=BLOCKED returned=145 unparsed=1 missing=5

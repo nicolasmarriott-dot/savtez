@@ -1,0 +1,13 @@
+[
+  {
+    "role": "assistant",
+    "content": "M101 | supported: no | keeps: yes | ok: no | General load balancing does not allocate based on KV cache.\nM102 | supported: no | keeps: no | ok: no | Contradicts source: FP32 is almost never used for inference.\nM103 | supported: no | keeps: no | ok: no | LLMs do not pass context to draft models; they accumulate it.\nM104 | supported: no | keeps: yes | ok: no | Specific to B200 GPU; sentence generalizes to \"any GPU\".\nM105 | supported: no | keeps: no | ok: no | Advantage is sequence length of speculation, not verification capability.\nM106 | supported: no | keeps: yes | ok: no | Agent is inference engine, not the user.\nM107 | supported: no | keeps: no | ok: no | Source does not compare quantity to other optimizations.\nM108 | supported: yes | keeps: yes | ok: yes | \nM109 | supported: no | keeps: no | ok: no | Exponent/mantissa do not \"set\" the sign bit; it is separate.\nM110 | supported: no | keeps: no | ok: no | Subject changed from Quantization to Speculative decoding.\nM111 | supported: no | keeps: no | ok: no | Quantization enables optimizations; optimizations do not make quantization effective.\nM112 | supported: no | keeps: no | ok: no | Conflates Type and Scale factor definitions.\nM113 | supported: no | keeps: no | ok: no | Source says Lookahead requires extra compute, not less.\nM114 | supported: no | keeps: no | ok: no | No comparison to compute overhead magnitude in source.\nM115 | supported: no | keeps: no | ok: no | Subject changed from Quantization to Distillation.\nM116 | supported: no | keeps: no | ok: no | Direction reversed; maps low-precision back to high-precision.\nM117 | supported: yes | keeps: no | ok: no | \"Every one\" is stronger than \"a collection of essential\".\nM118 | supported: no | keeps: no | ok: no | Contradicts source: must run on all four tokens.\nM119 | supported: no | keeps: yes | ok: no | Architecture uses HBM4, does not \"produce\" it.\nM120 | supported: no | keeps: no | ok: no | \"Every model\" is wider than \"the model\".\nM121 | supported: no | keeps: no | ok: no | Numbering is arbitrary; lettering is meaningful.\nM122 | supported: yes | keeps: yes | ok: yes | \nM123 | supported: no | keeps: no | ok: no | Swapped exponent and mantissa bit counts.\nM124 | supported: yes | keeps: yes | ok: yes |"
+  },
+  {
+    "role": "assistant",
+    "content": "'You have exceeded your ZeroGPU quota (120s requested vs. 5s left). Try again in 23:53:58. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens'\n\nSign in to Hugging Face for a larger daily GPU quota, or lower **Reasoning effort**.",
+    "metadata": {
+      "title": "⚠️ Stopped early"
+    }
+  }
+]

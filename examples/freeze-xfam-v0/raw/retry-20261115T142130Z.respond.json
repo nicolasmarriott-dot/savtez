@@ -1,0 +1,6 @@
+[
+  {
+    "role": "assistant",
+    "content": "M022 | supported: no | keeps: no | ok: no | Source says scale, not binary; sentence says binary.\nM023 | supported: yes | keeps: yes | ok: yes\nM024 | supported: no | keeps: no | ok: no | Source limits to speculative decoding; sentence adds n-gram.\nM025 | supported: no | keeps: no | ok: no | Source says lack access; sentence says do not provide.\nM100 | supported: no | keeps: no | ok: no | Source says slightly reducing; sentence says significantly reducing.\nM125 | supported: no | keeps: no | ok: no | Source says FP32; sentence says FP64."
+  }
+]

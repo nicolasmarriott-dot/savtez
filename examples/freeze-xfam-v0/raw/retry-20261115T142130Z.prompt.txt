@@ -1,0 +1,26 @@
+
+Task: you are checking sentences for faithfulness to a source. Each item is one sentence meant to say exactly what its source span says, read in its context. Some items are correct; others contain one subtle change of meaning. Judge each item on its own.
+For each item answer two questions separately: (1) Does the source span, read in its context, support everything the sentence says (nothing stronger, wider, added, or attributed to the wrong thing)? (2) Does the sentence keep everything material the span says (qualifiers, negations, comparisons, conditions, who does what)?
+Output one line per item, nothing else, in this exact form: M001 | supported: yes/no | keeps: yes/no | ok: yes/no | reason if any no (max 12 words)
+Cover all 150 items in order. English only. Do not skip items or summarize.
+
+SOURCES
+[S01] SPAN: The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, slightly reducing the performance gains from quantization.
+
+[S02] SPAN: quantization is a scale, not a binary decision.
+
+[S05] SPAN: At higher batch sizes, speculative decoding must be dynamically disabled as compute is too saturated to afford verification.
+
+[S08] SPAN: Traditional draft models don’t have access to this information.
+
+[S13] SPAN: If you’re working on a B200 GPU with 180 GB of VRAM and used 100 GB for model weights and buffers, this would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+
+[S22] SPAN: FP32 is sometimes used for training, but almost never for inference.
+
+ITEMS
+M022 [S02] Quantization is more a binary decision than a scale.
+M023 [S13] On a B200 GPU with 180 GB of VRAM where 100 GB is used for model weights and buffers, the configuration shown would allocate 80 percent of the remaining VRAM, or 64 GB, to KV cache.
+M024 [S05] At higher batch sizes, every form of speculation, including n-gram, must be dynamically disabled as compute is too saturated to afford verification.
+M025 [S08] Traditional draft models do not provide the hidden-state information that LLMs accumulate during inference.
+M100 [S01] The tradeoff to a microscaling format is that the small-block scale factor must also be stored in memory, significantly reducing the performance gains from quantization.
+M125 [S22] FP64 is sometimes used for training, but almost never for inference.

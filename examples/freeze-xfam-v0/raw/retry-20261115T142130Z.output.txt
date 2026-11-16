@@ -1,0 +1,6 @@
+M022 | supported: no | keeps: no | ok: no | Source says scale, not binary; sentence says binary.
+M023 | supported: yes | keeps: yes | ok: yes
+M024 | supported: no | keeps: no | ok: no | Source limits to speculative decoding; sentence adds n-gram.
+M025 | supported: no | keeps: no | ok: no | Source says lack access; sentence says do not provide.
+M100 | supported: no | keeps: no | ok: no | Source says slightly reducing; sentence says significantly reducing.
+M125 | supported: no | keeps: no | ok: no | Source says FP32; sentence says FP64.

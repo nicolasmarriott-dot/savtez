@@ -1,0 +1,10 @@
+Smoke test (anonymous gradio_client, no HF token)
+Space: bottlecapai/Qwen3.8-27B-reference
+Model repo ID (Space README + card models field): Qwen/Qwen3.8-27B
+Precision: bf16 (app.py: dtype=torch.bfloat16, @spaces.GPU duration<=60, size=xlarge)
+Prompt: Reply with exactly these four words and nothing else: route smoke test ok
+
+/respond final yield: [{'role': 'assistant', 'content': 'route smoke test ok'}]
+/step ids: [8695, 15728, 1228, 5226, 248046]
+Decoded with official Qwen/Qwen3.8-27B tokenizer (skip_special_tokens=True): 'route smoke test ok'
+Special id 248046 = <|im_end|>

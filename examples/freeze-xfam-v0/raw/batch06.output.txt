@@ -1,0 +1,25 @@
+M126 | supported: yes | keeps: yes | ok: yes
+M127 | supported: yes | keeps: yes | ok: yes
+M128 | supported: no | keeps: yes | ok: no | Source specifies only Rubin, not all post-Blackwell architectures.
+M129 | supported: no | keeps: yes | ok: no | Source specifies E4M3 format, not "any data format".
+M130 | supported: no | keeps: no | ok: no | Misinterprets contrast; lettering independent from numbering's meaning.
+M131 | supported: no | keeps: no | ok: no | Source says "almost never", not "never".
+M132 | supported: yes | keeps: yes | ok: yes
+M133 | supported: no | keeps: yes | ok: no | Source implies general case, sentence adds "always".
+M134 | supported: no | keeps: yes | ok: no | Source specifies "draft model", not any drafter or EAGLE.
+M135 | supported: no | keeps: yes | ok: no | Source says "longer and more accurate", not "arbitrarily".
+M136 | supported: no | keeps: yes | ok: no | Source discusses quantization, not speculative decoding.
+M137 | supported: no | keeps: yes | ok: no | Source attributes extra compute to Lookahead, not n-gram speculation.
+M138 | supported: yes | keeps: yes | ok: yes
+M139 | supported: no | keeps: yes | ok: no | Source context is NVIDIA; "all vendors" is unsupported.
+M140 | supported: no | keeps: yes | ok: no | Source says "higher batch sizes", not lower.
+M141 | supported: no | keeps: yes | ok: no | Source doesn't explicitly compare prefix length to difference.
+M142 | supported: no | keeps: yes | ok: no | Source says "compute" saturated, not memory bandwidth.
+M143 | supported: no | keeps: yes | ok: no | Omits 100GB usage condition required for 64GB result.
+M144 | supported: yes | keeps: yes | ok: yes
+M145 | supported: no | keeps: yes | ok: no | Changes "offering performance" to "requiring performance".
+M146 | supported: yes | keeps: yes | ok: yes
+M147 | supported: no | keeps: yes | ok: no | Source says "generated", not "verified".
+M148 | supported: yes | keeps: yes | ok: yes
+M149 | supported: no | keeps: yes | ok: no | Adds "always", source implies specific example/pair.
+M150 | supported: no | keeps: yes | ok: no | Source says "By default", not "always".
