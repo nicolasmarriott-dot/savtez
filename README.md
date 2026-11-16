@@ -73,6 +73,15 @@ If you change any one character, or swap two adjacent ones, the word is rejected
 | `data/SAVTEZ-GATE_v2c.txt` | recorded validator gate run | CC BY 4.0 |
 | `data/SAVTEZ-GENERATED-FORMS_v0.3_r3.txt` | generator output: candidate forms and screening tables | CC BY 4.0 |
 | `data/SAVTEZ-LISTS_v2.txt` | public lists and data sources the generator used | CC BY 4.0 |
+| `spec/FACT-JUDGE.md` | later method: the source sentence is the FACT; the agent's reading is JUDGMENT | CC BY 4.0 |
+| `spec/tests/` | test specifications for the FACT/JUDGE work (2026-11-14) | CC BY 4.0 |
+| `tools/freeze-xfam-v0/` | scripts to batch, run and score the freeze cross-family example | Apache-2.0 |
+| `tools/pointer/` | scripts used in the pointer-chain, freeze, cutter and relay tests | Apache-2.0 |
+| `tools/cardcheck/` | deterministic citation checker (v0.2) | Apache-2.0 |
+| `examples/freeze-xfam-v0/` | worked example: 150 items, Qwen verdicts, score, and how to rescore | CC BY 4.0 |
+| `examples/cardcheck/` | calibration claims and scores for the citation checker | CC BY 4.0 |
+| `examples/pointer/` | recorded results of the 2026-11-14 pointer-chain and relay tests | CC BY 4.0 |
+| `examples/real-round/` | a FACT/JUDGE research prompt and two recorded rounds | CC BY 4.0 |
 | `SHA256SUMS` | sha256 of every other file in the repository | n/a |
 
 ## How to run the validator
@@ -98,6 +107,79 @@ You can check the files against the checksums with `sha256sum -c SHA256SUMS`.
 
 The generator needs `wordfreq`, `tiktoken` and `tokenizers`, plus local copies of the word lists, tokenizer files and corpora listed in `data/SAVTEZ-LISTS_v2.txt`. None of these are included here. Put them under `external/`, or set `SAVTEZ_WORDLISTS`, `SAVTEZ_TOKENIZERS` and `SAVTEZ_CORPORA`. The generator also reads its acronym list from `tools/SAVTEZ-PROPOSE_v0.3.py`, which is not included in this release.
 
+
+## FACT / JUDGE
+
+Later work in this repository uses a simpler passing rule than the compact wire language above. The two sit side by side. The v0.7r1 language is the formal message format. FACT/JUDGE is the method for passing research findings without the facts drifting. The note in `spec/FACT-JUDGE.md` and the test specifications in `spec/tests/` record the method.
+
+- FACT: a verbatim sentence from a named source, or a figure copied from that source, with a stable ID. It is not a paraphrase.
+- JUDGMENT: the agent's reading of what that fact shows, labelled as judgment. This is the only part a model-based checker is asked to score.
+- A test of the method counts only if it produces at least 25 findings, or at least 4 errors.
+- Ground truth is sealed, and its sha256 posted, by a different bot from the one that researched the round, ideally from a different model family, before the pipeline runs. Thresholds and pass rules do not change after results are in.
+
+A research finding line looks like this:
+
+```
+N | figure | paper title | URL | exact sentence | location | JUDGMENT: one-sentence reading
+```
+
+The exact sentence is the fact. The last field is the agent's judgment. An example prompt is in `examples/real-round/TO-AI_grok-round_2026-11-14.txt`.
+
+## The freeze-xfam-v0 worked example
+
+On 2026-11-14, 150 sentences were judged against short source quotations. Some sentences were faithful to the quoted span; others contained one planted change of meaning. Checker A produced 150 verdicts in `examples/freeze-xfam-v0/freeze-judgment-20261114.txt`.
+
+The answer key used for scoring was:
+
+- PLANTED = the 124 items Checker A marked `ok: no`, plus item M009 (125 items). The recorded result calls M009 arguably not an error; the key still counts it as planted.
+- CLEAN = the other 25 items.
+
+This key was derived from Checker A's verdicts, with M009 added by the scoring rule, and the counts (125 planted, 25 clean) were checked before scoring. It was not a separately posted ground-truth file sealed before Qwen ran.
+
+On 2026-11-15, Qwen/Qwen3.8-27B (bf16) judged the same 150 items through the public Hugging Face Space `bottlecapai/Qwen3.8-27B-reference`, called anonymously with Python `gradio_client` (no token, no paid plan). Sampling: `reasoning_effort=off`, `max_new_tokens=2048`, `temperature=1.0`, `top_p=0.95`, `top_k=20`.
+
+Result: Qwen caught 121 of 125 planted items, and raised 0 false alarms on 25 clean items. It missed M046, M066, M124 and M127. Checker A caught those four; Qwen caught M009. The two checkers shared no misses.
+
+Original hashes of the delivered files, before path or name substitution and before the source quotations were trimmed for this repository:
+
+- `freeze-judgment-20261114.txt`: 11816 bytes, sha256 `6804a5cd5628dbfdc8d8cb85359d4898217b349c6a3e43be7d6ec1293f6479aa` (byte-identical here)
+- `result.txt`: 15903 bytes, sha256 `e6856bda3daed69f7d980388e8df30b838d1009dbd94d7799f3f6aff26ed6e2c`
+- `score-20261115b.txt`: 1179 bytes, sha256 `919f89ffded855d6ea1735618d24623b313807307985840a228478fc54ffca76`
+- `items-and-sources.txt` (original name `task-20261114e.txt`): sha256 `75c214d571d68ef771d9f8cdbe45544d491c3cc491e59daafdab3857f2e28adf`
+
+The copies of `result.txt` and `score-20261115b.txt` here have internal machine paths and internal checker names replaced, so their sha256 values differ; see `SHA256SUMS`. The 150 verdict lines in `result.txt` are unchanged. `items-and-sources.txt` and the batch prompts have had surrounding source paragraphs removed (see below), so they also differ. A short record is in `examples/freeze-xfam-v0/ORIGINAL-HASHES.txt`.
+
+### How to rescore the published run
+
+```sh
+python3 tools/freeze-xfam-v0/score.py \
+  examples/freeze-xfam-v0/freeze-judgment-20261114.txt \
+  examples/freeze-xfam-v0/result.txt
+```
+
+This should report: caught 121 of 125 planted, 0 false alarms on 25 clean, misses M046, M066, M124, M127. The scorer reads only the verdict lines. It does not depend on the trimmed source text.
+
+### How to rerun the model
+
+1. The 150 items, with their quoted source spans, are in `examples/freeze-xfam-v0/items-and-sources.txt`. Batches of 25 are in `examples/freeze-xfam-v0/batches/`.
+2. `tools/freeze-xfam-v0/run.py` calls the same Space anonymously. It refuses to run if a Hugging Face token is present in the environment.
+3. A rerun may not match the published lines token-for-token: the original sampling used temperature 1.0, and the packaged prompts no longer include the surrounding source paragraphs that were sent on 2026-11-15. The published `result.txt` is the record of that run.
+4. The quoted spans are short excerpts from Philip Kiely, *Inference Engineering* (Baseten Books, 2026). See `examples/freeze-xfam-v0/SOURCE.txt`. Surrounding paragraphs from the book are not in this repository.
+
+## How to run the later tools
+
+The freeze scorer uses only the Python standard library. The optional model runner needs `gradio_client`, `huggingface_hub` and `tokenizers`, and it will not start if a Hugging Face token is set.
+
+```sh
+python3 tools/freeze-xfam-v0/score.py \
+  examples/freeze-xfam-v0/freeze-judgment-20261114.txt \
+  examples/freeze-xfam-v0/result.txt
+python3 tools/freeze-xfam-v0/build_batches.py
+# python3 tools/freeze-xfam-v0/run.py    # optional; calls the public Space
+```
+
+`tools/pointer/` and `tools/cardcheck/checker_v0.2.py` support the earlier tests whose specifications are in `spec/tests/` and whose recorded results are under `examples/`. The pointer-chain tests also used passages from *Inference Engineering*; that passage corpus is not included here, so those tests cannot be replayed from this repository alone.
+
 ## How to contribute
 
 The method is fixed: Rules 0 and 1, the grammar, the generation process and the admission test. The dictionary is open to contributions until v1.0. See [CONTRIBUTING.md](CONTRIBUTING.md). In short, you propose a value in a GitHub issue. It has to pass the admission test (spec section 7) and the validator gate, and the owner decides.
@@ -105,7 +187,7 @@ The method is fixed: Rules 0 and 1, the grammar, the generation process and the 
 ## Licenses
 
 - **Code (`tools/`): Apache License 2.0.** The full text is in `LICENSE`.
-- **Spec, dictionary and data (`spec/`, `data/`, and this README): Creative Commons Attribution 4.0 International (CC BY 4.0).** The full legal code is in `LICENSE-CC-BY-4.0`.
+- **Spec, dictionary, data and examples (`spec/`, `data/`, `examples/`, and this README): Creative Commons Attribution 4.0 International (CC BY 4.0).** The full legal code is in `LICENSE-CC-BY-4.0`.
 
 When you reuse the spec, dictionary or data, credit "Nicolas Marriott, Savtez v0.7r1, 2026-11-04" (or the version you used).
 
