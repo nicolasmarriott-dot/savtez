@@ -1,0 +1,21 @@
+M001 | supported: no | keeps: yes | ok: no | Adds "GPUs force" not in source.
+M002 | supported: no | keeps: no | ok: no | "most" added; source says "a lot".
+M003 | supported: yes | keeps: yes | ok: yes |
+M004 | supported: no | keeps: no | ok: no | "Every model developer" is an unsupported generalization.
+M005 | supported: no | keeps: no | ok: no | Source says "rather than evenly", not "more evenly".
+M006 | supported: no | keeps: no | ok: no | "making routing irrelevant" contradicts source context.
+M007 | supported: no | keeps: yes | ok: no | Source refers to "Traditional", not specifically Medusa.
+M008 | supported: yes | keeps: yes | ok: yes |
+M009 | supported: no | keeps: no | ok: no | "always" added; source states definition as fact.
+M010 | supported: no | keeps: no | ok: no | "global" changes "small-block" scale factor.
+M011 | supported: no | keeps: no | ok: no | Comparison to numbering not in source span.
+M012 | supported: no | keeps: no | ok: no | "always" changes "can be".
+M013 | supported: no | keeps: no | ok: no | "on par with Hopper" contradicts "highest".
+M014 | supported: no | keeps: no | ok: no | "any bit width" is an added constraint.
+M015 | supported: no | keeps: no | ok: no | E5M2 has 5-bit exponent, not 4.
+M016 | supported: no | keeps: no | ok: no | "free... from KV cache" is wrong direction.
+M017 | supported: no | keeps: no | ok: no | "every step... costs quality" is added inference.
+M018 | supported: yes | keeps: yes | ok: yes |
+M019 | supported: yes | keeps: yes | ok: yes |
+M020 | supported: no | keeps: no | ok: no | "much slower than prefill" is added comparison.
+M021 | supported: no | keeps: no | ok: no | "No draft models" contradicts "Traditional" qualification.

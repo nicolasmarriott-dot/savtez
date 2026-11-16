@@ -1,0 +1,25 @@
+M026 | supported: no | keeps: yes | ok: no | Source specifies Rubin architecture, not Blackwell
+M027 | supported: no | keeps: no | ok: no | Contradicts source: 'less accurate' vs 'more accurate'
+M028 | supported: no | keeps: no | ok: no | Adds unsupported claim 'only multiplier'
+M029 | supported: no | keeps: yes | ok: no | Adds unsupported comparison 'more than weights'
+M030 | supported: no | keeps: yes | ok: no | Adds unsupported claim 'longer always better'
+M031 | supported: no | keeps: no | ok: no | Reversed causality: builds cache using storage
+M032 | supported: no | keeps: no | ok: no | Passive voice misattributes 'quantization' as subject
+M033 | supported: no | keeps: no | ok: no | Softens negation 'don't' to 'less access'
+M034 | supported: no | keeps: yes | ok: no | Adds unsupported frequency qualifier 'always'
+M035 | supported: no | keeps: no | ok: no | Contradicts source: 'at most' vs 'at least'
+M036 | supported: no | keeps: yes | ok: no | Adds unsupported qualifier 'modest'
+M037 | supported: no | keeps: yes | ok: no | Adds unsupported scope 'training'
+M038 | supported: no | keeps: no | ok: no | Attributed to wrong subject: Disaggregation vs Quantization
+M039 | supported: no | keeps: yes | ok: no | Wrong hardware: H100/H200 vs B200/B300
+M040 | supported: no | keeps: yes | ok: no | Wrong subject: Inference engines vs Foundation labs
+M041 | supported: no | keeps: no | ok: no | Removes 'rule of thumb' qualifier
+M042 | supported: no | keeps: no | ok: no | Wrong subject: draft models vs LLMs
+M043 | supported: no | keeps: yes | ok: no | Exaggerates 'extra' to 'substantial'
+M044 | supported: no | keeps: no | ok: no | Reversed direction: low-to-high vs high-to-low
+M045 | supported: yes | keeps: yes | ok: yes | 
+M046 | supported: yes | keeps: yes | ok: yes | 
+M047 | supported: no | keeps: no | ok: no | Wrong strategy: inference optimization vs speculative decoding
+M048 | supported: no | keeps: no | ok: no | Exaggerates 'don't' to 'never'
+M049 | supported: no | keeps: no | ok: no | Wrong subject: Optimization vs Quantization
+M050 | supported: no | keeps: yes | ok: no | Wrong mechanism: prefix caching vs cache-aware routing

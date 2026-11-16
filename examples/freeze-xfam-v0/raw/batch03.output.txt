@@ -1,0 +1,25 @@
+M051 | supported: no | keeps: yes | ok: no | Draft tokens are generated, not target-generated
+M052 | supported: no | keeps: no | ok: no | Makes optimizations less effective vs even more effective
+M053 | supported: no | keeps: yes | ok: no | Models of all kinds vs LLMs
+M054 | supported: no | keeps: yes | ok: no | Undisputed is stronger than source claims
+M055 | supported: no | keeps: no | ok: no | Every generation vs last few generations
+M056 | supported: yes | keeps: yes | ok: yes |
+M057 | supported: no | keeps: no | ok: no | Allocates traffic based on KV, not KV based on traffic
+M058 | supported: yes | keeps: yes | ok: yes |
+M059 | supported: no | keeps: no | ok: no | Every optimization technique vs Quantization
+M060 | supported: yes | keeps: yes | ok: yes |
+M061 | supported: no | keeps: yes | ok: no | Better option is added judgment
+M062 | supported: no | keeps: no | ok: no | Every number format vs microscaling format
+M063 | supported: no | keeps: no | ok: no | All other methods vs EAGLE
+M064 | supported: yes | keeps: yes | ok: yes |
+M065 | supported: no | keeps: no | ok: no | All model types vs LLM inference
+M066 | supported: yes | keeps: yes | ok: yes |
+M067 | supported: no | keeps: yes | ok: no | Guarantee is stronger than depends on
+M068 | supported: no | keeps: no | ok: no | Much shorter contradicts much longer
+M069 | supported: no | keeps: no | ok: no | Engine splits vs tokens form
+M070 | supported: no | keeps: no | ok: no | Shared suffix vs shared prefix
+M071 | supported: no | keeps: no | ok: no | All of the context vs a lot of context
+M072 | supported: no | keeps: no | ok: no | Force model vs quantization reduces
+M073 | supported: no | keeps: no | ok: no | Adds or scientific computing
+M074 | supported: no | keeps: no | ok: no | EAGLE advantage contradicts n-gram advantage
+M075 | supported: no | keeps: no | ok: no | More than any other optimization is added

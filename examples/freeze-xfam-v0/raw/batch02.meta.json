@@ -1,0 +1,8 @@
+{
+  "batch": "batch02",
+  "started_utc": "2026-11-15T07:20:28Z",
+  "endpoint": "/respond",
+  "raw_type": "list",
+  "elapsed_s": 50.8,
+  "finished_utc": "2026-11-15T07:21:18Z"
+}

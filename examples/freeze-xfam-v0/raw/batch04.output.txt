@@ -1,0 +1,25 @@
+M076 | supported: no | keeps: yes | ok: no | Source attributes extra compute only to Lookahead, not n-gram.
+M077 | supported: no | keeps: no | ok: no | Source specifies decode phase, sentence says prefill phase.
+M078 | supported: no | keeps: no | ok: no | Speculative decoding is disabled, not verification.
+M079 | supported: no | keeps: no | ok: no | Omits conditional "when it goes wrong"; claims absolute certainty.
+M080 | supported: no | keeps: no | ok: no | Source says "between the pair", sentence says "all requests".
+M081 | supported: no | keeps: no | ok: no | Adds "always" which is not in the source span.
+M082 | supported: yes | keeps: yes | ok: yes |
+M083 | supported: no | keeps: no | ok: no | Source says "across replicas", sentence says "clusters and regions".
+M084 | supported: no | keeps: no | ok: no | Source says allocated to KV cache, sentence says model weights.
+M085 | supported: yes | keeps: yes | ok: yes |
+M086 | supported: no | keeps: no | ok: no | Source says "RoPE", sentence says "speculative decoding".
+M087 | supported: yes | keeps: yes | ok: yes |
+M088 | supported: yes | keeps: yes | ok: yes |
+M089 | supported: no | keeps: no | ok: no | Source says "stored in memory", sentence says "applied by hardware".
+M090 | supported: no | keeps: no | ok: no | Source specifies "all four tokens", sentence generalizes to "every token".
+M091 | supported: yes | keeps: yes | ok: yes |
+M092 | supported: no | keeps: no | ok: no | Source says lettering is meaningful, doesn't say numbering isn't.
+M093 | supported: yes | keeps: yes | ok: yes |
+M094 | supported: no | keeps: no | ok: no | Source says "run prefill", sentence says "run decode".
+M095 | supported: no | keeps: no | ok: no | Source says "G4 networked storage", sentence says "G1 memory tier".
+M096 | supported: no | keeps: no | ok: no | Mismatch: defines draft token cost as sequence length.
+M097 | supported: yes | keeps: yes | ok: yes |
+M098 | supported: no | keeps: no | ok: no | Source says "dynamically disabled", sentence says "permanently disabled".
+M099 | supported: no | keeps: no | ok: no | Reverses relationship: draft model is smaller, not target.
+M100 | supported: no | keeps: no | ok:

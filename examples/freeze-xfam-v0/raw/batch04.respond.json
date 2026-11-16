@@ -1,0 +1,13 @@
+[
+  {
+    "role": "assistant",
+    "content": "M076 | supported: no | keeps: yes | ok: no | Source attributes extra compute only to Lookahead, not n-gram.\nM077 | supported: no | keeps: no | ok: no | Source specifies decode phase, sentence says prefill phase.\nM078 | supported: no | keeps: no | ok: no | Speculative decoding is disabled, not verification.\nM079 | supported: no | keeps: no | ok: no | Omits conditional \"when it goes wrong\"; claims absolute certainty.\nM080 | supported: no | keeps: no | ok: no | Source says \"between the pair\", sentence says \"all requests\".\nM081 | supported: no | keeps: no | ok: no | Adds \"always\" which is not in the source span.\nM082 | supported: yes | keeps: yes | ok: yes |\nM083 | supported: no | keeps: no | ok: no | Source says \"across replicas\", sentence says \"clusters and regions\".\nM084 | supported: no | keeps: no | ok: no | Source says allocated to KV cache, sentence says model weights.\nM085 | supported: yes | keeps: yes | ok: yes |\nM086 | supported: no | keeps: no | ok: no | Source says \"RoPE\", sentence says \"speculative decoding\".\nM087 | supported: yes | keeps: yes | ok: yes |\nM088 | supported: yes | keeps: yes | ok: yes |\nM089 | supported: no | keeps: no | ok: no | Source says \"stored in memory\", sentence says \"applied by hardware\".\nM090 | supported: no | keeps: no | ok: no | Source specifies \"all four tokens\", sentence generalizes to \"every token\".\nM091 | supported: yes | keeps: yes | ok: yes |\nM092 | supported: no | keeps: no | ok: no | Source says lettering is meaningful, doesn't say numbering isn't.\nM093 | supported: yes | keeps: yes | ok: yes |\nM094 | supported: no | keeps: no | ok: no | Source says \"run prefill\", sentence says \"run decode\".\nM095 | supported: no | keeps: no | ok: no | Source says \"G4 networked storage\", sentence says \"G1 memory tier\".\nM096 | supported: no | keeps: no | ok: no | Mismatch: defines draft token cost as sequence length.\nM097 | supported: yes | keeps: yes | ok: yes |\nM098 | supported: no | keeps: no | ok: no | Source says \"dynamically disabled\", sentence says \"permanently disabled\".\nM099 | supported: no | keeps: no | ok: no | Reverses relationship: draft model is smaller, not target.\nM100 | supported: no | keeps: no | ok:"
+  },
+  {
+    "role": "assistant",
+    "content": "'You have exceeded your ZeroGPU quota (120s requested vs. 20s left). Try again in 23:59:09. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens'\n\nSign in to Hugging Face for a larger daily GPU quota, or lower **Reasoning effort**.",
+    "metadata": {
+      "title": "⚠️ Stopped early"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "role": "assistant",
+    "content": "M001 | supported: no | keeps: yes | ok: no | Adds \"GPUs force\" not in source.\nM002 | supported: no | keeps: no | ok: no | \"most\" added; source says \"a lot\".\nM003 | supported: yes | keeps: yes | ok: yes |\nM004 | supported: no | keeps: no | ok: no | \"Every model developer\" is an unsupported generalization.\nM005 | supported: no | keeps: no | ok: no | Source says \"rather than evenly\", not \"more evenly\".\nM006 | supported: no | keeps: no | ok: no | \"making routing irrelevant\" contradicts source context.\nM007 | supported: no | keeps: yes | ok: no | Source refers to \"Traditional\", not specifically Medusa.\nM008 | supported: yes | keeps: yes | ok: yes |\nM009 | supported: no | keeps: no | ok: no | \"always\" added; source states definition as fact.\nM010 | supported: no | keeps: no | ok: no | \"global\" changes \"small-block\" scale factor.\nM011 | supported: no | keeps: no | ok: no | Comparison to numbering not in source span.\nM012 | supported: no | keeps: no | ok: no | \"always\" changes \"can be\".\nM013 | supported: no | keeps: no | ok: no | \"on par with Hopper\" contradicts \"highest\".\nM014 | supported: no | keeps: no | ok: no | \"any bit width\" is an added constraint.\nM015 | supported: no | keeps: no | ok: no | E5M2 has 5-bit exponent, not 4.\nM016 | supported: no | keeps: no | ok: no | \"free... from KV cache\" is wrong direction.\nM017 | supported: no | keeps: no | ok: no | \"every step... costs quality\" is added inference.\nM018 | supported: yes | keeps: yes | ok: yes |\nM019 | supported: yes | keeps: yes | ok: yes |\nM020 | supported: no | keeps: no | ok: no | \"much slower than prefill\" is added comparison.\nM021 | supported: no | keeps: no | ok: no | \"No draft models\" contradicts \"Traditional\" qualification."
+  },
+  {
+    "role": "assistant",
+    "content": "'You have exceeded your ZeroGPU quota (120s requested vs. 20s left). Try again in 23:59:09. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens'\n\nSign in to Hugging Face for a larger daily GPU quota, or lower **Reasoning effort**.",
+    "metadata": {
+      "title": "⚠️ Stopped early"
+    }
+  }
+]
